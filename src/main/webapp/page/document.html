@@ -1,0 +1,62 @@
+<div class="container">
+    <div layout="column">
+        <div layout="row">
+            <h3>Prometni dokumenti</h3>
+        </div>
+        <md-divider></md-divider>
+        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+            <md-table-container>
+                <table md-table>
+                    <thead md-head md-order="query.order">
+                    <tr md-row>
+                        <th md-column style="max-width: 60px">Magacin</th>
+                        <th md-column style="max-width: 60px"><span>Serijski broj</span></th>
+                        <th md-column style="max-width: 60px"><span>Vrsta</span></th>
+                        <th md-column style="max-width: 60px"><span>Status</span></th>
+                        <th md-column style="max-width: 60px"><span>Datum formiranja</span></th>
+                        <th md-column style="max-width: 60px"><span>Datum knjiženja</span></th>
+                        <th md-column style="max-width: 60px">Stavke</th>
+                        <th md-column style="max-width: 60px;text-align:right;">Knjiženje</th>
+                        <th md-column style="max-width: 60px">Brisanje</th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row ng-repeat="document in documents | limitTo: query.limit:(query.page-1) * query.limit"
+                        ng-click="edit(document)">
+                        <td md-cell style="max-width: 60px">{{document.warehouse.name}}</td>
+                        <td md-cell style="max-width: 60px">{{document.serialNumber}}</td>
+                        <td md-cell style="max-width: 60px">{{documentType[document.documentType]}}</td>
+                        <td md-cell style="max-width: 60px">{{status[document.status]}}</td>
+                        <td md-cell style="max-width: 60px">{{document.establishmentDate | date :'dd-MM-yyyy'}}</td>
+                        <td md-cell style="max-width: 60px">{{document.bookingDate ? document.bookingDate : "/" | date :'dd-MM-yyyy'}}</td>
+                        <td md-cell style="max-width: 60px">
+                            <md-button class="md-icon-button md-accent" aria-label="Stavke" ng-click="showUnits(document, $event)" style="margin-left: -5px;">
+                                <md-icon md-svg-icon="image/ic_document_24px.svg"></md-icon>
+                            </md-button>
+                            <md-checkbox ng-model="document.reverse" aria-label="Checkbox 1" ng-click="checkBoxClick(document.reverse, $event)">
+                                Storno
+                            </md-checkbox>
+                            <md-button ng-click="addUnit(document, $event)">
+                                Dodaj stavku
+                            </md-button>
+                        </td>
+                        <td md-cell style="max-width:60px;text-align:right;">
+                            <md-button class="md-icon-button md-accent" aria-label="Knjiženje" ng-click="book(document, $event)">
+                                <md-icon md-svg-icon="image/ic_booking.svg"></md-icon>
+                            </md-button>
+                        </td>
+                        <td md-cell style="max-width: 60px">
+                            <md-button class="md-icon-button md-accent" aria-label="Brisanje" ng-click="delete(document, $event)">
+                                <md-icon md-svg-icon="image/ic_delete_blue.svg"></md-icon>
+                            </md-button>
+                        </td>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{documents.length}}" md-page-select
+                                 md-boundary-links="options.boundaryLinks" md-label="{page: 'Stranica:', rowsPerPage: 'redova po stranici', of: 'od'}">
+            </md-table-pagination>
+        </md-card>
+    </div>
+</div>

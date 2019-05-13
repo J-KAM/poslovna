@@ -1,0 +1,112 @@
+<div>
+    <md-content>
+        <md-toolbar class="stay-top" ng-show="!showSearch">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="toggleSidenav()">
+                    <md-icon md-svg-icon="image/ic_menu_white_24px.svg"></md-icon>
+                </md-button>
+                <h2><span>{{page.title}}</span></h2>
+                <span flex></span>
+                <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+                    <md-icon md-svg-icon="image/ic_search_white_24px.svg"></md-icon>
+                </md-button>
+                <h3 class="toolbar-item"><span>{{user.firstName}} {{user.lastName}}</span></h3>
+                <md-button class="md-raised" ng-click="logout()">
+                    Logout
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-toolbar class="stay-top" ng-show="showSearch" style="background-color: white">
+            <div class="md-toolbar-tools">
+                <md-button ng-click="showSearch = !showSearch;  searchText = ''; emitSearchQuery(searchText);" aria-label="Back">
+                    <md-icon md-svg-icon="image/ic_arrow_back_black_24px.svg"></md-icon>
+                </md-button>
+                <md-input-container md-theme="input" flex layout="start center">
+                    <label>&nbsp;</label>
+                    <input ng-model="searchText" placeholder="Search..." ng-change="emitSearchQuery(searchText)">
+                </md-input-container>
+            </div>
+        </md-toolbar>
+    </md-content>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2 stay-top" md-component-id="left">
+        <md-toolbar class="md-theme-indigo">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" ng-click="toggleSidenav()">
+                    <md-icon md-svg-icon="image/ic_arrow_back_white_24px.svg"></md-icon>
+                </md-button>
+                <h2><span>{{page.title}}</span></h2>
+            </div>
+        </md-toolbar>
+
+        <md-content layout-xs style="margin: 10px" ng-if="authService.isEmployee()">
+            <md-select ng-model="activeWarehouse" id="activeWarehouse" name="activeWarehouse" ng-change="activeWarehouseChanged()">
+                <md-option ng-value="warehouse" ng-repeat="warehouse in warehouses" ng-selected="$first">{{ warehouse.name }}</md-option>
+            </md-select>
+        </md-content>
+
+        <!-- Employee -->
+        <md-content layout-xs ng-if="authService.isEmployee()">
+            <md-input-container class="md-block sidenav-item">
+                <md-button ng-click="goToHome()" class="md-primary sidenav-item" style="text-align:left" ng-disabled="isActive(0)">
+                    Početna
+                </md-button>
+            </md-input-container>
+        </md-content>
+        <md-content layout-xs ng-if="authService.isEmployee()">
+            <md-input-container class="md-block sidenav-item">
+                <md-button ng-click="goToWareGroups()" class="md-primary sidenav-item" style="text-align:left" ng-disabled="isActive(3.4)">
+                    Grupe robe
+                </md-button>
+            </md-input-container>
+        </md-content>
+        <md-content layout-xs ng-if="authService.isEmployee()">
+            <md-input-container class="md-block sidenav-item">
+                <md-button ng-click="goToWarehouses()" class="md-primary sidenav-item" style="text-align:left" ng-disabled="isActive(3.8)">
+                    Magacini
+                </md-button>
+            </md-input-container>
+        </md-content>
+
+        <!-- Admin -->
+        <md-content layout-xs ng-if="authService.isAdmin()">
+            <md-input-container class="md-block sidenav-item">
+                <md-button ng-click="goToMeasurementUnits()" class="md-primary sidenav-item" style="text-align:left" ng-disabled="isActive(3.1)">
+                    Merne jedinice
+                </md-button>
+            </md-input-container>
+            <md-input-container class="md-block sidenav-item" ng-if="authService.isAdmin()">
+                <md-button ng-click="goToLocation()" class="md-primary sidenav-item" style="text-align:left" ng-disabled="isActive(3.2)">
+                    Lokacija
+                </md-button>
+            </md-input-container>
+        </md-content>
+        <md-content layout-xs ng-if="authService.isAdmin()">
+            <md-input-container class="md-block sidenav-item">
+                <md-button ng-click="goToCompanies()" class="md-primary sidenav-item" style="text-align:left" ng-disabled="isActive(3.3)">
+                    Preduzeća
+                </md-button>
+            </md-input-container>
+        </md-content>
+        <md-content layout-xs ng-if="authService.isAdmin()">
+            <md-input-container class="md-block sidenav-item">
+                <md-button ng-click="goToBusinessPartners()" class="md-primary sidenav-item" style="text-align:left" ng-disabled="isActive(3.6)">
+                    Poslovni partneri
+                </md-button>
+            </md-input-container>
+        </md-content>
+        <md-content layout-xs ng-if="authService.isAdmin()">
+            <md-input-container class="md-block sidenav-item">
+                <md-button ng-click="goToWarehouses()" class="md-primary sidenav-item" style="text-align:left" ng-disabled="isActive(3.8)">
+                    Magacini
+                </md-button>
+            </md-input-container>
+        </md-content>
+    </md-sidenav>
+    <section id="container" class="page active">
+        <ui-view></ui-view>
+    </section>
+    <md-button class="md-primary md-fab md-fab-bottom-right"
+               aria-label="Add" ng-click="add()" ng-if="page.current != 0 && page.current != 3.7  && page.current != 0.1">
+        <md-icon md-svg-src="image/ic_add_white_24px.svg"></md-icon>
+    </md-button>
+</div>

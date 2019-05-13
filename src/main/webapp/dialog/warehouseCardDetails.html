@@ -1,0 +1,75 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="warehouseCardForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Naziv robe</label>
+                    <input type="text" ng-model="card.ware.name" disabled>
+                </md-input-container>
+            </md-dialog-content>
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Prosečna cena</label>
+                    <input type="text" data-ng-model="card.averagePrice" disabled>
+                </md-input-container>
+            </md-dialog-content>
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Poslovna godina</label>
+                    <input type="text" data-ng-model="card.businessYear.year" disabled>
+                </md-input-container>
+            </md-dialog-content>
+            <md-dialog-content>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Početna količina</label>
+                        <input type="text" data-ng-model="card.initialQuantity" disabled>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Početna vrednost</label>
+                        <input type="text" ng-model="card.initialValue" disabled>
+                    </md-input-container>
+                </div>
+            </md-dialog-content>
+            <md-dialog-content>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Promet ulaza količina</label>
+                        <input type="text" ng-model="card.quantityEntryTraffic" disabled>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Promet ulaza vrednost</label>
+                        <input type="text" ng-model="card.valueEntryTraffic" disabled>
+                    </md-input-container>
+                </div>
+            </md-dialog-content>
+            <md-dialog-content>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Promet izlazna količina</label>
+                        <input type="text" ng-model="card.quantityExitTraffic" disabled>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Promet izlazna vrednost</label>
+                        <input type="text" ng-model="card.valueExitTraffic" disabled>
+                    </md-input-container>
+                </div>
+            </md-dialog-content>
+            <md-dialog-content>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Ukupna količina</label>
+                        <input type="text" ng-model="card.totalQuantity" disabled>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Ukupna vrednost</label>
+                        <input type="text" ng-model="card.totalValue" disabled>
+                    </md-input-container>
+                </div>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Zatvori</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

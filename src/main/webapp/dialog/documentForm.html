@@ -1,0 +1,95 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <h4>Formiranje dokumenta</h4>
+    <md-divider></md-divider>
+    <form novalidate name="documentForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-autocomplete
+                    md-selected-item="document.warehouse"
+                    md-search-text="searchTextWarehouse"
+                    md-items="warehouse in queryWarehouses(searchTextWarehouse)"
+                    md-item-text="warehouse.name"
+                    md-selected-item-change = "updateWarehouse()"
+                    md-min-length="0"
+                    placeholder="Lokacija u prometu...">
+                <md-item-template>
+                    <span><strong>{{warehouse.name}}</strong></span>
+                </md-item-template>
+                <md-not-found>
+                    Nije pronađen magacin sa ovim nazivom "{{searchTextWarehouse}}".
+                </md-not-found>
+            </md-autocomplete>
+            <md-dialog-content>
+                <md-input-container class="md-block" style="margin-top: 20px">
+                    <md-label>Poslovna godina</md-label>
+                    <md-select ng-model="document.businessYear" id="businessYear" name="businessYear"
+                               required>
+                        <md-option ng-repeat="businessYear in businessYears" ng-value="businessYear">{{ businessYear.year }}</md-option>
+                    </md-select>
+                    <div ng-messages="documentForm.businessYear.$error"
+                         ng-if="documentForm.businessYear.$dirty">
+                        <div ng-message="required">Obavezan izbor poslovne godine.</div>
+                    </div>
+                </md-input-container>
+            </md-dialog-content>
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <md-label>Tip dokumenta</md-label>
+                    <md-select ng-model="document.documentType" id="documentType" name="documentType"
+                               required>
+                        <md-option ng-repeat="(key, value) in documentTypes" value="{{key}}">{{ value }}</md-option>
+                    </md-select>
+                    <div ng-messages="documentForm.documentType.$error"
+                         ng-if="documentForm.documentType.$dirty">
+                        <div ng-message="required">Obavezan izbor tipa dokumenta.</div>
+                    </div>
+                </md-input-container>
+            </md-dialog-content>
+            <md-autocomplete
+                    ng-if="document.documentType == 'RECEIPT' || document.documentType == 'DISPATCH'"
+                    md-no-cache="true"
+                    md-selected-item="document.businessPartner"
+                    md-search-text="searchTextBusinessPartner"
+                    md-items="businessPartner in queryBusinessPartners(searchTextBusinessPartner)"
+                    md-item-text="businessPartner.name"
+                    md-min-length="0"
+                    placeholder="Poslovni partner...">
+                <md-item-template>
+                    <span class="item-title" style="display: block; line-height:1;">
+                        <span><strong>{{businessPartner.name}}</strong></span>
+                    </span>
+                    <span class="item-metadata" style="display: block; padding-bottom: 3px;line-height: 2">
+                        <span style="padding-right: 10px">
+                            {{businessPartner.pib}}
+                        </span>
+                    </span>
+                </md-item-template>
+                <md-not-found>
+                    Nije pronađen poslovni partner sa ovim nazivom ili PIB-om. "{{searchTextBusinessPartner}}".
+                </md-not-found>
+            </md-autocomplete>
+            <md-autocomplete
+                    ng-if="document.documentType == 'INTER_WAREHOUSE_TRAFFIC'"
+                    md-selected-item="document.innerWarehouse"
+                    md-search-text="searchTextInnerWarehouse"
+                    md-items="innerWarehouse in queryInnerWarehouses(searchTextInnerWarehouse)"
+                    md-item-text="innerWarehouse.name"
+                    md-min-length="0"
+                    placeholder="Unutrašnji promet sa...">
+                <md-item-template>
+                    <span><strong>{{innerWarehouse.name}}</strong></span>
+                </md-item-template>
+                <md-not-found>
+                    Nije pronađen magacin sa ovim nazivom "{{searchTextInnerWarehouse}}".
+                </md-not-found>
+            </md-autocomplete>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Nazad</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="documentForm.$invalid || document.warehouse == null ||
+                       (document.businessPartner == null && (document.documentType === 'RECEIPT' || document.documentType === 'DISPATCH')) ||
+                       (document.innerWarehouse == null && document.documentType == 'INTER_WAREHOUSE_TRAFFIC')">Sačuvaj
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

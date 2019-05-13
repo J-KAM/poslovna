@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Magacin</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <link rel="stylesheet" href="libs/md-data-table.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="initial-scale=1" />
+</head>
+<body ng-app="app">
+<div class="container" ng-view=""></div>
+<ui-view></ui-view>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+<script type="text/javascript" src="libs/md-data-table.min.js"></script>
+<script src="http://ngmaterial.assets.s3.amazonaws.com/svg-assets-cache.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+
+<script src="app.js"></script>
+
+<!-- Pages -->
+<script src="page/login.js"></script>
+<script src="page/navigation.js"></script>
+<script src="page/home.js"></script>
+<script src="page/measurementUnit.js"></script>
+<script src="page/company.js"></script>
+<script src="page/location.js"></script>
+<script src="page/wareGroup.js"></script>
+<script src="page/ware.js"></script>
+<script src="page/businessPartner.js"></script>
+<script src="page/businessYear.js"></script>
+<script src="page/document.js"></script>
+<script src="page/warehouse.js"></script>
+<script src="page/warehouseCard.js"></script>
+
+
+<!-- Dialogs -->
+<script src="dialog/createAccount.js"></script>
+<script src="dialog/measurementUnitForm.js"></script>
+<script src="dialog/companyForm.js"></script>
+<script src="dialog/locationForm.js"></script>
+<script src="dialog/wareGroupForm.js"></script>
+<script src="dialog/wareForm.js"></script>
+<script src="dialog/businessPartnerForm.js"></script>
+<script src="dialog/businessYearForm.js"></script>
+<script src="dialog/documentForm.js"></script>
+<script src="dialog/warehouseForm.js"></script>
+<script src="dialog/documentUnitPreview.js"></script>
+<script src="dialog/documentUnitForm.js"></script>
+<script src="dialog/warehouseCardDetails.js"></script>
+<script src="dialog/warehouseCardAnalyticsPreview.js"></script>
+<script src="dialog/chooseDateForm.js"></script>
+
+
+
+<!-- Services -->
+<script src="service/authenticationService.js"></script>
+<script src="service/userService.js"></script>
+<script src="service/measurementUnitService.js"></script>
+<script src="service/companyService.js"></script>
+<script src="service/locationService.js"></script>
+<script src="service/wareGroupService.js"></script>
+<script src="service/wareService.js"></script>
+<script src="service/businessPartnerService.js"></script>
+<script src="service/businessYearService.js"></script>
+<script src="service/documentService.js"></script>
+<script src="service/warehouseService.js"></script>
+<script src="service/documentUnitService.js"></script>
+<script src="service/warehouseCardService.js"></script>
+<script src="service/warehouseCardAnalyticsService.js"></script>
+
+
+<!-- Directives -->
+<script src="directives/confirmPassword.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<div class="container">
+    <div layout="column">
+        <div layout="row">
+            <h3>Magacinske kartice</h3>
+        </div>
+        <md-divider></md-divider>
+        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+            <md-table-container>
+                <table md-table>
+                    <thead md-head md-order="query.order">
+                    <tr md-row>
+                        <th md-column>Naziv robe</th>
+                        <th md-column><span>Prosečna cena</span></th>
+                        <th md-column><span>Početna količina</span></th>
+                        <th md-column><span>Početna vrednost</span></th>
+                        <th md-column><span>Ukupna količina</span></th>
+                        <th md-column><span>Ukupna vrednost</span></th>
+                        <th md-column><span>Detalji</span></th>
+                        <th md-column><span>Analitike</span></th>
+                        <th md-column><span>Generiši izveštaj</span></th>
+                        <th md-column><span>Niveliši</span></th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row ng-repeat="card in cards | limitTo: query.limit:(query.page-1) * query.limit"
+                        ng-click="null">
+                        <td md-cell>{{card.ware.name}}</td>
+                        <td md-cell>{{card.averagePrice}}</td>
+                        <td md-cell>{{card.initialQuantity}}</td>
+                        <td md-cell>{{card.initialValue}}</td>
+                        <td md-cell>{{card.totalQuantity}}</td>
+                        <td md-cell>{{card.totalValue}}</td>
+                        <td md-cell>
+                            <md-button class="md-icon-button md-accent" aria-label="Detalji" ng-click = "showDetails(card)">
+                                <md-icon md-svg-icon="image/ic_details.svg"></md-icon>
+                            </md-button>
+                        </td>
+                        <td md-cell>
+                            <md-button class="md-icon-button md-accent" aria-label="Analitike" ng-click = "showAnalytics(card)">
+                                <md-icon md-svg-icon="image/ic_document_24px.svg"></md-icon>
+                            </md-button>
+                        </td>
+                        <td md-cell>
+                            <md-button class="md-icon-button md-accent" aria-label="Izveštaj" ng-click = "chooseDate(card)">
+                                <md-icon md-svg-icon="image/ic_report-pdf.svg"></md-icon>
+                            </md-button>
+                        </td>
+                        <td md-cell>
+                            <md-button class="md-icon-button md-accent" aria-label="Niveliši" ng-click = "level(card)">
+                                <md-icon md-svg-icon="image/ic_nivelation.svg"></md-icon>
+                            </md-button>
+                        </td>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{cards.length}}" md-page-select
+                                 md-boundary-links="options.boundaryLinks" md-label="{page: 'Stranica:', rowsPerPage: 'redova po stranici', of: 'od'}">
+            </md-table-pagination>
+        </md-card>
+    </div>
+</div>

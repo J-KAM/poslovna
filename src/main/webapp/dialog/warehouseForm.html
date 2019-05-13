@@ -1,0 +1,61 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="warehouseForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Naziv</label>
+                    <input id="name" name="name" type="text" data-ng-model="warehouse.name" required>
+                    <div ng-messages="warehouseForm.name.$error" ng-if="warehouseForm.name.$dirty">
+                        <div ng-message="required">Obavezan je unos naziva magacina.</div>
+                    </div>
+                </md-input-container>
+               <!--Dodati autocomplete za zaposlenog-->
+                <md-autocomplete
+                        style="margin-top: 10px; margin-bottom: 10px;"
+                        md-selected-item="warehouse.employee"
+                        md-search-text="searchText"
+                        md-items="employee in queryEmployees(searchText)"
+                        md-item-text="employee.firstName + ' ' +  employee.lastName"
+                        md-min-length="0"
+                        placeholder="Traži zaposlenog...">
+                    <md-item-template>
+                        <span class="item-title" style="display: block; line-height:1">
+                            <span><strong>{{employee.firstName}} {{employee.lastName}}</strong></span>
+                        </span>
+                    </md-item-template>
+                    <md-not-found>
+                        Nije pronađen zaposleni sa nazivom "{{searchText}}".
+                    </md-not-found>
+                </md-autocomplete>
+                    <md-autocomplete
+                        style="margin-top: 10px; margin-bottom: 10px;"
+                        md-selected-item="warehouse.company"
+                        md-search-text="searchText1"
+                        md-items="company in queryCompanies(searchText1)"
+                        md-item-text="company.name"
+                        md-min-length="0"
+                        placeholder="Traži preduzeće...">
+                    <md-item-template>
+                        <span class="item-title" style="display: block; line-height:1">
+                            <span><strong>{{company.name}}</strong></span>
+                        </span>
+                        <span class="item-metadata" style="display: block; padding-bottom: 3px;line-height: 2">
+                            <span style="padding-right: 10px">
+                                PIB: {{company.pib}}
+                            </span>
+                        </span>
+                    </md-item-template>
+                    <md-not-found>
+                        Nije pronađeno preduzeće sa nazivom ili PIB-om "{{searchText1}}".
+                    </md-not-found>
+                </md-autocomplete>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Nazad</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="warehouseForm.$invalid || warehouse.company == null">Sačuvaj
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

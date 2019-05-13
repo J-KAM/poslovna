@@ -1,0 +1,88 @@
+<md-dialog class="md-padding card" style="width: 800px;">
+    <md-dialog-content style="padding-top: 10px">
+        <md-tabs class="md-accent" md-selected="selectedIndex">
+            <md-tab id="1" ng-click="disableSave()">
+                <md-tab-label>Pregled stavki</h4></md-tab-label>
+                <md-tab-body>
+                    <md-table-container>
+                        <table md-table>
+                            <thead md-head md-order="query.order">
+                            <tr md-row>
+                                <th md-column><span>Sifra artikla</span></th>
+                                <th md-column><span>Pakovanje</span></th>
+                                <th md-column><span>Naziv</span></th>
+                                <th md-column><span>Cena</span></th>
+                                <th md-column><span>Količina</span></th>
+                                <th md-column><span>Vrednost</span></th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row
+                                ng-repeat="documentUnit in documentUnits | limitTo: query.limit:(query.page-1) * query.limit"
+                                ng-click="editDocumentUnit(documentUnit)">
+                                <td md-cell>{{documentUnit.ware.id}}</td>
+                                <td md-cell>{{documentUnit.ware.packing}}</td>
+                                <td md-cell>{{documentUnit.ware.name}}</td>
+                                <td md-cell>{{documentUnit.price}}</td>
+                                <td md-cell>{{documentUnit.quantity}}</td>
+                                <td md-cell>{{documentUnit.value}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                    <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page"
+                                         md-total="{{documentUnits.length}}" md-page-select
+                                         md-boundary-links="options.boundaryLinks"
+                                         md-label="{page: 'Stranica:', rowsPerPage: 'redova po stranici', of: 'od'}">
+                    </md-table-pagination>
+                </md-tab-body>
+            </md-tab>
+            <md-tab id="2" ng-disabled="secondLocked">
+                <md-tab-label>Izmena stavki</md-tab-label>
+                <md-tab-body>
+                    <form novalidate name="documentUnitForm" ng-show="pending">
+                        <md-input-container class="md-block">
+                            <label>Količina</label>
+                            <input id="quantity" name="quantity" type="text" data-ng-model="documentUnit.quantity"
+                                   ng-pattern="positiveInteger" required>
+                            <div ng-messages="documentUnit.quantity.$error" ng-if="documentUnitForm.price.$dirty">
+                                <div ng-message="required">Obavezan je unos količine.</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Nabavna cena</label>
+                            <input id="price" name="price" type="number" min="0.1" data-ng-model="documentUnit.price"
+                                   required>
+                            <div ng-messages="documentUnit.price.$error" ng-if="documentUnitForm.price.$dirty">
+                                <div ng-message="required">Obavezan je unos cene.</div>
+                                <div ng-message="min">Količina mora biti pozitivan broj.</div>
+                            </div>
+                        </md-input-container>
+                        <md-autocomplete required
+                                         md-selected-item="documentUnit.ware"
+                                         md-search-text="searchText"
+                                         md-items="ware in queryWares(searchText)"
+                                         md-item-text="ware.name"
+                                         md-min-length="0"
+                                         placeholder="Traži artikal po nazivu ili šifri...">
+                            <md-item-template>
+                                <span md-highlight-text="searchText" md-highlight-flags="^i">{{ware.name}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                Nije pronađen artikal sa nazivom "{{searchText}}".
+                            </md-not-found>
+                        </md-autocomplete>
+                    </form>
+                    <div ng-show="notPending">
+                        <h3>Izmena stavke dokumenta nije dozvoljena.</h3>
+                        <p>Dokument nije u statusu formiranja. Stavke se mogu menjati samo dok je dokument u statusu formiranja.</p>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Zatvori</md-button>
+            <md-button ng-click="saveUnit()" ng-disabled="(documentUnitForm.$invalid || saveDisabled)">Sacuvaj</md-button>
+        </md-dialog-actions>
+    </md-dialog-content>
+</md-dialog>

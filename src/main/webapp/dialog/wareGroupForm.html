@@ -1,0 +1,41 @@
+<md-dialog class="md-padding card" style="width: 600px">
+    <form novalidate name="wareGroupForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Naziv grupe</label>
+                    <input id="name" name="name" type="text" data-ng-model="wareGroup.name" required>
+                    <div ng-messages="wareGroupForm.name.$error" ng-if="wareGroupForm.name.$dirty">
+                        <div ng-message="required">Obavezan je unos naziva grupe robe.</div>
+                    </div>
+                </md-input-container>
+                <md-autocomplete md-selected-item="wareGroup.company"
+                                 md-search-text="searchText"
+                                 md-items="company in queryCompanies(searchText)"
+                                 md-item-text="company.name"
+                                 md-min-length="0"
+                                 placeholder="Traži preduzeće...">
+                    <md-item-template>
+                        <span class="item-title" style="display: block; line-height:1">
+                            <span><strong>{{company.name}}</strong></span>
+                        </span>
+                        <span class="item-metadata" style="display: block; padding-bottom: 3px;line-height: 2">
+                            <span style="padding-right: 10px">
+                                PIB: {{company.pib}}
+                            </span>
+                        </span>
+                    </md-item-template>
+                    <md-not-found>
+                        Nije pronađeno preduzeće sa nazivom  "{{searchText}}" .
+                    </md-not-found>
+                </md-autocomplete>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Nazad</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="wareGroup.$invalid || wareGroup.company == null">Sačuvaj
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

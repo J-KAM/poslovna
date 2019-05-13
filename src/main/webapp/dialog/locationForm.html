@@ -1,0 +1,30 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="locationForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Naziv</label>
+                    <input id="name" name="name" type="text" data-ng-model="location.name" required>
+                    <div ng-messages="locationForm.name.$error" ng-if="locationForm.name.$dirty">
+                        <div ng-message="required">Obavezan je unos naziva lokacije.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Poštanski broj</label>
+                    <input id="ptt" name="ptt" type="number" data-ng-model="location.ptt" ng-pattern="/^[1-9][0-9]{4}$/"required>
+                    <div ng-messages="locationForm.ptt.$error" ng-if="locationForm.ptt.$dirty">
+                        <div ng-message="required">Obavezan je unos poštanskog broja.</div>
+                        <div ng-message="pattern">Poštanski broj nije validan.</div>
+                    </div>
+
+                </md-input-container>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Nazad</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="location.$invalid">Sačuvaj
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

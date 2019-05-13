@@ -1,0 +1,57 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="wareForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Naziv</label>
+                    <input id="name" name="name" type="text" data-ng-model="ware.name" required>
+                    <div ng-messages="wareForm.name.$error" ng-if="wareForm.name.$dirty">
+                        <div ng-message="required">Obavezan je unos naziva robe.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Pakovanje</label>
+                    <input id="packing" name="packing" type="text" data-ng-model="ware.packing" required ng-pattern="/^[0-9]+\.?[0-9]*$/">
+                    <div ng-messages="wareForm.packing.$error" ng-if="wareForm.packing.$dirty">
+                        <div ng-message="required">Obavezan je unos pakovanja robe.</div>
+                        <div ng-message="pattern">Pakovanje mora biti broj.</div>
+                    </div>
+                </md-input-container>
+            <md-autocomplete
+                    md-selected-item="ware.measurementUnit"
+                    md-search-text="searchText"
+                    md-items="measurementUnit in queryMeasurementUnits(searchText)"
+                    md-item-text="measurementUnit.name"
+                    md-min-length="0"
+                    placeholder="Traži jedinicu mere...">
+                <md-item-template>
+                    <span md-highlight-text="searchText" md-highlight-flags="^i">{{measurementUnit.name}}</span>
+                </md-item-template>
+                <md-not-found>
+                    Nije pronađena jedinica mere sa nazivom "{{searchText}}".
+                </md-not-found>
+            </md-autocomplete>
+                <md-autocomplete required
+                        md-selected-item="ware.wareGroup"
+                        md-search-text="searchText1"
+                        md-items="wareGroup in queryWareGroups(searchText1)"
+                        md-item-text="wareGroup.name"
+                        md-min-length="0"
+                        placeholder="Traži grupu robe...">
+                    <md-item-template>
+                        <span md-highlight-text="searchText1" md-highlight-flags="^i">{{wareGroup.name}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        Nije pronađena grupa robe sa nazivom "{{searchText}}".
+                    </md-not-found>
+                </md-autocomplete>
+         </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Nazad</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="wareForm.$invalid || ware.measurementUnit == null || ware.wareGroup == null">Sačuvaj
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

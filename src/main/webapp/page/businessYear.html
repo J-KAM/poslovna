@@ -1,0 +1,31 @@
+<div class="container">
+    <div layout="column">
+        <div layout="row">
+            <h3>Poslovne godine</h3>
+        </div>
+        <md-divider></md-divider>
+        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+            <md-table-container>
+                <table md-table>
+                    <thead md-head md-order="query.order">
+                    <tr md-row>
+                        <th md-column><span>Godina</span></th>
+                        <th md-column><span>Zatvorena?</span></th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row ng-repeat="businessYear in businessYears | limitTo: query.limit:(query.page-1) * query.limit"
+                        ng-click="edit(businessYear)">
+                        <td md-cell>{{businessYear.year}}</td>
+                        <td md-cell>{{ businessYear.closed ? "Da" : "Ne" }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{businessYears.length}}" md-page-select
+                                 md-boundary-links="options.boundaryLinks" md-label="{page: 'Stranica:', rowsPerPage: 'redova po stranici', of: 'od'}">
+            </md-table-pagination>
+        </md-card>
+    </div>
+</div>

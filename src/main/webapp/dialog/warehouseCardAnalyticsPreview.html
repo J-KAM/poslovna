@@ -1,0 +1,38 @@
+<md-dialog class="md-padding card" style="width: 800px;">
+    <md-dialog-content style="padding-top: 10px">
+        <h4>Analitika magacinske kartice</h4>
+        <md-divider></md-divider>
+        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+            <md-table-container>
+                <table md-table>
+                    <thead md-head md-order="query.order">
+                    <tr md-row>
+                        <th md-column><span>Vrsta prometa</span></th>
+                        <th md-column><span>Smer</span></th>
+                        <th md-column><span>Količina</span></th>
+                        <th md-column><span>Cena</span></th>
+                        <th md-column><span>Vrednost</span></th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row ng-repeat="warehouseCardAnalytic in warehouseCardAnalytics | limitTo: query.limit:(query.page-1) * query.limit"
+                        ng-click="null">
+                        <td md-cell>{{trafficType[warehouseCardAnalytic.trafficType]}}</td>
+                        <td md-cell>{{direction[warehouseCardAnalytic.direction]}}</td>
+                        <td md-cell>{{warehouseCardAnalytic.quantity}}</td>
+                        <td md-cell>{{warehouseCardAnalytic.averagePrice}}</td>
+                        <td md-cell>{{warehouseCardAnalytic.value}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{warehouseCardAnalytics.length}}" md-page-select
+                                 md-boundary-links="options.boundaryLinks" md-label="{page: 'Stranica:', rowsPerPage: 'redova po stranici', of: 'od'}">
+            </md-table-pagination>
+        </md-card>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="end center">
+        <md-button ng-click="close()">Zatvori</md-button>
+    </md-dialog-actions>
+</md-dialog>

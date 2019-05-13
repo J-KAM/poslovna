@@ -1,0 +1,42 @@
+<md-dialog class="md-padding card" style="width: 500px">
+    <form novalidate name="documentUnitForm" layout="column">
+        <md-dialog-content style="padding-top: 20px">
+            <md-input-container class="md-block">
+                <label>Količina</label>
+                <input id="quantity" name="quantity" type="text" data-ng-model="documentUnit.quantity"
+                       ng-pattern="positiveInteger" required>
+                <div ng-messages="documentUnit.quantity.$error" ng-if="documentUnitForm.price.$dirty">
+                    <div ng-message="required">Obavezan je unos količine.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Nabavna cena</label>
+                <input id="price" name="price" type="number" min="0.1" data-ng-model="documentUnit.price" required>
+                <div ng-messages="documentUnit.price.$error" ng-if="documentUnitForm.price.$dirty">
+                    <div ng-message="required">Obavezan je unos cene.</div>
+                    <div ng-message="min">Količina mora biti pozitivan broj.</div>
+                </div>
+            </md-input-container>
+            <md-autocomplete required
+                             md-selected-item="documentUnit.ware"
+                             md-search-text="searchText"
+                             md-items="ware in queryWares(searchText)"
+                             md-item-text="ware.name"
+                             md-min-length="0"
+                             placeholder="Traži artikal po nazivu ili šifri...">
+                <md-item-template>
+                    <span md-highlight-text="searchText" md-highlight-flags="^i">{{ware.name}}</span>
+                </md-item-template>
+                <md-not-found>
+                    Nije pronađen artikal sa nazivom "{{searchText}}".
+                </md-not-found>
+            </md-autocomplete>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Nazad</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="documentUnitForm.$invalid">Sačuvaj
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

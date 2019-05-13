@@ -1,0 +1,31 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Unesite željene datume</h2>
+        </div>
+    </md-toolbar>
+    <form novalidate name="dateChooserForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-input-container class="md-block">
+                <label>Početni datum</label>
+                <input id="startDate" name="startDate" type="date" ng-model="data.startDate" max="{{currentDate | date:'yyyy-MM-dd'}}"  required>
+                <div ng-messages="dateChooserForm.startDate.$error" ng-if="dateChooserForm.startDate.$dirty">
+                    <div ng-message="required">Obavezan je unos početnog datuma</div>
+                    <div ng-message="max">Početni ne sme biti veći od današnjeg</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Krajni datum</label>
+                <input id="endDate" name="endDate" type="date" ng-model = "data.endDate" min="{{data.startDate | date:'yyyy-MM-dd'}}" required>
+                <div ng-messages="dateChooserForm.endDate.$error" ng-if="dateChooserForm.endDate.$dirty">
+                    <div ng-message="required">Obavezan je unos krajnjeg datuma</div>
+                    <div ng-message="max">Krajnji datum ne sme biti veći od početnog</div>
+                </div>
+            </md-input-container>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Zatvori</md-button>
+            <md-button ng-click="generateReport()" ng-disabled="dateChooserForm.$invalid">U redu</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

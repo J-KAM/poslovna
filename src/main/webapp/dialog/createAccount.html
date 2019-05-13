@@ -1,0 +1,70 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="registerForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <md-dialog-content>
+                <md-input-container class="md-block">
+                    <label>Korisnicko ime</label>
+                    <input id="username" name="username" type="username" data-ng-model="user.username" required>
+                    <div ng-messages="registerForm.email.$error" role="alert"
+                         ng-if="registerForm.email.$dirty">
+                        <div ng-message="required">Ovo polje ne moze biti prazno.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Lozinka</label>
+                    <input id="password" name="password" type="password" data-ng-model="user.password"
+                           required>
+                    <div ng-messages="registerForm.password.$error"
+                         ng-if="registerForm.password.$dirty">
+                        <div ng-message="required">Ovo polje ne moze biti prazno.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Potvrda lozinke</label>
+                    <input id="confirmPassword" name="confirmPassword" type="password"
+                           required data-password-verify="user.password" ng-model="user.password_verify">
+                    <div ng-messages="registerForm.password.$error"
+                         ng-if="registerForm.password.$dirty">
+                        <div ng-message="required">Ovo polje ne moze biti prazno.</div>
+                        <div ng-show="registerForm.confirmPassword.$error.passwordVerify">
+                            Lozinke su razlicite!</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>JMBG</label>
+                    <input id="jmbg" name="jmbg" type="text" data-ng-model="user.jmbg" required ng-pattern="/^[0-9]{13,13}$/">
+                    <div ng-messages="registerForm.jmbg.$error" ng-if="registerForm.jmbg.$dirty">
+                        <div ng-message="required">Ovo polje ne moze biti prazno.</div>
+                        <div ng-message="pattern">Molim Vas unesite validan JMBG, 13 cifara.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Ime</label>
+                    <input id="firstName" name="firstName" type="text" data-ng-model="user.firstName" required>
+                    <div ng-messages="registerForm.firstName.$error" ng-if="registerForm.firstName.$dirty">
+                        <div ng-message="required">Ovo polje ne moze biti prazno.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Prezime</label>
+                    <input id="lastName" name="lastName" type="text" data-ng-model="user.lastName"
+                           required>
+                    <div ng-messages="registerForm.lastName.$error" ng-if="registerForm.lastName.$dirty">
+                        <div ng-message="required">Ovo polje ne moze biti prazno.</div>
+                    </div>
+                </md-input-container>
+            </md-dialog-content>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Zatvori</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="registerForm.$invalid">Kreiraj
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+
+
+
+

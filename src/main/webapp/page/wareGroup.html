@@ -1,0 +1,36 @@
+<div class="container">
+    <div layout="column">
+        <div layout="row">
+            <h3>Grupe robe</h3>
+        </div>
+        <md-divider></md-divider>
+        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+            <md-table-container>
+                <table md-table>
+                    <thead md-head md-order="query.order">
+                    <tr md-row>
+                        <th md-column><span>Naziv</span></th>
+                        <th md-column><span>Preduzeće</span></th>
+                        <th md-column></th>
+                    </tr>
+                    <tbody md-body>
+                    <tr md-row ng-repeat="wareGroup in wareGroups | limitTo: query.limit:(query.page-1) * query.limit"
+                        ng-click="edit(wareGroup)">
+                        <td md-cell>{{wareGroup.name}}</td>
+                        <td md-cell>{{wareGroup.company.name}}</td>
+                        <td md-cell>
+                            <md-button class="md-icon-button md-accent" aria-label="Obriši" ng-click="delete(wareGroup, $event)">
+                                <md-icon md-svg-icon="image/ic_delete_blue.svg"></md-icon>
+                            </md-button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{wareGroups.length}}" md-page-select
+                                 md-boundary-links="options.boundaryLinks" md-label="{page: 'Stranica:', rowsPerPage: 'redova po stranici', of: 'od'}">
+            </md-table-pagination>
+        </md-card>
+    </div>
+</div>
