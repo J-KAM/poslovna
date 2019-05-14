@@ -40,4 +40,5 @@ public abstract class BaseModel {
     public BaseModel(BaseDTO baseDTO) {
         this.id = baseDTO.getId();
     }
+
 }

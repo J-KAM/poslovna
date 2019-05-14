@@ -2,13 +2,12 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.dto.DocumentDTO;
+import com.ftn.model.Document;
 import com.ftn.service.BookingService;
 import com.ftn.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -50,21 +49,21 @@ public class DocumentController {
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody DocumentDTO documentDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody Document document, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(documentService.create(documentDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(documentService.create(document), HttpStatus.CREATED);
     }
 
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PatchMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody DocumentDTO documentDTO, BindingResult bindingResult) {
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody Document document, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(documentService.update(id, documentDTO), HttpStatus.OK);
+        return new ResponseEntity<>(documentService.update(id, document), HttpStatus.OK);
     }
 
     @Transactional
@@ -78,10 +77,10 @@ public class DocumentController {
 
     @Transactional
     @PostMapping(value="/book/{id}")
-    public ResponseEntity book(@PathVariable Long id, @Valid @RequestBody DocumentDTO documentDTO, BindingResult bindingResult){
+    public ResponseEntity book(@PathVariable Long id, @Valid @RequestBody Document document, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(bookingService.book(id, documentDTO), HttpStatus.OK);
+        return new ResponseEntity<>(bookingService.book(id, document), HttpStatus.OK);
     }
 }

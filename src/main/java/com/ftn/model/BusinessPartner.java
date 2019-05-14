@@ -1,8 +1,6 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.BusinessPartnerDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,6 +21,9 @@ import java.util.List;
 @SQLDelete(sql = Sql.UPDATE + "business_partner" + Sql.SOFT_DELETE)
 @Where(clause = Sql.ACTIVE)
 public class BusinessPartner extends BaseModel {
+
+    public BusinessPartner(BusinessPartner businessPartner) {
+    }
 
     public enum PartnershipType {
         BUYER,
@@ -51,7 +52,8 @@ public class BusinessPartner extends BaseModel {
     @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<>();
 
-    public BusinessPartner(BaseDTO baseDTO) {
+    //brisanje
+   /* public BusinessPartner(BaseDTO baseDTO) {
         super(baseDTO);
     }
 
@@ -64,5 +66,5 @@ public class BusinessPartner extends BaseModel {
         if (businessPartnerDTO.getLocation() != null) {
             this.location = businessPartnerDTO.getLocation().construct();
         }
-    }
+    }*/
 }

@@ -1,6 +1,6 @@
 package com.ftn.service;
 
-import com.ftn.model.dto.BusinessPartnerDTO;
+import com.ftn.model.BusinessPartner;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface BusinessPartnerService {
 
-    List<BusinessPartnerDTO> read();
+    List<BusinessPartner> read();
 
-    BusinessPartnerDTO create(BusinessPartnerDTO businessPartnerDTO);
+    BusinessPartner create(BusinessPartner businessPartner);
 
-    BusinessPartnerDTO update(Long id, BusinessPartnerDTO businessPartnerDTO);
+    BusinessPartner update(Long id, BusinessPartner businessPartner);
 
     void delete(Long id);
 }

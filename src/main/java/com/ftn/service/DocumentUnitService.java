@@ -1,6 +1,6 @@
 package com.ftn.service;
 
-import com.ftn.model.dto.DocumentUnitDTO;
+import com.ftn.model.DocumentUnit;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import java.util.List;
  */
 public interface DocumentUnitService {
 
-    List<DocumentUnitDTO> read();
+    List<DocumentUnit> read();
 
-    List<DocumentUnitDTO> read(Long documentId);
+    List<DocumentUnit> read(Long documentId);
 
-    DocumentUnitDTO create(DocumentUnitDTO documentUnitDTO);
+    DocumentUnit create(DocumentUnit documentUnit);
 
-    DocumentUnitDTO update(Long id, DocumentUnitDTO documentUnitDTO);
+    DocumentUnit update(Long id, DocumentUnit documentUnit);
 
     void delete(Long id);
 }

@@ -2,6 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
+import com.ftn.model.WarehouseCardAnalytics;
 import com.ftn.model.dto.WarehouseCardAnalyticsDTO;
 import com.ftn.service.WarehouseCardAnalyticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +47,12 @@ public class WarehouseCardAnalyticsController {
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody WarehouseCardAnalyticsDTO warehouseCardAnalyticsDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody WarehouseCardAnalytics warehouseCardAnalytics, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
 
-        return new ResponseEntity<>(warehouseCardAnalyticsService.create(warehouseCardAnalyticsDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(warehouseCardAnalyticsService.create(warehouseCardAnalytics), HttpStatus.CREATED);
     }
 
     @Transactional

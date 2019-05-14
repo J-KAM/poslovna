@@ -1,6 +1,6 @@
 package com.ftn.service;
 
-import com.ftn.model.dto.DocumentDTO;
+import com.ftn.model.Document;
 
 
 
@@ -9,5 +9,5 @@ import com.ftn.model.dto.DocumentDTO;
  */
 public interface BookingService {
 
-    DocumentDTO book(Long id, DocumentDTO documentDTO);
+    Document book(Long id, Document document);
 }

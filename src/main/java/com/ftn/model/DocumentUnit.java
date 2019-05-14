@@ -1,8 +1,6 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.DocumentUnitDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -38,7 +36,11 @@ public class DocumentUnit extends BaseModel {
     @ManyToOne(optional = false)
     private Ware ware;
 
-    public DocumentUnit(BaseDTO baseDTO) {
+    public DocumentUnit(DocumentUnit documentUnit) {
+    }
+
+    // brisanje
+    /*public DocumentUnit(BaseDTO baseDTO) {
         super(baseDTO);
     }
 
@@ -49,5 +51,5 @@ public class DocumentUnit extends BaseModel {
         if (documentUnitDTO.getWare() != null) {
             this.ware = documentUnitDTO.getWare().construct();
         }
-    }
+    }*/
 }

@@ -1,6 +1,6 @@
 package com.ftn.service;
 
-import com.ftn.model.dto.BusinessYearDTO;
+import com.ftn.model.BusinessYear;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import java.util.List;
  */
 public interface BusinessYearService {
 
-    List<BusinessYearDTO> read();
+    List<BusinessYear> read();
 
-    BusinessYearDTO create(BusinessYearDTO businessYearDTO);
+    BusinessYear create(BusinessYear businessYear);
 
-    BusinessYearDTO update(Long id, BusinessYearDTO businessYearDTO);
+    BusinessYear update(Long id, BusinessYear businessYear);
 
     void delete(Long id);
 
-    boolean active(BusinessYearDTO businessYearDTO);
+    boolean active(BusinessYear businessYear);
 }

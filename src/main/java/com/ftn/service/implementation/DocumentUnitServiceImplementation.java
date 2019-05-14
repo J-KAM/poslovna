@@ -2,9 +2,7 @@ package com.ftn.service.implementation;
 
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
-import com.ftn.model.Document;
 import com.ftn.model.DocumentUnit;
-import com.ftn.model.dto.DocumentUnitDTO;
 import com.ftn.repository.DocumentDao;
 import com.ftn.repository.DocumentUnitDao;
 import com.ftn.repository.WareDao;
@@ -12,7 +10,6 @@ import com.ftn.service.DocumentUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,37 +33,29 @@ public class DocumentUnitServiceImplementation implements DocumentUnitService {
     }
 
     @Override
-    public List<DocumentUnitDTO> read() {
-        return documentUnitDao.findAll().stream().map(DocumentUnitDTO::new).collect(Collectors.toList());
+    public List<DocumentUnit> read() {
+        return documentUnitDao.findAll().stream().map(DocumentUnit::new).collect(Collectors.toList());
     }
 
     @Override
-    public List<DocumentUnitDTO> read(Long documentId) {
-        List<DocumentUnitDTO> documentUnitDTOS = new ArrayList<>();
+    public List<DocumentUnit> read(Long documentId) {
         List<DocumentUnit> documentUnits = documentUnitDao.findByDocumentId(documentId);
-        for(DocumentUnit documentUnit : documentUnits){
-            DocumentUnitDTO documentUnitDTO = new DocumentUnitDTO(documentUnit, true);
-            documentUnitDTOS.add(documentUnitDTO);
-        }
-        return documentUnitDTOS;
+        return documentUnits;
     }
 
     @Override
-    public DocumentUnitDTO create(DocumentUnitDTO documentUnitDTO) {
-        if (documentUnitDao.findById(documentUnitDTO.getId()).isPresent()) {
+    public DocumentUnit create(DocumentUnit documentUnit) {
+        if (documentUnitDao.findById(documentUnit.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        final DocumentUnit documentUnit = documentUnitDTO.construct();
-        documentUnitDao.save(documentUnit);
-        return new DocumentUnitDTO(documentUnit);
+
+        return documentUnitDao.save(documentUnit);
     }
 
     @Override
-    public DocumentUnitDTO update(Long id, DocumentUnitDTO documentUnitDTO) {
-        final DocumentUnit documentUnit = documentUnitDao.findById(id).orElseThrow(NotFoundException::new);
-        documentUnit.merge(documentUnitDTO);
-        documentUnitDao.save(documentUnit);
-        return new DocumentUnitDTO(documentUnit);
+    public DocumentUnit update(Long id, DocumentUnit documentUnit) {
+        documentUnitDao.findById(id).orElseThrow(NotFoundException::new);
+        return documentUnitDao.save(documentUnit);
     }
 
     @Override

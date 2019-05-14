@@ -51,8 +51,8 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
     }
 
     @Override
-    public WarehouseCardDTO read(WareDTO wareDTO, BusinessYearDTO businessYearDTO, WarehouseDTO warehouseDTO) {
-        WarehouseCard warehouseCard = warehouseCardDao.findByWareIdAndBusinessYearIdAndWarehouseId(wareDTO.getId(), businessYearDTO.getId(), warehouseDTO.getId());
+    public WarehouseCardDTO read(WareDTO wareDTO, BusinessYear businessYear, WarehouseDTO warehouseDTO) {
+        WarehouseCard warehouseCard = warehouseCardDao.findByWareIdAndBusinessYearIdAndWarehouseId(wareDTO.getId(), businessYear.getId(), warehouseDTO.getId());
         if(warehouseCard != null){
             return new WarehouseCardDTO(warehouseCard, true);
         }else {
@@ -61,14 +61,12 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
     }
 
     @Override
-    public WarehouseCardDTO create(WarehouseCardDTO warehouseCardDTO) {
-        if (warehouseCardDao.findById(warehouseCardDTO.getId()).isPresent()) {
+    public WarehouseCard create(WarehouseCard warehouseCard) {
+        if (warehouseCardDao.findById(warehouseCard.getId()).isPresent()) {
             throw new BadRequestException();
         }
 
-        final WarehouseCard warehouseCard = warehouseCardDTO.construct();
-        warehouseCardDao.save(warehouseCard);
-        return new WarehouseCardDTO(warehouseCard);
+        return warehouseCardDao.save(warehouseCard);
     }
 
     @Override

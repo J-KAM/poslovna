@@ -1,8 +1,6 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.DocumentDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -24,6 +22,9 @@ import java.util.List;
 @SQLDelete(sql = Sql.UPDATE + "document" + Sql.SOFT_DELETE)
 @Where(clause = Sql.ACTIVE)
 public class Document extends BaseModel {
+
+    public Document(Document document) {
+    }
 
     public enum DocumentType {
         RECEIPT,
@@ -68,7 +69,11 @@ public class Document extends BaseModel {
     @ManyToOne
     private BusinessPartner businessPartner;
 
-    public Document(BaseDTO baseDTO) {
+    //dodato iz dto sloja
+    private boolean reverse;
+
+    // brisanje
+    /*public Document(BaseDTO baseDTO) {
         super(baseDTO);
     }
 
@@ -85,5 +90,5 @@ public class Document extends BaseModel {
         else
             this.businessPartner = documentDTO.getBusinessPartner().construct();
 
-    }
+    }*/
 }

@@ -2,7 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.dto.DocumentUnitDTO;
+import com.ftn.model.DocumentUnit;
 import com.ftn.service.DocumentUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,21 +45,21 @@ public class DocumentUnitController {
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody DocumentUnitDTO documentUnitDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody DocumentUnit documentUnit, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(documentUnitService.create(documentUnitDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(documentUnitService.create(documentUnit), HttpStatus.CREATED);
     }
 
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PatchMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody DocumentUnitDTO documentUnitDTO, BindingResult bindingResult) {
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody DocumentUnit documentUnit, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(documentUnitService.update(id, documentUnitDTO), HttpStatus.OK);
+        return new ResponseEntity<>(documentUnitService.update(id, documentUnit), HttpStatus.OK);
     }
 
     @Transactional

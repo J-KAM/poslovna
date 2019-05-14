@@ -94,7 +94,8 @@ public class WarehouseServiceImplementation implements WarehouseService {
             tableItems.add(lagerListElementDTO);
         }
 
-        data.put("CompanyName", warehouseDTO.getCompany().getName());
+        // TODO: Uncomment after warehouseDTO has been deleted
+        // data.put("CompanyName", warehouseDTO.getCompany().getName());
         data.put("WarehouseName", warehouseDTO.getName());
         data.put("DataSource", new JRBeanCollectionDataSource(tableItems));
 

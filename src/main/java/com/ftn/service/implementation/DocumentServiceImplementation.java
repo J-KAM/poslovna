@@ -3,7 +3,6 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
-import com.ftn.model.dto.DocumentDTO;
 import com.ftn.repository.DocumentDao;
 import com.ftn.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,35 +39,32 @@ public class DocumentServiceImplementation implements DocumentService {
     }
 
     @Override
-    public List<DocumentDTO> read() {
+    public List<Document> read() {
         final User user = authenticationService.getCurrentUser();
-        return documentDao.findByWarehouseEmployeeId(user.getId()).stream().map(DocumentDTO::new).collect(Collectors.toList());
+        return documentDao.findByWarehouseEmployeeId(user.getId()).stream().map(Document::new).collect(Collectors.toList());
     }
 
     @Override
-    public List<DocumentDTO> readByWarehouse(Long id) {
-        return documentDao.findByWarehouseId(id).stream().map(DocumentDTO::new).collect(Collectors.toList());
+    public List<Document> readByWarehouse(Long id) {
+        return documentDao.findByWarehouseId(id).stream().map(Document::new).collect(Collectors.toList());
     }
 
     @Override
-    public DocumentDTO create(DocumentDTO documentDTO) {
-        if (documentDao.findById(documentDTO.getId()).isPresent()) {
+    public Document create(Document document) {
+        if (documentDao.findById(document.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        final Document document = documentDTO.construct();
         document.setStatus(Document.Status.PENDING);
         document.setEstablishmentDate(new Date());
         document.setSerialNumber(documentDao.count() + 1);
         documentDao.save(document);
-        return new DocumentDTO(document);
+        return document;
     }
 
     @Override
-    public DocumentDTO update(Long id, DocumentDTO documentDTO) {
-        final Document document = getDocument(id);
-        document.merge(documentDTO);
-        documentDao.save(document);
-        return new DocumentDTO(document);
+    public Document update(Long id, Document document) {
+        getDocument(id);
+        return documentDao.save(document);
     }
 
     @Override

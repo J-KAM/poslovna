@@ -1,8 +1,7 @@
 package com.ftn.service;
 
 
-import com.ftn.model.dto.CompanyDTO;
-import com.ftn.model.dto.UserDTO;
+import com.ftn.model.Company;
 
 import java.util.List;
 
@@ -11,13 +10,13 @@ import java.util.List;
  */
 public interface CompanyService {
 
-    List<CompanyDTO> read();
+    List<Company> read();
 
-    CompanyDTO read(Long id);
+    Company read(Long id);
 
-    CompanyDTO create(CompanyDTO companyDTO);
+    Company create(Company company);
 
-    CompanyDTO update(Long id, CompanyDTO companyDTO);
+    Company update(Long id, Company company);
 
     void delete(Long id);
 }

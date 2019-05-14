@@ -2,7 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.dto.CompanyDTO;
+import com.ftn.model.Company;
 import com.ftn.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,21 +45,21 @@ public class CompanyController {
     @Transactional
     @PreAuthorize(Auth.ADMIN)
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody CompanyDTO companyDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody Company company, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(companyService.create(companyDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(companyService.create(company), HttpStatus.CREATED);
     }
 
     @Transactional
     @PreAuthorize(Auth.ADMIN)
     @PatchMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody CompanyDTO companyDTO, BindingResult bindingResult) {
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody Company company, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(companyService.update(id, companyDTO), HttpStatus.OK);
+        return new ResponseEntity<>(companyService.update(id, company), HttpStatus.OK);
     }
 
     @Transactional

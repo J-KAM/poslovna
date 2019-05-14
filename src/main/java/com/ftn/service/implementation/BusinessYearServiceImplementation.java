@@ -3,8 +3,6 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
-import com.ftn.model.dto.BusinessYearDTO;
-import com.ftn.model.dto.WarehouseCardAnalyticsDTO;
 import com.ftn.repository.BusinessYearDao;
 import com.ftn.repository.DocumentDao;
 import com.ftn.repository.WarehouseCardAnalyticsDao;
@@ -45,27 +43,24 @@ public class BusinessYearServiceImplementation implements BusinessYearService {
     }
 
     @Override
-    public List<BusinessYearDTO> read() {
+    public List<BusinessYear> read() {
         Employee employee = authenticationService.getCurrentUser();
-        return businessYearDao.findByCompanyId(employee.getCompany().getId()).stream().map(BusinessYearDTO::new).collect(Collectors.toList());
+        return businessYearDao.findByCompanyId(employee.getCompany().getId()).stream().map(BusinessYear::new).collect(Collectors.toList());
     }
 
     @Override
-    public BusinessYearDTO create(BusinessYearDTO businessYearDTO) {
-        if (businessYearDao.findById(businessYearDTO.getId()).isPresent()) {
+    public BusinessYear create(BusinessYear businessYear) {
+        if (businessYearDao.findById(businessYear.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        final BusinessYear businessYear = businessYearDTO.construct();
         open(businessYear);
-        return new BusinessYearDTO(businessYear);
+        return businessYear;
     }
 
     @Override
-    public BusinessYearDTO update(Long id, BusinessYearDTO businessYearDTO) {
-        final BusinessYear businessYear = businessYearDao.findById(id).orElseThrow(NotFoundException::new);
-        businessYear.merge(businessYearDTO);
-        businessYearDao.save(businessYear);
-        return new BusinessYearDTO(businessYear);
+    public BusinessYear update(Long id, BusinessYear businessYear) {
+        businessYearDao.findById(id).orElseThrow(NotFoundException::new);
+        return businessYearDao.save(businessYear);
     }
 
     @Override
@@ -75,9 +70,9 @@ public class BusinessYearServiceImplementation implements BusinessYearService {
     }
 
     @Override
-    public boolean active(BusinessYearDTO businessYearDTO) {
-        final BusinessYear businessYear = businessYearDao.findById(businessYearDTO.getId()).orElseThrow(NotFoundException::new);
-        return businessYear.isActive();
+    public boolean active(BusinessYear businessYear) {
+        final BusinessYear businessYearDB = businessYearDao.findById(businessYear.getId()).orElseThrow(NotFoundException::new);
+        return businessYearDB.isActive();
     }
 
     private void open(BusinessYear businessYear) {

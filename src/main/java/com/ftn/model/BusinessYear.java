@@ -1,8 +1,6 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.BusinessYearDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -39,7 +37,11 @@ public class BusinessYear extends BaseModel {
     @OneToMany(mappedBy = "businessYear", cascade = CascadeType.ALL)
     private List<WarehouseCard> warehouseCards = new ArrayList<>();
 
-    public BusinessYear(BaseDTO baseDTO) {
+    public BusinessYear(BusinessYear businessYear) {
+    }
+
+    //brisanje
+    /*public BusinessYear(BaseDTO baseDTO) {
         super(baseDTO);
     }
 
@@ -47,5 +49,5 @@ public class BusinessYear extends BaseModel {
         this.year = businessYearDTO.getYear();
         this.closed = businessYearDTO.isClosed();
         this.company = businessYearDTO.getCompany().construct();
-    }
+    }*/
 }

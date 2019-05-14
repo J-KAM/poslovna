@@ -5,9 +5,6 @@ import com.ftn.exception.NotFoundException;
 import com.ftn.model.Company;
 import com.ftn.model.Employee;
 import com.ftn.model.User;
-import com.ftn.model.dto.CompanyDTO;
-import com.ftn.model.dto.UserDTO;
-import com.ftn.model.dto.WareDTO;
 import com.ftn.repository.CompanyDao;
 import com.ftn.repository.LocationDao;
 import com.ftn.service.AuthenticationService;
@@ -39,41 +36,37 @@ public class CompanyServiceImplementation implements CompanyService {
     }
 
     @Override
-    public List<CompanyDTO> read() {
+    public List<Company> read() {
         final User user = authenticationService.getCurrentUser();
         if (user instanceof Employee) {
             final Company company = ((Employee) user).getCompany();
-            final CompanyDTO companyDTO = new CompanyDTO(company, true);
-            final List<CompanyDTO> companyDTOS = new ArrayList<>();
-            companyDTOS.add(companyDTO);
-            return companyDTOS;
+            final List<Company> companies = new ArrayList<>();
+            companies.add(company);
+            return companies;
         } else {
-            return companyDao.findAll().stream().map(CompanyDTO::new).collect(Collectors.toList());
+            return companyDao.findAll().stream().map(Company::new).collect(Collectors.toList());
         }
     }
 
     @Override
-    public CompanyDTO read(Long id) {
-        return new CompanyDTO(companyDao.findById(id).orElseThrow(NotFoundException::new));
+    public Company read(Long id) {
+        return new Company(companyDao.findById(id).orElseThrow(NotFoundException::new));
     }
 
     @Override
-    public CompanyDTO create(CompanyDTO companyDTO) {
-        if (companyDao.findById(companyDTO.getId()).isPresent()) {
+    public Company create(Company company) {
+        if (companyDao.findById(company.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        final Company company = companyDTO.construct();
         companyDao.save(company);
         company.setLocation(locationDao.findById(company.getLocation().getId()).orElseThrow(NotFoundException::new));
-        return new CompanyDTO(company);
+        return company;
     }
 
     @Override
-    public CompanyDTO update(Long id, CompanyDTO companyDTO) {
-        final Company company = companyDao.findById(id).orElseThrow(NotFoundException::new);
-        company.merge(companyDTO);
-        companyDao.save(company);
-        return new CompanyDTO(company);
+    public Company update(Long id, Company company) {
+        companyDao.findById(id).orElseThrow(NotFoundException::new);
+        return companyDao.save(company);
     }
 
     @Override

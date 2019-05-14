@@ -2,6 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
+import com.ftn.model.WarehouseCard;
 import com.ftn.model.dto.ReportDataDTO;
 import com.ftn.model.dto.WareDTO;
 import com.ftn.model.dto.WarehouseCardDTO;
@@ -50,11 +51,11 @@ public class WarehouseCardController {
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody WarehouseCardDTO warehouseCardDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody WarehouseCard warehouseCard, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(warehouseCardService.create(warehouseCardDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(warehouseCardService.create(warehouseCard), HttpStatus.CREATED);
     }
 
     @Transactional

@@ -1,6 +1,6 @@
 package com.ftn.service;
 
-import com.ftn.model.dto.DocumentDTO;
+import com.ftn.model.Document;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import java.util.List;
  */
 public interface DocumentService {
 
-    List<DocumentDTO> read();
+    List<Document> read();
 
-    List<DocumentDTO> readByWarehouse(Long id);
+    List<Document> readByWarehouse(Long id);
 
-    DocumentDTO create(DocumentDTO documentDTO);
+    Document create(Document document);
 
-    DocumentDTO update(Long id, DocumentDTO documentDTO);
+    Document update(Long id, Document document);
 
     void delete(Long id);
 }

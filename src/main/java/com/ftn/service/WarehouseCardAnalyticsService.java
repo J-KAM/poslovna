@@ -16,7 +16,7 @@ public interface WarehouseCardAnalyticsService {
 
     List<WarehouseCardAnalyticsDTO> read(Long id, WarehouseCardAnalytics.TrafficType trafficType);
 
-    WarehouseCardAnalyticsDTO create(WarehouseCardAnalyticsDTO warehouseCardAnalyticsDTO);
+    WarehouseCardAnalytics create(WarehouseCardAnalytics warehouseCardAnalytics);
 
     WarehouseCardAnalyticsDTO update(Long id, WarehouseCardAnalyticsDTO warehouseCardAnalyticsDTO);
 

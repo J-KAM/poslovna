@@ -2,7 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.dto.BusinessYearDTO;
+import com.ftn.model.BusinessYear;
 import com.ftn.service.BusinessYearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,22 +38,22 @@ public class BusinessYearController {
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody BusinessYearDTO businessYearDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody BusinessYear businessYear, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
 
-        return new ResponseEntity<>(businessYearService.create(businessYearDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(businessYearService.create(businessYear), HttpStatus.CREATED);
     }
 
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PatchMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody BusinessYearDTO businessYearDTO, BindingResult bindingResult) {
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody BusinessYear businessYear, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(businessYearService.update(id, businessYearDTO), HttpStatus.OK);
+        return new ResponseEntity<>(businessYearService.update(id, businessYear), HttpStatus.OK);
     }
 
     @Transactional
