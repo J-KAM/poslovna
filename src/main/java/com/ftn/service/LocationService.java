@@ -1,6 +1,6 @@
 package com.ftn.service;
 
-import com.ftn.model.dto.LocationDTO;
+import com.ftn.model.Location;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface LocationService {
 
-    List<LocationDTO> read();
+    List<Location> read();
 
-    LocationDTO create(LocationDTO locationDTO);
+    Location create(Location location);
 
-    LocationDTO update(Long id, LocationDTO locationDTO);
+    Location update(Long id, Location location);
 
     void delete(Long id);
 }

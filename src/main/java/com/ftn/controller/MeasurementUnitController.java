@@ -2,7 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.dto.MeasurementUnitDTO;
+import com.ftn.model.MeasurementUnit;
 import com.ftn.service.MeasurementUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,21 +38,21 @@ public class MeasurementUnitController {
     @Transactional
     @PreAuthorize(Auth.ADMIN)
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody MeasurementUnitDTO measurementUnitDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody MeasurementUnit measurementUnit, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(measurementUnitService.create(measurementUnitDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(measurementUnitService.create(measurementUnit), HttpStatus.CREATED);
     }
 
     @Transactional
     @PreAuthorize(Auth.ADMIN)
     @PatchMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody MeasurementUnitDTO measurementUnitDTO, BindingResult bindingResult) {
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody MeasurementUnit measurementUnit, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(measurementUnitService.update(id, measurementUnitDTO), HttpStatus.OK);
+        return new ResponseEntity<>(measurementUnitService.update(id, measurementUnit), HttpStatus.OK);
     }
 
     @Transactional

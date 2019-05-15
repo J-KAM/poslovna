@@ -2,8 +2,10 @@ package com.ftn.service.implementation;
 
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
-import com.ftn.model.*;
-import com.ftn.model.dto.WareDTO;
+import com.ftn.model.Company;
+import com.ftn.model.Employee;
+import com.ftn.model.User;
+import com.ftn.model.Ware;
 import com.ftn.repository.CompanyDao;
 import com.ftn.repository.WareDao;
 import com.ftn.service.AuthenticationService;
@@ -12,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by JELENA on 30.5.2017.
@@ -35,32 +36,29 @@ public class WareServiceImplementation implements WareService {
     }
 
     @Override
-    public List<WareDTO> read() {
+    public List<Ware> read() {
         final User user = authenticationService.getCurrentUser();
         if (user instanceof Employee) {
             final Company company = ((Employee) user).getCompany();
-            return wareDao.findByWareGroupCompanyId(company.getId()).stream().map(WareDTO::new).collect(Collectors.toList());
+            return wareDao.findByWareGroupCompanyId(company.getId());
         } else {
-            return wareDao.findAll().stream().map(WareDTO::new).collect(Collectors.toList());
+            return wareDao.findAll();
         }
     }
 
     @Override
-    public WareDTO create(WareDTO wareDTO) {
-        if (wareDao.findById(wareDTO.getId()).isPresent()) {
+    public Ware create(Ware ware) {
+        if (wareDao.findById(ware.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        final Ware ware = wareDTO.construct();
-        wareDao.save(ware);
-        return new WareDTO(ware);
+        return wareDao.save(ware);
     }
 
     @Override
-    public WareDTO update(Long id, WareDTO wareDTO) {
-        final Ware ware = getWare(id);
-        ware.merge(wareDTO);
-        wareDao.save(ware);
-        return new WareDTO(ware);
+    public Ware update(Long id, Ware ware) {
+        final Ware persistentWare = getWare(id);
+        ware.setId(persistentWare.getId());
+        return wareDao.save(ware);
     }
 
     @Override

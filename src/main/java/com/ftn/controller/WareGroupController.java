@@ -2,7 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.dto.WareGroupDTO;
+import com.ftn.model.WareGroup;
 import com.ftn.service.WareGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,21 +38,21 @@ public class WareGroupController {
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody WareGroupDTO wareGroupDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody WareGroup wareGroup, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(wareGroupService.create(wareGroupDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(wareGroupService.create(wareGroup), HttpStatus.CREATED);
     }
 
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PatchMapping("/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody WareGroupDTO wareGroupDTO, BindingResult bindingResult) {
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody WareGroup wareGroup, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(wareGroupService.update(id, wareGroupDTO), HttpStatus.OK);
+        return new ResponseEntity<>(wareGroupService.update(id, wareGroup), HttpStatus.OK);
     }
 
     @Transactional

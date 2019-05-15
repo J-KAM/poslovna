@@ -3,14 +3,12 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.Location;
-import com.ftn.model.dto.LocationDTO;
 import com.ftn.repository.LocationDao;
 import com.ftn.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Jasmina on 21/05/2017.
@@ -26,26 +24,23 @@ public class LocationServiceImplementation implements LocationService {
     }
 
     @Override
-    public List<LocationDTO> read() {
-        return locationDao.findAll().stream().map(LocationDTO::new).collect(Collectors.toList());
+    public List<Location> read() {
+        return locationDao.findAll();
     }
 
     @Override
-    public LocationDTO create(LocationDTO locationDTO) {
-        if (locationDao.findById(locationDTO.getId()).isPresent()) {
+    public Location create(Location location) {
+        if (locationDao.findById(location.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        final Location location = locationDTO.construct();
-        locationDao.save(location);
-        return new LocationDTO(location);
+        return locationDao.save(location);
     }
 
     @Override
-    public LocationDTO update(Long id, LocationDTO locationDTO) {
-        final Location location = locationDao.findById(id).orElseThrow(NotFoundException::new);
-        location.merge(locationDTO);
-        locationDao.save(location);
-        return new LocationDTO(location);
+    public Location update(Long id, Location location) {
+        locationDao.findById(id).orElseThrow(NotFoundException::new);
+        location.setId(id);
+        return locationDao.save(location);
     }
 
     @Override

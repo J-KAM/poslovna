@@ -1,8 +1,7 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.WarehouseCardDTO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,6 +22,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @SQLDelete(sql = Sql.UPDATE + "warehouse_card" + Sql.SOFT_DELETE)
 @Where(clause = Sql.ACTIVE)
 public class WarehouseCard extends BaseModel {
@@ -56,25 +56,6 @@ public class WarehouseCard extends BaseModel {
 
     @ManyToOne(optional = false)
     private Warehouse warehouse;
-
-    public WarehouseCard(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public void merge(WarehouseCardDTO warehouseCardDTO) {
-        this.averagePrice = warehouseCardDTO.getAveragePrice();
-        this.initialQuantity = warehouseCardDTO.getInitialQuantity();
-        this.initialValue = warehouseCardDTO.getInitialValue();
-        this.quantityEntryTraffic = warehouseCardDTO.getQuantityEntryTraffic();
-        this.valueEntryTraffic = warehouseCardDTO.getValueEntryTraffic();
-        this.quantityExitTraffic = warehouseCardDTO.getQuantityExitTraffic();
-        this.valueExitTraffic = warehouseCardDTO.getValueExitTraffic();
-        this.totalQuantity = warehouseCardDTO.getTotalQuantity();
-        this.totalValue = warehouseCardDTO.getTotalValue();
-        this.businessYear = warehouseCardDTO.getBusinessYear().construct();
-        this.ware = warehouseCardDTO.getWare().construct();
-        this.warehouse = warehouseCardDTO.getWarehouse().construct();
-    }
 
     public WarehouseCard constructNextYearCard() {
         final WarehouseCard newWarehouseCard = new WarehouseCard();

@@ -1,6 +1,5 @@
 package com.ftn.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ftn.model.WarehouseCard;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class ReportDataDTO {
 
-    private WarehouseCardDTO warehouseCardDTO;
+    //TODO: mozda ovu klasu da preimenujemo samo u reportData posto sad koristi WarehouseCard
+    private WarehouseCard warehouseCardDTO;
 
     private Date startDate;
 

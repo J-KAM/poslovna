@@ -1,6 +1,6 @@
 package com.ftn.service;
 
-import com.ftn.model.dto.MeasurementUnitDTO;
+import com.ftn.model.MeasurementUnit;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface MeasurementUnitService {
 
-    List<MeasurementUnitDTO> read();
+    List<MeasurementUnit> read();
 
-    MeasurementUnitDTO create(MeasurementUnitDTO measurementUnitDTO);
+    MeasurementUnit create(MeasurementUnit measurementUnit);
 
-    MeasurementUnitDTO update(Long id, MeasurementUnitDTO measurementUnitDTO);
+    MeasurementUnit update(Long id, MeasurementUnit measurementUnit);
 
     void delete(Long id);
 }

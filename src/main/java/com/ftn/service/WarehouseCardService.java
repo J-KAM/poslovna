@@ -1,12 +1,10 @@
 package com.ftn.service;
 
 import com.ftn.model.BusinessYear;
+import com.ftn.model.Ware;
+import com.ftn.model.Warehouse;
 import com.ftn.model.WarehouseCard;
-import com.ftn.model.dto.WareDTO;
-import com.ftn.model.dto.WarehouseCardDTO;
-import com.ftn.model.dto.WarehouseDTO;
-import com.ftn.model.dto.*;
-
+import com.ftn.model.dto.ReportDataDTO;
 
 import java.util.List;
 
@@ -15,21 +13,21 @@ import java.util.List;
  */
 public interface WarehouseCardService {
 
-    List<WarehouseCardDTO> read();
+    List<WarehouseCard> read();
 
     //read warehouse cards for active warehouse
-    List<WarehouseCardDTO> read(Long id);
+    List<WarehouseCard> read(Long id);
 
     //Check if there's card for ware, year and specific warehouse
-    WarehouseCardDTO read(WareDTO wareDTO, BusinessYear businessYear, WarehouseDTO warehouseDTO);
+    WarehouseCard read(Ware ware, BusinessYear businessYear, Warehouse warehouse);
 
     WarehouseCard create(WarehouseCard warehouseCard);
 
-    WarehouseCardDTO update(Long id, WarehouseCardDTO warehouseCardDTO);
+    WarehouseCard update(Long id, WarehouseCard warehouseCard);
 
     void delete(Long id);
 
     String generateReport(ReportDataDTO reportDataDTO);
 
-    WarehouseCardDTO getWarehouseCardForWare(WareDTO wareDTO);
+    WarehouseCard getWarehouseCardForWare(Ware ware);
 }

@@ -2,10 +2,9 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
+import com.ftn.model.Ware;
 import com.ftn.model.WarehouseCard;
 import com.ftn.model.dto.ReportDataDTO;
-import com.ftn.model.dto.WareDTO;
-import com.ftn.model.dto.WarehouseCardDTO;
 import com.ftn.service.LevelingService;
 import com.ftn.service.WarehouseCardService;
 import org.springframework.http.HttpStatus;
@@ -61,11 +60,11 @@ public class WarehouseCardController {
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PatchMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody WarehouseCardDTO warehouseCardDTO, BindingResult bindingResult) {
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody WarehouseCard warehouseCard, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(warehouseCardService.update(id, warehouseCardDTO), HttpStatus.OK);
+        return new ResponseEntity<>(warehouseCardService.update(id, warehouseCard), HttpStatus.OK);
     }
 
     @Transactional
@@ -86,17 +85,17 @@ public class WarehouseCardController {
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping(value="/level")
-    public ResponseEntity level(@Valid @RequestBody WarehouseCardDTO warehouseCardDTO, BindingResult bindingResult){
+    public ResponseEntity level(@Valid @RequestBody WarehouseCard warehouseCard, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(levelingService.level(warehouseCardDTO), HttpStatus.OK);
+        return new ResponseEntity<>(levelingService.level(warehouseCard), HttpStatus.OK);
     }
 
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping(value="/card")
-    public ResponseEntity getCardForWare(@RequestBody WareDTO wareDTO){
-        return new ResponseEntity<>(warehouseCardService.getWarehouseCardForWare(wareDTO), HttpStatus.OK);
+    public ResponseEntity getCardForWare(@RequestBody Ware ware){
+        return new ResponseEntity<>(warehouseCardService.getWarehouseCardForWare(ware), HttpStatus.OK);
     }
 }

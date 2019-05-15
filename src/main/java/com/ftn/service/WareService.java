@@ -1,6 +1,6 @@
 package com.ftn.service;
 
-import com.ftn.model.dto.WareDTO;
+import com.ftn.model.Ware;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface WareService {
 
-    List<WareDTO> read();
+    List<Ware> read();
 
-    WareDTO create(WareDTO wareDTO);
+    Ware create(Ware ware);
 
-    WareDTO update(Long id, WareDTO wareDTO);
+    Ware update(Long id, Ware ware);
 
     void delete(Long id);
 }

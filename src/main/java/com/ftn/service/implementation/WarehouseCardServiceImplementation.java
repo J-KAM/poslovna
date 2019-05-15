@@ -2,18 +2,19 @@ package com.ftn.service.implementation;
 
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
-import com.ftn.model.BusinessYear;
-import com.ftn.model.WarehouseCard;
-import com.ftn.model.WarehouseCardAnalytics;
-import com.ftn.model.dto.*;
+import com.ftn.model.*;
+import com.ftn.model.dto.ReportDataDTO;
+import com.ftn.model.dto.WarehouseCardReportDTO;
 import com.ftn.repository.BusinessYearDao;
 import com.ftn.repository.WarehouseCardDao;
 import com.ftn.service.WarehouseCardService;
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +23,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by JELENA on 31.5.2017.
@@ -41,23 +41,19 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
     }
 
     @Override
-    public List<WarehouseCardDTO> read() {
-        return warehouseCardDao.findAll().stream().map(WarehouseCardDTO::new).collect(Collectors.toList());
+    public List<WarehouseCard> read() {
+        return warehouseCardDao.findAll();
     }
 
     @Override
-    public List<WarehouseCardDTO> read(Long warehouseID) {
-        return warehouseCardDao.findByWarehouseId(warehouseID).stream().map(WarehouseCardDTO::new).collect(Collectors.toList());
+    public List<WarehouseCard> read(Long warehouseID) {
+        return warehouseCardDao.findByWarehouseId(warehouseID);
     }
 
     @Override
-    public WarehouseCardDTO read(WareDTO wareDTO, BusinessYear businessYear, WarehouseDTO warehouseDTO) {
-        WarehouseCard warehouseCard = warehouseCardDao.findByWareIdAndBusinessYearIdAndWarehouseId(wareDTO.getId(), businessYear.getId(), warehouseDTO.getId());
-        if(warehouseCard != null){
-            return new WarehouseCardDTO(warehouseCard, true);
-        }else {
-            return null;
-        }
+    public WarehouseCard read(Ware ware, BusinessYear businessYear, Warehouse warehouse) {
+        WarehouseCard warehouseCard = warehouseCardDao.findByWareIdAndBusinessYearIdAndWarehouseId(ware.getId(), businessYear.getId(), warehouse.getId());
+        return warehouseCard;
     }
 
     @Override
@@ -65,16 +61,13 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
         if (warehouseCardDao.findById(warehouseCard.getId()).isPresent()) {
             throw new BadRequestException();
         }
-
         return warehouseCardDao.save(warehouseCard);
     }
 
     @Override
-    public WarehouseCardDTO update(Long id, WarehouseCardDTO warehouseCardDTO) {
+    public WarehouseCard update(Long id, WarehouseCard warehouseCard) {
         final WarehouseCard warehouseCard = warehouseCardDao.findById(id).orElseThrow(NotFoundException::new);
-        warehouseCard.merge(warehouseCardDTO);
-        warehouseCardDao.save(warehouseCard);
-        return new WarehouseCardDTO(warehouseCard);
+        return warehouseCardDao.save(warehouseCard);
     }
 
     @Override
@@ -85,7 +78,7 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
 
     @Override
     public String generateReport(ReportDataDTO reportDataDTO) {
-        Optional<WarehouseCard> warehouseCard = warehouseCardDao.findById(reportDataDTO.getWarehouseCardDTO().getId());
+        Optional<WarehouseCard> warehouseCard = warehouseCardDao.findById(reportDataDTO.getWarehouseCard().getId());
         String jasperFilePath = "src/main/resources/jasper/MagacinskaKartica.jasper";
 
         ArrayList<WarehouseCardReportDTO> tableItems = new ArrayList<>();
@@ -138,14 +131,11 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
     }
 
     @Override
-    public WarehouseCardDTO getWarehouseCardForWare(WareDTO wareDTO) {
+    public WarehouseCard getWarehouseCardForWare(Ware ware) {
         List<BusinessYear> businessYearList = businessYearDao.findByClosed(false);
         BusinessYear businessYear = businessYearList.get(0);
-        WarehouseCard card = warehouseCardDao.findByWareIdAndBusinessYearId(wareDTO.getId(), businessYear.getId());
-        if (card == null) {
-            return null;
-        }
-        return new WarehouseCardDTO(card, true);
+        WarehouseCard card = warehouseCardDao.findByWareIdAndBusinessYearId(ware.getId(), businessYear.getId());
+        return card;
     }
 
 

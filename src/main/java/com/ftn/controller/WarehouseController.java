@@ -2,7 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.dto.WarehouseDTO;
+import com.ftn.model.Warehouse;
 import com.ftn.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,21 +39,21 @@ public class WarehouseController {
     @Transactional
     @PreAuthorize(Auth.AUTHENTICATED)
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody WarehouseDTO warehouseDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody Warehouse warehouse, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(warehouseService.create(warehouseDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(warehouseService.create(warehouse), HttpStatus.CREATED);
     }
 
     @Transactional
     @PreAuthorize(Auth.AUTHENTICATED)
     @PatchMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody WarehouseDTO warehouseDTO, BindingResult bindingResult) {
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody Warehouse warehouse, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(warehouseService.update(id, warehouseDTO), HttpStatus.OK);
+        return new ResponseEntity<>(warehouseService.update(id, warehouse), HttpStatus.OK);
     }
 
     @Transactional
@@ -67,11 +67,11 @@ public class WarehouseController {
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping(value = "/generateReport", produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity generateReport(@Valid @RequestBody WarehouseDTO warehouseDTO, BindingResult bindingResult) {
+    public ResponseEntity generateReport(@Valid @RequestBody Warehouse warehouse, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(warehouseService.generateReport(warehouseDTO), HttpStatus.OK);
+        return new ResponseEntity<>(warehouseService.generateReport(warehouse), HttpStatus.OK);
     }
 
 

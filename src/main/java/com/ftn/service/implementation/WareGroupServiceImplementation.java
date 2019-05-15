@@ -6,7 +6,6 @@ import com.ftn.model.Company;
 import com.ftn.model.Employee;
 import com.ftn.model.User;
 import com.ftn.model.WareGroup;
-import com.ftn.model.dto.WareGroupDTO;
 import com.ftn.repository.CompanyDao;
 import com.ftn.repository.WareGroupDao;
 import com.ftn.service.AuthenticationService;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Jasmina on 22/05/2017.
@@ -37,33 +35,31 @@ public class WareGroupServiceImplementation implements WareGroupService {
     }
 
     @Override
-    public List<WareGroupDTO> read() {
+    public List<WareGroup> read() {
         final User user = authenticationService.getCurrentUser();
         if (user instanceof Employee) {
             final Company company = ((Employee) user).getCompany();
-            return wareGroupDao.findByCompanyId(company.getId()).stream().map(WareGroupDTO::new).collect(Collectors.toList());
+            return wareGroupDao.findByCompanyId(company.getId());
         } else {
-            return wareGroupDao.findAll().stream().map(WareGroupDTO::new).collect(Collectors.toList());
+            return wareGroupDao.findAll();
         }
     }
 
     @Override
-    public WareGroupDTO create(WareGroupDTO wareGroupDTO) {
-        if (wareGroupDao.findById(wareGroupDTO.getId()).isPresent()) {
+    public WareGroup create(WareGroup wareGroup) {
+        if (wareGroupDao.findById(wareGroup.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        final WareGroup wareGroup = wareGroupDTO.construct();
-        wareGroupDao.save(wareGroup);
+        //zamenila sam redosled naredne dve linije jer mi vise ima smisla
         wareGroup.setCompany(companyDao.findById(wareGroup.getCompany().getId()).orElseThrow(NotFoundException::new));
-        return new WareGroupDTO(wareGroup);
+        return wareGroupDao.save(wareGroup);
     }
 
     @Override
-    public WareGroupDTO update(Long id, WareGroupDTO wareGroupDTO) {
-        final WareGroup wareGroup = getWareGroup(id);
-        wareGroup.merge(wareGroupDTO);
-        wareGroupDao.save(wareGroup);
-        return new WareGroupDTO(wareGroup);
+    public WareGroup update(Long id, WareGroup wareGroup) {
+        final WareGroup persistentWareGroup = getWareGroup(id);
+        wareGroup.setId(persistentWareGroup.getId());
+        return wareGroupDao.save(wareGroup);
     }
 
     @Override

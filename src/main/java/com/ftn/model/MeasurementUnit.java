@@ -1,8 +1,7 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.MeasurementUnitDTO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,6 +22,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @SQLDelete(sql = Sql.UPDATE + "measurement_unit" + Sql.SOFT_DELETE)
 @Where(clause = Sql.ACTIVE)
 public class MeasurementUnit extends BaseModel {
@@ -36,12 +36,4 @@ public class MeasurementUnit extends BaseModel {
     @OneToMany(mappedBy = "measurementUnit", cascade = CascadeType.ALL)
     private List<Ware> wares = new ArrayList<>();
 
-    public MeasurementUnit(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public void merge(MeasurementUnitDTO measurementUnitDTO) {
-        this.name = measurementUnitDTO.getName();
-        this.label = measurementUnitDTO.getLabel();
-    }
 }

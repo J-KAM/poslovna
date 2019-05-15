@@ -2,7 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.dto.LocationDTO;
+import com.ftn.model.Location;
 import com.ftn.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,21 +38,21 @@ public class LocationController {
     @Transactional
     @PreAuthorize(Auth.ADMIN)
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody LocationDTO locationDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody Location location, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(locationService.create(locationDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(locationService.create(location), HttpStatus.CREATED);
     }
 
     @Transactional
     @PreAuthorize(Auth.ADMIN)
     @PatchMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody LocationDTO locationDTO, BindingResult bindingResult) {
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody Location location, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(locationService.update(id, locationDTO), HttpStatus.OK);
+        return new ResponseEntity<>(locationService.update(id, location), HttpStatus.OK);
     }
 
     @Transactional

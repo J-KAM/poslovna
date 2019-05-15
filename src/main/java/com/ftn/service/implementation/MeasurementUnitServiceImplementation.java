@@ -3,7 +3,6 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.MeasurementUnit;
-import com.ftn.model.dto.MeasurementUnitDTO;
 import com.ftn.repository.MeasurementUnitDao;
 import com.ftn.service.MeasurementUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ *
  * Created by Alex on 5/20/17.
  */
 @Service
@@ -26,26 +26,25 @@ public class MeasurementUnitServiceImplementation implements MeasurementUnitServ
     }
 
     @Override
-    public List<MeasurementUnitDTO> read() {
-        return measurementUnitDao.findAll().stream().map(MeasurementUnitDTO::new).collect(Collectors.toList());
+    public List<MeasurementUnit> read() {
+        return measurementUnitDao.findAll().stream().map(MeasurementUnit::new).collect(Collectors.toList());
     }
 
     @Override
-    public MeasurementUnitDTO create(MeasurementUnitDTO measurementUnitDTO) {
-        if (measurementUnitDao.findById(measurementUnitDTO.getId()).isPresent()) {
+    public MeasurementUnit create(MeasurementUnit measurementUnit) {
+        if (measurementUnitDao.findById(measurementUnit.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        final MeasurementUnit measurementUnit = measurementUnitDTO.construct();
         measurementUnitDao.save(measurementUnit);
-        return new MeasurementUnitDTO(measurementUnit);
+        return measurementUnitDao.save(measurementUnit);
     }
 
     @Override
-    public MeasurementUnitDTO update(Long id, MeasurementUnitDTO measurementUnitDTO) {
-        final MeasurementUnit measurementUnit = measurementUnitDao.findById(id).orElseThrow(NotFoundException::new);
-        measurementUnit.merge(measurementUnitDTO);
+    public MeasurementUnit update(Long id, MeasurementUnit measurementUnit) {
+        measurementUnitDao.findById(id).orElseThrow(NotFoundException::new);
+        measurementUnit.setId(id);
         measurementUnitDao.save(measurementUnit);
-        return new MeasurementUnitDTO(measurementUnit);
+        return  measurementUnitDao.save(measurementUnit);
     }
 
     @Override

@@ -1,8 +1,7 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.WareGroupDTO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,6 +19,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @SQLDelete(sql = Sql.UPDATE + "ware_group" + Sql.SOFT_DELETE)
 @Where(clause = Sql.ACTIVE)
 public class WareGroup extends BaseModel {
@@ -32,13 +32,4 @@ public class WareGroup extends BaseModel {
 
     @ManyToOne(optional = false)
     private Company company;
-
-    public WareGroup(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public void merge(WareGroupDTO wareGroupDTO) {
-        this.name = wareGroupDTO.getName();
-        this.company = wareGroupDTO.getCompany().construct();
-    }
 }

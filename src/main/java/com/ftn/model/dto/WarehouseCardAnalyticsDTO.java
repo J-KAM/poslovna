@@ -26,9 +26,6 @@ public class WarehouseCardAnalyticsDTO extends BaseDTO {
 
     private double averagePrice;
 
-    @NotNull
-    private WarehouseCardDTO warehouseCard;
-
     public WarehouseCardAnalyticsDTO(WarehouseCardAnalytics warehouseCardAnalytics) {
         this(warehouseCardAnalytics, false);
     }
@@ -40,9 +37,6 @@ public class WarehouseCardAnalyticsDTO extends BaseDTO {
         this.quantity = warehouseCardAnalytics.getQuantity();
         this.value = warehouseCardAnalytics.getValue();
         this.averagePrice = warehouseCardAnalytics.getAveragePrice();
-        if (cascade) {
-            this.warehouseCard = new WarehouseCardDTO(warehouseCardAnalytics.getWarehouseCard(), false);
-        }
     }
 
     public WarehouseCardAnalytics construct() {
@@ -52,7 +46,6 @@ public class WarehouseCardAnalyticsDTO extends BaseDTO {
         warehouseCardAnalytics.setQuantity(quantity);
         warehouseCardAnalytics.setValue(value);
         warehouseCardAnalytics.setAveragePrice(averagePrice);
-        warehouseCardAnalytics.setWarehouseCard(warehouseCard != null ? warehouseCard.construct() : null);
         return warehouseCardAnalytics;
     }
 }

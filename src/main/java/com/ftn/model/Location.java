@@ -1,8 +1,7 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.LocationDTO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,6 +22,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @SQLDelete(sql = Sql.UPDATE + "location" + Sql.SOFT_DELETE)
 @Where(clause = Sql.ACTIVE)
 public class Location extends BaseModel {
@@ -42,12 +42,4 @@ public class Location extends BaseModel {
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
     private List<Employee> employees = new ArrayList<>();
 
-    public Location(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public void merge(LocationDTO locationDTO) {
-        this.name = locationDTO.getName();
-        this.ptt = locationDTO.getPtt();
-    }
 }

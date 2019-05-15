@@ -1,8 +1,6 @@
 package com.ftn.service;
 
-import com.ftn.model.Ware;
-import com.ftn.model.dto.WarehouseCardDTO;
-import com.ftn.model.dto.WarehouseDTO;
+import com.ftn.model.Warehouse;
 
 import java.util.List;
 
@@ -11,13 +9,13 @@ import java.util.List;
  */
 public interface WarehouseService {
 
-    List<WarehouseDTO> read();
+    List<Warehouse> read();
 
-    WarehouseDTO create(WarehouseDTO warehouseDTO);
+    Warehouse create(Warehouse warehouse);
 
-    WarehouseDTO update(Long id, WarehouseDTO warehouseDTO);
+    Warehouse update(Long id, Warehouse warehouse);
 
     void delete(Long id);
 
-    String generateReport(WarehouseDTO warehouseDTO);
+    String generateReport(Warehouse warehouse);
 }

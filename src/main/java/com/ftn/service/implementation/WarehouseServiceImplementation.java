@@ -3,12 +3,9 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.User;
-import com.ftn.model.Ware;
 import com.ftn.model.Warehouse;
 import com.ftn.model.WarehouseCard;
 import com.ftn.model.dto.LagerListElementDTO;
-import com.ftn.model.dto.WarehouseCardDTO;
-import com.ftn.model.dto.WarehouseDTO;
 import com.ftn.repository.WarehouseDao;
 import com.ftn.service.AuthenticationService;
 import com.ftn.service.WarehouseService;
@@ -27,7 +24,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
+
+import static com.ftn.model.User.Role.ADMIN;
+import static com.ftn.model.User.Role.EMPLOYEE;
 
 /**
  * Created by Olivera on 30.5.2017..
@@ -46,33 +45,30 @@ public class WarehouseServiceImplementation implements WarehouseService {
     }
 
     @Override
-    public List<WarehouseDTO> read() {
+    public List<Warehouse> read() {
         final User user = authenticationService.getCurrentUser();
         switch (user.getRole()) {
             case ADMIN:
-                return warehouseDao.findAll().stream().map(WarehouseDTO::new).collect(Collectors.toList());
+                return warehouseDao.findAll();
             case EMPLOYEE:
-                return warehouseDao.findByEmployeeId(user.getId()).stream().map(WarehouseDTO::new).collect(Collectors.toList());
+                return warehouseDao.findByEmployeeId(user.getId());
         }
         return new ArrayList<>();
     }
 
     @Override
-    public WarehouseDTO create(WarehouseDTO warehouseDTO) {
-        if (warehouseDao.findById(warehouseDTO.getId()).isPresent()) {
+    public Warehouse create(Warehouse warehouse) {
+        if (warehouseDao.findById(warehouse.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        final Warehouse warehouse = warehouseDTO.construct();
-        warehouseDao.save(warehouse);
-        return new WarehouseDTO(warehouse);
+        return warehouseDao.save(warehouse);
     }
 
     @Override
-    public WarehouseDTO update(Long id, WarehouseDTO warehouseDTO) {
-        final Warehouse warehouse = getWarehouseById(id);
-        warehouse.merge(warehouseDTO);
-        warehouseDao.save(warehouse);
-        return new WarehouseDTO(warehouse);
+    public Warehouse update(Long id, Warehouse warehouse) {
+        final Warehouse persistentWarehouse = getWarehouseById(id);
+        warehouse.setId(persistentWarehouse.getId());
+        return warehouseDao.save(warehouse);
     }
 
     @Override
@@ -82,21 +78,20 @@ public class WarehouseServiceImplementation implements WarehouseService {
     }
 
     @Override
-    public String generateReport(WarehouseDTO warehouseDTO) {
-        Optional<Warehouse> warehouse = warehouseDao.findById(warehouseDTO.getId());
+    public String generateReport(Warehouse warehouse) {
+        Optional<Warehouse> persistentWarehouse = warehouseDao.findById(warehouse.getId());
         String jasperFilePath = "src/main/resources/jasper/LagerLista.jasper";
 
         ArrayList<LagerListElementDTO> tableItems = new ArrayList<>();
         Map<String, Object> data = new HashMap<>();
 
-        for(WarehouseCard warehouseCard :  warehouse.get().getWarehouseCards()) {
+        for(WarehouseCard warehouseCard :  persistentWarehouse.get().getWarehouseCards()) {
             LagerListElementDTO lagerListElementDTO = new LagerListElementDTO(warehouseCard);
             tableItems.add(lagerListElementDTO);
         }
 
-        // TODO: Uncomment after warehouseDTO has been deleted
-        // data.put("CompanyName", warehouseDTO.getCompany().getName());
-        data.put("WarehouseName", warehouseDTO.getName());
+        data.put("CompanyName", warehouse.getCompany().getName());
+        data.put("WarehouseName", warehouse.getName());
         data.put("DataSource", new JRBeanCollectionDataSource(tableItems));
 
         try{
