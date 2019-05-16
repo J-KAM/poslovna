@@ -37,17 +37,4 @@ public class BusinessYear extends BaseModel {
     @OneToMany(mappedBy = "businessYear", cascade = CascadeType.ALL)
     private List<WarehouseCard> warehouseCards = new ArrayList<>();
 
-    public BusinessYear(BusinessYear businessYear) {
-    }
-
-    //brisanje
-    /*public BusinessYear(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public void merge(BusinessYearDTO businessYearDTO) {
-        this.year = businessYearDTO.getYear();
-        this.closed = businessYearDTO.isClosed();
-        this.company = businessYearDTO.getCompany().construct();
-    }*/
 }

@@ -5,7 +5,7 @@ import com.ftn.exception.NotFoundException;
 import com.ftn.model.User;
 import com.ftn.model.Warehouse;
 import com.ftn.model.WarehouseCard;
-import com.ftn.model.dto.LagerListElementDTO;
+import com.ftn.model.LagerListElementDTO;
 import com.ftn.repository.WarehouseDao;
 import com.ftn.service.AuthenticationService;
 import com.ftn.service.WarehouseService;
@@ -24,9 +24,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-
-import static com.ftn.model.User.Role.ADMIN;
-import static com.ftn.model.User.Role.EMPLOYEE;
 
 /**
  * Created by Olivera on 30.5.2017..

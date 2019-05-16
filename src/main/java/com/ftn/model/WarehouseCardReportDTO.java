@@ -1,4 +1,4 @@
-package com.ftn.model.dto;
+package com.ftn.model;
 
 import com.ftn.model.WarehouseCardAnalytics;
 import lombok.Data;

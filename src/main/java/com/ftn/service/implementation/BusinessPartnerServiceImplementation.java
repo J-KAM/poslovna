@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Olivera on 21.5.2017..
@@ -26,7 +25,7 @@ public class BusinessPartnerServiceImplementation implements BusinessPartnerServ
 
     @Override
     public List<BusinessPartner> read() {
-        return businessPartnerDao.findAll().stream().map(BusinessPartner::new).collect(Collectors.toList());
+        return businessPartnerDao.findAll();
     }
 
     @Override

@@ -22,9 +22,6 @@ import java.util.List;
 @Where(clause = Sql.ACTIVE)
 public class BusinessPartner extends BaseModel {
 
-    public BusinessPartner(BusinessPartner businessPartner) {
-    }
-
     public enum PartnershipType {
         BUYER,
         SUPPLIER,
@@ -52,19 +49,4 @@ public class BusinessPartner extends BaseModel {
     @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL)
     private List<Document> documents = new ArrayList<>();
 
-    //brisanje
-   /* public BusinessPartner(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public void merge(BusinessPartnerDTO businessPartnerDTO) {
-        this.partnershipType = PartnershipType.valueOf(businessPartnerDTO.getPartnershipType());
-        this.name = businessPartnerDTO.getName();
-        this.pib = businessPartnerDTO.getPib();
-        this.address = businessPartnerDTO.getAddress();
-        this.company = businessPartnerDTO.getCompany().construct();
-        if (businessPartnerDTO.getLocation() != null) {
-            this.location = businessPartnerDTO.getLocation().construct();
-        }
-    }*/
 }

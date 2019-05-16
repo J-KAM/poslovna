@@ -24,9 +24,9 @@ public abstract class BaseDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date updated;
 
-//    public BaseDTO(BaseModel baseModel) {
-//        this.id = baseModel.getId();
-//        this.created = baseModel.getCreated();
-//        this.updated = baseModel.getUpdated();
-//    }
+    public BaseDTO(BaseModel baseModel) {
+        this.id = baseModel.getId();
+        this.created = baseModel.getCreated();
+        this.updated = baseModel.getUpdated();
+    }
 }

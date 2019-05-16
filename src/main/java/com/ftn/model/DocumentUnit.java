@@ -36,20 +36,4 @@ public class DocumentUnit extends BaseModel {
     @ManyToOne(optional = false)
     private Ware ware;
 
-    public DocumentUnit(DocumentUnit documentUnit) {
-    }
-
-    // brisanje
-    /*public DocumentUnit(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public void merge(DocumentUnitDTO documentUnitDTO) {
-        this.quantity = documentUnitDTO.getQuantity();
-        this.price = documentUnitDTO.getPrice();
-        this.value = documentUnitDTO.getValue();
-        if (documentUnitDTO.getWare() != null) {
-            this.ware = documentUnitDTO.getWare().construct();
-        }
-    }*/
 }

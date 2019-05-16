@@ -5,7 +5,6 @@ import com.ftn.model.Document;
 import com.ftn.model.DocumentUnit;
 import com.ftn.model.WarehouseCard;
 import com.ftn.model.WarehouseCardAnalytics;
-import com.ftn.model.dto.WarehouseCardAnalyticsDTO;
 import com.ftn.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,7 +117,7 @@ public class BookingServiceImplementation implements BookingService {
 
     //Method for updating existing card and creating new analytics for that card
     private WarehouseCard updateCardAndMakeAnalytics(WarehouseCard warehouseCard, DocumentUnit documentUnit, Document document){
-        WarehouseCardAnalyticsDTO warehouseCardAnalyticsDTO = new WarehouseCardAnalyticsDTO();
+        WarehouseCardAnalytics warehouseCardAnalytics = new WarehouseCardAnalytics();
 //        warehouseCardAnalyticsDTO.setWarehouseCard(warehouseCard);
 
         Document.DocumentType documentType = document.getDocumentType();
@@ -138,7 +137,7 @@ public class BookingServiceImplementation implements BookingService {
                 if(Math.abs(documentUnit.getQuantity()) > warehouseCard.getTotalQuantity() && reverse){
                     throw new BadRequestException();
                 }
-                warehouseCardAnalyticsDTO = bookReceipt(warehouseCardAnalyticsDTO, documentUnit, reverse);
+                warehouseCardAnalytics = bookReceipt(warehouseCardAnalytics, documentUnit, reverse);
                 warehouseCard = updateCardReceipt(warehouseCard, documentUnit);
                 warehouseCard = updateAveragePrice(warehouseCard, documentUnit); //only receipt changes price
                 warehouseCard = updateTotalQuantity(warehouseCard);
@@ -150,7 +149,7 @@ public class BookingServiceImplementation implements BookingService {
                     throw new BadRequestException();
                 }
 
-                warehouseCardAnalyticsDTO = bookDispatch(warehouseCardAnalyticsDTO, documentUnit, reverse);
+                warehouseCardAnalytics = bookDispatch(warehouseCardAnalytics, documentUnit, reverse);
                 warehouseCard = updateCardDispatch(warehouseCard, documentUnit);
                 warehouseCard = updateTotalQuantity(warehouseCard);
                 warehouseCard = updateTotalValue(warehouseCard);
@@ -161,7 +160,7 @@ public class BookingServiceImplementation implements BookingService {
                 if(Math.abs(documentUnit.getQuantity()) > warehouseCard.getTotalQuantity()){
                     throw new BadRequestException();
                 }
-                warehouseCardAnalyticsDTO = bookDispatch(warehouseCardAnalyticsDTO, documentUnit, reverse);
+                warehouseCardAnalytics = bookDispatch(warehouseCardAnalytics, documentUnit, reverse);
                 warehouseCard = updateCardDispatch(warehouseCard, documentUnit);
                 warehouseCard = updateTotalQuantity(warehouseCard);
                 warehouseCard = updateTotalValue(warehouseCard);
@@ -171,51 +170,51 @@ public class BookingServiceImplementation implements BookingService {
                 if(innerWarehouseCard == null){
                     makeCardAndAnalytics(innerWarehouseCard, documentUnit, document);
                 }else {
-                    WarehouseCardAnalyticsDTO innerWarehouseCardAnalyticsDTO = new WarehouseCardAnalyticsDTO();
+                    WarehouseCardAnalytics innerWarehouseCardAnalytics = new WarehouseCardAnalytics();
 //                    innerWarehouseCardAnalyticsDTO.setWarehouseCard(innerWarehouseCard);
-                    innerWarehouseCardAnalyticsDTO = bookReceipt(innerWarehouseCardAnalyticsDTO, documentUnit, reverse);
+                    innerWarehouseCardAnalytics = bookReceipt(innerWarehouseCardAnalytics, documentUnit, reverse);
                     innerWarehouseCard = updateCardReceipt(innerWarehouseCard, documentUnit);
                     innerWarehouseCard = updateAveragePrice(innerWarehouseCard, documentUnit);
                     innerWarehouseCard = updateTotalQuantity(innerWarehouseCard);
                     innerWarehouseCard = updateTotalValue(innerWarehouseCard);
 
                     //Save and update card and analytics for inter-warehouse traffic
-                    innerWarehouseCardAnalyticsDTO = warehouseCardAnalyticsService.create(innerWarehouseCardAnalyticsDTO);
+                    innerWarehouseCardAnalytics = warehouseCardAnalyticsService.create(innerWarehouseCardAnalytics);
                     innerWarehouseCard = warehouseCardService.update(innerWarehouseCard.getId(), innerWarehouseCard);
                 }
                 break;
             }
         }
-        warehouseCardAnalyticsDTO = warehouseCardAnalyticsService.create(warehouseCardAnalyticsDTO);
+        warehouseCardAnalytics = warehouseCardAnalyticsService.create(warehouseCardAnalytics);
         warehouseCard = warehouseCardService.update(warehouseCard.getId(), warehouseCard);
         return warehouseCard;
     }
 
 
-    private WarehouseCardAnalyticsDTO bookReceipt(WarehouseCardAnalyticsDTO analyticsDTO, DocumentUnit documentUnit, boolean reverse){
-        analyticsDTO.setTrafficType(WarehouseCardAnalytics.TrafficType.RECEIPT.toString());
+    private WarehouseCardAnalytics bookReceipt(WarehouseCardAnalytics analytics, DocumentUnit documentUnit, boolean reverse){
+        analytics.setTrafficType(WarehouseCardAnalytics.TrafficType.RECEIPT);
         if(reverse){
-            analyticsDTO.setDirection(WarehouseCardAnalytics.Direction.OUTGOING.toString());
+            analytics.setDirection(WarehouseCardAnalytics.Direction.OUTGOING);
         }else {
-            analyticsDTO.setDirection(WarehouseCardAnalytics.Direction.INCOMING.toString());
+            analytics.setDirection(WarehouseCardAnalytics.Direction.INCOMING);
         }
-        analyticsDTO.setQuantity(documentUnit.getQuantity());
-        analyticsDTO.setAveragePrice(documentUnit.getPrice());
-        analyticsDTO.setValue(documentUnit.getValue());
-        return analyticsDTO;
+        analytics.setQuantity(documentUnit.getQuantity());
+        analytics.setAveragePrice(documentUnit.getPrice());
+        analytics.setValue(documentUnit.getValue());
+        return analytics;
     }
 
-    private WarehouseCardAnalyticsDTO bookDispatch(WarehouseCardAnalyticsDTO analyticsDTO, DocumentUnit documentUnit, boolean reverse){
-        analyticsDTO.setTrafficType(WarehouseCardAnalytics.TrafficType.DISPATCH.toString());
+    private WarehouseCardAnalytics bookDispatch(WarehouseCardAnalytics analytics, DocumentUnit documentUnit, boolean reverse){
+        analytics.setTrafficType(WarehouseCardAnalytics.TrafficType.DISPATCH);
         if(reverse){
-            analyticsDTO.setDirection(WarehouseCardAnalytics.Direction.INCOMING.toString());
+            analytics.setDirection(WarehouseCardAnalytics.Direction.INCOMING);
         }else {
-            analyticsDTO.setDirection(WarehouseCardAnalytics.Direction.OUTGOING.toString());
+            analytics.setDirection(WarehouseCardAnalytics.Direction.OUTGOING);
         }
-        analyticsDTO.setQuantity(documentUnit.getQuantity());
-        analyticsDTO.setAveragePrice(documentUnit.getPrice());
-        analyticsDTO.setValue(documentUnit.getValue());
-        return analyticsDTO;
+        analytics.setQuantity(documentUnit.getQuantity());
+        analytics.setAveragePrice(documentUnit.getPrice());
+        analytics.setValue(documentUnit.getValue());
+        return analytics;
     }
 
     private WarehouseCard updateCardReceipt(WarehouseCard warehouseCard, DocumentUnit documentUnit){

@@ -1,8 +1,6 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.WarehouseCardAnalyticsDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -54,16 +52,4 @@ public class WarehouseCardAnalytics extends BaseModel {
     @ManyToOne(optional = false)
     private WarehouseCard warehouseCard;
 
-    public WarehouseCardAnalytics(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public void merge(WarehouseCardAnalyticsDTO warehouseCardAnalyticsDTO) {
-        this.trafficType = TrafficType.valueOf(warehouseCardAnalyticsDTO.getTrafficType());
-        this.direction = Direction.valueOf(warehouseCardAnalyticsDTO.getDirection());
-        this.quantity = warehouseCardAnalyticsDTO.getQuantity();
-        this.value = warehouseCardAnalyticsDTO.getValue();
-        this.averagePrice = warehouseCardAnalyticsDTO.getAveragePrice();
-        this.warehouseCard = warehouseCardAnalyticsDTO.getWarehouseCard().construct();
-    }
 }

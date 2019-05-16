@@ -27,7 +27,7 @@ public class MeasurementUnitServiceImplementation implements MeasurementUnitServ
 
     @Override
     public List<MeasurementUnit> read() {
-        return measurementUnitDao.findAll().stream().map(MeasurementUnit::new).collect(Collectors.toList());
+        return measurementUnitDao.findAll();
     }
 
     @Override

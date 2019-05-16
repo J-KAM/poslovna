@@ -44,7 +44,7 @@ public class CompanyServiceImplementation implements CompanyService {
             companies.add(company);
             return companies;
         } else {
-            return companyDao.findAll().stream().map(Company::new).collect(Collectors.toList());
+            return companyDao.findAll();
         }
     }
 

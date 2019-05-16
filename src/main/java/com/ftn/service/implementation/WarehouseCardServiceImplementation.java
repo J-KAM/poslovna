@@ -3,8 +3,8 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
-import com.ftn.model.dto.ReportDataDTO;
-import com.ftn.model.dto.WarehouseCardReportDTO;
+import com.ftn.model.ReportDataDTO;
+import com.ftn.model.WarehouseCardReportDTO;
 import com.ftn.repository.BusinessYearDao;
 import com.ftn.repository.WarehouseCardDao;
 import com.ftn.service.WarehouseCardService;
@@ -66,7 +66,7 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
 
     @Override
     public WarehouseCard update(Long id, WarehouseCard warehouseCard) {
-        final WarehouseCard warehouseCard = warehouseCardDao.findById(id).orElseThrow(NotFoundException::new);
+        warehouseCardDao.findById(id).orElseThrow(NotFoundException::new);
         return warehouseCardDao.save(warehouseCard);
     }
 
@@ -78,7 +78,7 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
 
     @Override
     public String generateReport(ReportDataDTO reportDataDTO) {
-        Optional<WarehouseCard> warehouseCard = warehouseCardDao.findById(reportDataDTO.getWarehouseCard().getId());
+        Optional<WarehouseCard> warehouseCard = warehouseCardDao.findById(reportDataDTO.getWarehouseCardDTO().getId());
         String jasperFilePath = "src/main/resources/jasper/MagacinskaKartica.jasper";
 
         ArrayList<WarehouseCardReportDTO> tableItems = new ArrayList<>();

@@ -1,7 +1,6 @@
 package com.ftn.service;
 
 import com.ftn.model.WarehouseCardAnalytics;
-import com.ftn.model.dto.WarehouseCardAnalyticsDTO;
 
 import java.util.List;
 
@@ -10,15 +9,15 @@ import java.util.List;
  */
 public interface WarehouseCardAnalyticsService {
 
-    List<WarehouseCardAnalyticsDTO> read();
+    List<WarehouseCardAnalytics> read();
 
-    List<WarehouseCardAnalyticsDTO> read(Long warehouseCard);
+    List<WarehouseCardAnalytics> read(Long warehouseCard);
 
-    List<WarehouseCardAnalyticsDTO> read(Long id, WarehouseCardAnalytics.TrafficType trafficType);
+    List<WarehouseCardAnalytics> read(Long id, WarehouseCardAnalytics.TrafficType trafficType);
 
     WarehouseCardAnalytics create(WarehouseCardAnalytics warehouseCardAnalytics);
 
-    WarehouseCardAnalyticsDTO update(Long id, WarehouseCardAnalyticsDTO warehouseCardAnalyticsDTO);
+    WarehouseCardAnalytics update(Long id, WarehouseCardAnalytics warehouseCardAnalyticsDTO);
 
     void delete(Long id);
 }

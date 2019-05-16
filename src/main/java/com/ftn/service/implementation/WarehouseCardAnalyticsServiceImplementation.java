@@ -3,14 +3,12 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.WarehouseCardAnalytics;
-import com.ftn.model.dto.WarehouseCardAnalyticsDTO;
 import com.ftn.repository.WarehouseCardAnalyticsDao;
 import com.ftn.service.WarehouseCardAnalyticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Olivera on 31.5.2017..
@@ -27,36 +25,33 @@ public class WarehouseCardAnalyticsServiceImplementation implements WarehouseCar
 
 
     @Override
-    public List<WarehouseCardAnalyticsDTO> read() {
-        return warehouseCardAnalyticsDao.findAll().stream().map(WarehouseCardAnalyticsDTO::new).collect(Collectors.toList());
+    public List<WarehouseCardAnalytics> read() {
+        return warehouseCardAnalyticsDao.findAll();
     }
 
     @Override
-    public List<WarehouseCardAnalyticsDTO> read(Long warehouseCardId) {
-        return warehouseCardAnalyticsDao.findByWarehouseCardId(warehouseCardId).stream().map(WarehouseCardAnalyticsDTO::new).collect(Collectors.toList());
+    public List<WarehouseCardAnalytics> read(Long warehouseCardId) {
+        return warehouseCardAnalyticsDao.findByWarehouseCardId(warehouseCardId);
     }
 
     @Override
-    public List<WarehouseCardAnalyticsDTO> read(Long id, WarehouseCardAnalytics.TrafficType trafficType) {
-        return warehouseCardAnalyticsDao.findByWarehouseCardIdAndTrafficTypeOrderByCreatedDesc(id,trafficType).stream().map(WarehouseCardAnalyticsDTO::new).collect(Collectors.toList());
+    public List<WarehouseCardAnalytics> read(Long id, WarehouseCardAnalytics.TrafficType trafficType) {
+        return warehouseCardAnalyticsDao.findByWarehouseCardIdAndTrafficTypeOrderByCreatedDesc(id,trafficType);
     }
 
     @Override
-    public WarehouseCardAnalyticsDTO create(WarehouseCardAnalyticsDTO warehouseCardAnalyticsDTO) {
-        if (warehouseCardAnalyticsDao.findById(warehouseCardAnalyticsDTO.getId()).isPresent()) {
+    public WarehouseCardAnalytics create(WarehouseCardAnalytics warehouseCardAnalytics) {
+        if (warehouseCardAnalyticsDao.findById(warehouseCardAnalytics.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        final WarehouseCardAnalytics warehouseCardAnalytics = warehouseCardAnalyticsDTO.construct();
-        warehouseCardAnalyticsDao.save(warehouseCardAnalytics);
-        return new WarehouseCardAnalyticsDTO(warehouseCardAnalytics);
+        return warehouseCardAnalyticsDao.save(warehouseCardAnalytics);
+
     }
 
     @Override
-    public WarehouseCardAnalyticsDTO update(Long id, WarehouseCardAnalyticsDTO warehouseCardAnalyticsDTO) {
-        final WarehouseCardAnalytics warehouseCardAnalytics = warehouseCardAnalyticsDao.findById(id).orElseThrow(NotFoundException::new);
-        warehouseCardAnalytics.merge(warehouseCardAnalyticsDTO);
-        warehouseCardAnalyticsDao.save(warehouseCardAnalytics);
-        return new WarehouseCardAnalyticsDTO(warehouseCardAnalytics);
+    public WarehouseCardAnalytics update(Long id, WarehouseCardAnalytics warehouseCardAnalytics) {
+        warehouseCardAnalyticsDao.findById(id).orElseThrow(NotFoundException::new);
+        return warehouseCardAnalyticsDao.save(warehouseCardAnalytics);
     }
 
 

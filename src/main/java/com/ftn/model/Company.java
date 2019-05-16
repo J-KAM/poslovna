@@ -48,20 +48,4 @@ public class Company extends BaseModel {
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<BusinessYear> businessYears = new ArrayList<>();
 
-    public Company(Company company) {
-    }
-
-    //brisanje
-    /*public Company(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public void merge(CompanyDTO companyDTO) {
-        this.name = companyDTO.getName();
-        this.pib = companyDTO.getPib();
-        this.address = companyDTO.getAddress();
-        if (companyDTO.getLocation() != null) {
-            this.location = companyDTO.getLocation().construct();
-        }
-    }*/
 }

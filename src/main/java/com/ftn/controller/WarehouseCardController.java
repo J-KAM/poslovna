@@ -4,7 +4,7 @@ import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
 import com.ftn.model.Ware;
 import com.ftn.model.WarehouseCard;
-import com.ftn.model.dto.ReportDataDTO;
+import com.ftn.model.ReportDataDTO;
 import com.ftn.service.LevelingService;
 import com.ftn.service.WarehouseCardService;
 import org.springframework.http.HttpStatus;

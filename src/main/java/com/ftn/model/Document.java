@@ -23,9 +23,6 @@ import java.util.List;
 @Where(clause = Sql.ACTIVE)
 public class Document extends BaseModel {
 
-    public Document(Document document) {
-    }
-
     public enum DocumentType {
         RECEIPT,
         DISPATCH,
@@ -72,23 +69,4 @@ public class Document extends BaseModel {
     //dodato iz dto sloja
     private boolean reverse;
 
-    // brisanje
-    /*public Document(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public void merge(DocumentDTO documentDTO) {
-        this.documentType = DocumentType.valueOf(documentDTO.getDocumentType());
-        this.serialNumber = documentDTO.getSerialNumber();
-        this.establishmentDate = documentDTO.getEstablishmentDate();
-        this.bookingDate = documentDTO.getBookingDate();
-        this.status = Status.valueOf(documentDTO.getStatus());
-        this.businessYear = documentDTO.getBusinessYear().construct();
-        this.warehouse = documentDTO.getWarehouse().construct();
-        if (documentDTO.getInnerWarehouse() != null)
-            this.innerWarehouse = documentDTO.getInnerWarehouse().construct();
-        else
-            this.businessPartner = documentDTO.getBusinessPartner().construct();
-
-    }*/
 }

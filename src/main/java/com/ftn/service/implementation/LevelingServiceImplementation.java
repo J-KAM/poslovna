@@ -2,7 +2,6 @@ package com.ftn.service.implementation;
 
 import com.ftn.model.WarehouseCard;
 import com.ftn.model.WarehouseCardAnalytics;
-import com.ftn.model.dto.WarehouseCardAnalyticsDTO;
 import com.ftn.service.LevelingService;
 import com.ftn.service.WarehouseCardAnalyticsService;
 import com.ftn.service.WarehouseCardService;
@@ -33,17 +32,17 @@ public class LevelingServiceImplementation implements LevelingService {
         if (averagePrice * totalQuantity != totalValue) {
             double leveling = totalQuantity*averagePrice - totalValue;
 
-            WarehouseCardAnalyticsDTO warehouseCardAnalyticsDTO = new WarehouseCardAnalyticsDTO();
-            warehouseCardAnalyticsDTO.setDirection(WarehouseCardAnalytics.Direction.INCOMING.toString());
-            warehouseCardAnalyticsDTO.setTrafficType(WarehouseCardAnalytics.TrafficType.LEVELING.toString());
-            warehouseCardAnalyticsDTO.setAveragePrice(averagePrice);
-            warehouseCardAnalyticsDTO.setQuantity(0.0);
-            warehouseCardAnalyticsDTO.setValue(leveling);
-            warehouseCardAnalyticsDTO.setWarehouseCard(warehouseCard);
+            WarehouseCardAnalytics warehouseCardAnalytics = new WarehouseCardAnalytics();
+            warehouseCardAnalytics.setDirection(WarehouseCardAnalytics.Direction.INCOMING);
+            warehouseCardAnalytics.setTrafficType(WarehouseCardAnalytics.TrafficType.LEVELING);
+            warehouseCardAnalytics.setAveragePrice(averagePrice);
+            warehouseCardAnalytics.setQuantity(0.0);
+            warehouseCardAnalytics.setValue(leveling);
+            warehouseCardAnalytics.setWarehouseCard(warehouseCard);
 
-            WarehouseCardAnalyticsDTO createdAnalyticsDTO = warehouseCardAnalyticsService.create(warehouseCardAnalyticsDTO);
+            WarehouseCardAnalytics createdAnalytics = warehouseCardAnalyticsService.create(warehouseCardAnalytics);
 
-            warehouseCard.getWarehouseCardAnalytics().add(createdAnalyticsDTO);
+            warehouseCard.getWarehouseCardAnalytics().add(createdAnalytics);
             warehouseCard.setTotalValue(totalValue + leveling);
             warehouseCardService.update(warehouseCard.getId(), warehouseCard);
 

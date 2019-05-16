@@ -34,7 +34,7 @@ public class DocumentUnitServiceImplementation implements DocumentUnitService {
 
     @Override
     public List<DocumentUnit> read() {
-        return documentUnitDao.findAll().stream().map(DocumentUnit::new).collect(Collectors.toList());
+        return documentUnitDao.findAll();
     }
 
     @Override

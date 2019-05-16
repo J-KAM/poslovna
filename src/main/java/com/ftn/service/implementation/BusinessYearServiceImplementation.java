@@ -45,7 +45,7 @@ public class BusinessYearServiceImplementation implements BusinessYearService {
     @Override
     public List<BusinessYear> read() {
         Employee employee = authenticationService.getCurrentUser();
-        return businessYearDao.findByCompanyId(employee.getCompany().getId()).stream().map(BusinessYear::new).collect(Collectors.toList());
+        return businessYearDao.findByCompanyId(employee.getCompany().getId());
     }
 
     @Override

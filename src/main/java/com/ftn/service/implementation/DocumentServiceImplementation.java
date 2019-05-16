@@ -41,12 +41,12 @@ public class DocumentServiceImplementation implements DocumentService {
     @Override
     public List<Document> read() {
         final User user = authenticationService.getCurrentUser();
-        return documentDao.findByWarehouseEmployeeId(user.getId()).stream().map(Document::new).collect(Collectors.toList());
+        return documentDao.findByWarehouseEmployeeId(user.getId());
     }
 
     @Override
     public List<Document> readByWarehouse(Long id) {
-        return documentDao.findByWarehouseId(id).stream().map(Document::new).collect(Collectors.toList());
+        return documentDao.findByWarehouseId(id);
     }
 
     @Override

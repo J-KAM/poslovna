@@ -4,7 +4,7 @@ import com.ftn.model.BusinessYear;
 import com.ftn.model.Ware;
 import com.ftn.model.Warehouse;
 import com.ftn.model.WarehouseCard;
-import com.ftn.model.dto.ReportDataDTO;
+import com.ftn.model.ReportDataDTO;
 
 import java.util.List;
 
