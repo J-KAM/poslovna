@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Jasmina on 21/05/2017.
@@ -50,7 +49,7 @@ public class CompanyServiceImplementation implements CompanyService {
 
     @Override
     public Company read(Long id) {
-        return new Company(companyDao.findById(id).orElseThrow(NotFoundException::new));
+        return companyDao.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -66,6 +65,7 @@ public class CompanyServiceImplementation implements CompanyService {
     @Override
     public Company update(Long id, Company company) {
         companyDao.findById(id).orElseThrow(NotFoundException::new);
+        company.setId(id);
         return companyDao.save(company);
     }
 

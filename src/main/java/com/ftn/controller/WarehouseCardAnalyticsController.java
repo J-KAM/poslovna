@@ -3,7 +3,6 @@ package com.ftn.controller;
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
 import com.ftn.model.WarehouseCardAnalytics;
-import com.ftn.model.dto.WarehouseCardAnalyticsDTO;
 import com.ftn.service.WarehouseCardAnalyticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,12 +57,12 @@ public class WarehouseCardAnalyticsController {
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PatchMapping("/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody WarehouseCardAnalyticsDTO warehouseCardAnalyticsDTO, BindingResult bindingResult) {
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody WarehouseCardAnalytics warehouseCardAnalytics, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
 
-        return new ResponseEntity<>(warehouseCardAnalyticsService.update(id, warehouseCardAnalyticsDTO), HttpStatus.OK);
+        return new ResponseEntity<>(warehouseCardAnalyticsService.update(id, warehouseCardAnalytics), HttpStatus.OK);
     }
 
     @Transactional

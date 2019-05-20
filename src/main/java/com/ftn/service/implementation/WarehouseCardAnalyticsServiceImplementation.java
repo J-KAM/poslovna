@@ -51,6 +51,7 @@ public class WarehouseCardAnalyticsServiceImplementation implements WarehouseCar
     @Override
     public WarehouseCardAnalytics update(Long id, WarehouseCardAnalytics warehouseCardAnalytics) {
         warehouseCardAnalyticsDao.findById(id).orElseThrow(NotFoundException::new);
+        warehouseCardAnalytics.setId(id);
         return warehouseCardAnalyticsDao.save(warehouseCardAnalytics);
     }
 

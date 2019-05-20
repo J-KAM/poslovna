@@ -1,7 +1,6 @@
 package com.ftn.service;
 
-import com.ftn.model.dto.RegisterUserDTO;
-import com.ftn.model.dto.UserDTO;
+import com.ftn.model.User;
 
 import java.util.List;
 
@@ -10,9 +9,9 @@ import java.util.List;
  */
 public interface UserService {
 
-    UserDTO create(RegisterUserDTO registerUserDTO);
+    User create(User user);
 
-    UserDTO read();
+    User read();
 
-    List<UserDTO> readEmployees();
+    List<User> readEmployees();
 }

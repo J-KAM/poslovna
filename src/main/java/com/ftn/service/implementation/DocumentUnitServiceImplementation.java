@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Alex on 5/20/17.
@@ -48,13 +47,13 @@ public class DocumentUnitServiceImplementation implements DocumentUnitService {
         if (documentUnitDao.findById(documentUnit.getId()).isPresent()) {
             throw new BadRequestException();
         }
-
         return documentUnitDao.save(documentUnit);
     }
 
     @Override
     public DocumentUnit update(Long id, DocumentUnit documentUnit) {
         documentUnitDao.findById(id).orElseThrow(NotFoundException::new);
+        documentUnit.setId(id);
         return documentUnitDao.save(documentUnit);
     }
 

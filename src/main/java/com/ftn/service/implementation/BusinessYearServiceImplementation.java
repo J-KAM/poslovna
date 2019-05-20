@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created by JELENA on 30.5.2017.
@@ -60,6 +59,7 @@ public class BusinessYearServiceImplementation implements BusinessYearService {
     @Override
     public BusinessYear update(Long id, BusinessYear businessYear) {
         businessYearDao.findById(id).orElseThrow(NotFoundException::new);
+        businessYear.setId(id);
         return businessYearDao.save(businessYear);
     }
 

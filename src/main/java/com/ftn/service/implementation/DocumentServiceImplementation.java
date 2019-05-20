@@ -2,7 +2,8 @@ package com.ftn.service.implementation;
 
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
-import com.ftn.model.*;
+import com.ftn.model.Document;
+import com.ftn.model.User;
 import com.ftn.repository.DocumentDao;
 import com.ftn.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Olivera on 31.5.2017..
@@ -64,6 +64,7 @@ public class DocumentServiceImplementation implements DocumentService {
     @Override
     public Document update(Long id, Document document) {
         getDocument(id);
+        document.setId(id);
         return documentDao.save(document);
     }
 

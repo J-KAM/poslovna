@@ -1,8 +1,6 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.UserDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -53,17 +51,12 @@ public class User extends BaseModel {
     @Column(nullable = false)
     private boolean enabled;
 
-    public User(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public User(UserDTO userDTO) {
-        super(userDTO);
-        this.jmbg = userDTO.getJmbg();
-        this.firstName = userDTO.getFirstName();
-        this.lastName = userDTO.getLastName();
-        this.address = userDTO.getAddress();
-        this.username = userDTO.getUsername();
-        this.role = Role.valueOf(userDTO.getRole());
+    public User(User user) {
+        this.jmbg = user.getJmbg();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.address = user.getAddress();
+        this.username = user.getUsername();
+        this.role = user.getRole();
     }
 }

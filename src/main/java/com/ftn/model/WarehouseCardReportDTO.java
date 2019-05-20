@@ -1,6 +1,5 @@
 package com.ftn.model;
 
-import com.ftn.model.WarehouseCardAnalytics;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

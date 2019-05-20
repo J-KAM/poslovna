@@ -2,8 +2,6 @@ package com.ftn.service.implementation;
 
 import com.ftn.model.Employee;
 import com.ftn.model.User;
-import com.ftn.model.dto.RegisterUserDTO;
-import com.ftn.model.dto.UserDTO;
 import com.ftn.repository.UserDao;
 import com.ftn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Alex on 5/18/17.
@@ -32,28 +29,24 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public UserDTO create(RegisterUserDTO registerUserDTO) {
-        final Employee employee = registerUserDTO.construct();
+    public User create(User user) {
+        final Employee employee = new Employee(user);
         employee.setRole(User.Role.EMPLOYEE);
         // TODO: Uncomment this when development ends
         //employee.setPassword(encoder.encode(employee.getPassword()));
         employee.setEnabled(true);
-        userDao.save(employee);
-        return new UserDTO(employee);
+        return userDao.save(employee);
     }
 
     @Override
-    public UserDTO read() {
+    public User read() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final User user = userDao.findByUsername(authentication.getName());
-        return new UserDTO(user);
+        return user;
     }
 
     @Override
-    public List<UserDTO> readEmployees() {
-        final List<User> users = userDao.findByRole(User.Role.EMPLOYEE);
-        return users.stream().map(UserDTO::new).collect(Collectors.toList());
-
-
+    public List<User> readEmployees() {
+        return userDao.findByRole(User.Role.EMPLOYEE);
     }
 }

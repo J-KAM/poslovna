@@ -1,8 +1,6 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
-import com.ftn.model.dto.BaseDTO;
-import com.ftn.model.dto.UserDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -34,11 +32,7 @@ public class Employee extends User {
     @ManyToOne // TODO: Find a way to make this mandatory if possible
     private Company company;
 
-    public Employee(BaseDTO baseDTO) {
-        super(baseDTO);
-    }
-
-    public Employee(UserDTO userDTO) {
-        super(userDTO);
+    public Employee(User user) {
+        super(user);
     }
 }

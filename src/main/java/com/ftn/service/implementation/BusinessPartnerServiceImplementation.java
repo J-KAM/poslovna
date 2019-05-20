@@ -39,6 +39,7 @@ public class BusinessPartnerServiceImplementation implements BusinessPartnerServ
     @Override
     public BusinessPartner update(Long id, BusinessPartner businessPartner) {
         businessPartnerDao.findById(id).orElseThrow(NotFoundException::new);
+        businessPartner.setId(id);
         return businessPartnerDao.save(businessPartner);
     }
 

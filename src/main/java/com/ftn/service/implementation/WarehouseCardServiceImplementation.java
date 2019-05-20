@@ -3,8 +3,6 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
-import com.ftn.model.ReportDataDTO;
-import com.ftn.model.WarehouseCardReportDTO;
 import com.ftn.repository.BusinessYearDao;
 import com.ftn.repository.WarehouseCardDao;
 import com.ftn.service.WarehouseCardService;
@@ -67,6 +65,7 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
     @Override
     public WarehouseCard update(Long id, WarehouseCard warehouseCard) {
         warehouseCardDao.findById(id).orElseThrow(NotFoundException::new);
+        warehouseCard.setId(id);
         return warehouseCardDao.save(warehouseCard);
     }
 

@@ -1,6 +1,5 @@
 package com.ftn.model;
 
-import com.ftn.model.dto.BaseDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -36,9 +35,4 @@ public abstract class BaseModel {
     protected void onUpdate() {
         updated = new Date();
     }
-
-    public BaseModel(BaseDTO baseDTO) {
-        this.id = baseDTO.getId();
-    }
-
 }

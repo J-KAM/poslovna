@@ -42,6 +42,7 @@ public class BookingServiceImplementation implements BookingService {
     @Override
     public Document book(Long id, Document document) {
         List<DocumentUnit> documentUnits = documentUnitService.read(id);
+        document.setId(id);
 
         if(documentUnits.size() == 0){
             throw new BadRequestException();
@@ -118,7 +119,7 @@ public class BookingServiceImplementation implements BookingService {
     //Method for updating existing card and creating new analytics for that card
     private WarehouseCard updateCardAndMakeAnalytics(WarehouseCard warehouseCard, DocumentUnit documentUnit, Document document){
         WarehouseCardAnalytics warehouseCardAnalytics = new WarehouseCardAnalytics();
-//        warehouseCardAnalyticsDTO.setWarehouseCard(warehouseCard);
+        warehouseCardAnalytics.setWarehouseCard(warehouseCard);
 
         Document.DocumentType documentType = document.getDocumentType();
         boolean reverse = document.isReverse();
@@ -171,7 +172,7 @@ public class BookingServiceImplementation implements BookingService {
                     makeCardAndAnalytics(innerWarehouseCard, documentUnit, document);
                 }else {
                     WarehouseCardAnalytics innerWarehouseCardAnalytics = new WarehouseCardAnalytics();
-//                    innerWarehouseCardAnalyticsDTO.setWarehouseCard(innerWarehouseCard);
+                    innerWarehouseCardAnalytics.setWarehouseCard(innerWarehouseCard);
                     innerWarehouseCardAnalytics = bookReceipt(innerWarehouseCardAnalytics, documentUnit, reverse);
                     innerWarehouseCard = updateCardReceipt(innerWarehouseCard, documentUnit);
                     innerWarehouseCard = updateAveragePrice(innerWarehouseCard, documentUnit);

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -43,7 +42,6 @@ public class MeasurementUnitServiceImplementation implements MeasurementUnitServ
     public MeasurementUnit update(Long id, MeasurementUnit measurementUnit) {
         measurementUnitDao.findById(id).orElseThrow(NotFoundException::new);
         measurementUnit.setId(id);
-        measurementUnitDao.save(measurementUnit);
         return  measurementUnitDao.save(measurementUnit);
     }
 

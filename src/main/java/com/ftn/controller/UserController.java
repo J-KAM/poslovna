@@ -2,7 +2,7 @@ package com.ftn.controller;
 
 import com.ftn.constants.Auth;
 import com.ftn.exception.BadRequestException;
-import com.ftn.model.dto.RegisterUserDTO;
+import com.ftn.model.User;
 import com.ftn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,11 +37,11 @@ public class UserController {
 
     @Transactional
     @PostMapping(value = "/employees")
-    public ResponseEntity create(@Valid @RequestBody RegisterUserDTO registerUserDTO, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();
         }
-        return new ResponseEntity<>(userService.create(registerUserDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
     }
 
     @Transactional
