@@ -58,5 +58,6 @@ public class User extends BaseModel {
         this.address = user.getAddress();
         this.username = user.getUsername();
         this.role = user.getRole();
+        this.password = user.getPassword();
     }
 }
