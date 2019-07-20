@@ -1,5 +1,6 @@
 package com.ftn.model;
 
+import com.fasterxml.jackson.annotation.*;
 import com.ftn.constants.Sql;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,18 +19,26 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"location", "company"})
 @SQLDelete(sql = Sql.UPDATE + "user" + Sql.SOFT_DELETE)
 @Where(clause = Sql.ACTIVE)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Employee extends User {
 
     @ManyToOne
+    @JsonIgnoreProperties("employees")
+    @JsonManagedReference
     private Location location;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Warehouse> warehouses = new ArrayList<>();
 
     @ManyToOne // TODO: Find a way to make this mandatory if possible
+    @JsonIgnoreProperties("employees")
+    @JsonManagedReference
     private Company company;
 
     public Employee(User user) {

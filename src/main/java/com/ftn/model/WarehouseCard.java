@@ -1,5 +1,6 @@
 package com.ftn.model;
 
+import com.fasterxml.jackson.annotation.*;
 import com.ftn.constants.Sql;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"businessYear", "ware", "warehouse"})
 @NoArgsConstructor
 @AllArgsConstructor
 @SQLDelete(sql = Sql.UPDATE + "warehouse_card" + Sql.SOFT_DELETE)
@@ -46,15 +47,22 @@ public class WarehouseCard extends BaseModel {
     private double totalValue;
 
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("warehouseCards")
+    @JsonManagedReference
     private BusinessYear businessYear;
 
     @OneToMany(mappedBy = "warehouseCard", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<WarehouseCardAnalytics> warehouseCardAnalytics = new ArrayList<>();
 
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("warehouseCards")
+    @JsonManagedReference
     private Ware ware;
 
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("warehouseCards")
+    @JsonManagedReference
     private Warehouse warehouse;
 
     public WarehouseCard constructNextYearCard() {

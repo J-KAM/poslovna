@@ -1,5 +1,8 @@
 package com.ftn.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ftn.constants.Sql;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +37,7 @@ public class MeasurementUnit extends BaseModel {
     private String label;
 
     @OneToMany(mappedBy = "measurementUnit", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Ware> wares = new ArrayList<>();
 
 }

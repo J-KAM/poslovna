@@ -1,5 +1,9 @@
 package com.ftn.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ftn.constants.Sql;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +21,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "warehouseCard")
 @NoArgsConstructor
 @SQLDelete(sql = Sql.UPDATE + "warehouse_card_analytics" + Sql.SOFT_DELETE)
 @Where(clause = Sql.ACTIVE)
@@ -50,6 +54,8 @@ public class WarehouseCardAnalytics extends BaseModel {
     private double averagePrice;
 
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("warehouseCardAnalytics")
+    @JsonManagedReference
     private WarehouseCard warehouseCard;
 
 }

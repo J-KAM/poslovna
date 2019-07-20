@@ -1,5 +1,6 @@
 package com.ftn.model;
 
+import com.fasterxml.jackson.annotation.*;
 import com.ftn.constants.Sql;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"employee", "company"})
 @NoArgsConstructor
 @AllArgsConstructor
 @SQLDelete(sql = Sql.UPDATE + "warehouse" + Sql.SOFT_DELETE)
@@ -28,18 +29,25 @@ public class Warehouse extends BaseModel {
     private String name;
 
     @ManyToOne
+    @JsonIgnoreProperties("warehouses")
+    @JsonManagedReference
     private Employee employee;
 
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("warehouses")
+    @JsonManagedReference
     private Company company;
 
     @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<WarehouseCard> warehouseCards = new ArrayList<>();
 
     @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Document> documents = new ArrayList<>();
 
     @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Document> innerDocuments = new ArrayList<>();
 
 }

@@ -1,5 +1,9 @@
 package com.ftn.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ftn.constants.Sql;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +20,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"document", "ware"})
 @NoArgsConstructor
 @SQLDelete(sql = Sql.UPDATE + "document_unit" + Sql.SOFT_DELETE)
 @Where(clause = Sql.ACTIVE)
@@ -31,9 +35,13 @@ public class DocumentUnit extends BaseModel {
     private double value;
 
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("documentUnits")
+    @JsonManagedReference
     private Document document;
 
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("documentUnits")
+    @JsonManagedReference
     private Ware ware;
 
 }

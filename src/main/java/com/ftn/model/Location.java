@@ -1,5 +1,8 @@
 package com.ftn.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ftn.constants.Sql;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,12 +37,15 @@ public class Location extends BaseModel {
     private int ptt;
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Company> companies = new ArrayList<>();
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<BusinessPartner> businessPartners = new ArrayList<>();
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Employee> employees = new ArrayList<>();
 
 }
