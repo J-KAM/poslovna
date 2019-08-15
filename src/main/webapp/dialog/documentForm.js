@@ -1,7 +1,7 @@
 /**
  * Created by Jasmina on 05/06/2017.
  */
-app.controller('DocumentFormController', function ($scope, $http, $state, $mdDialog, documentService, warehouseService, businessYearService, document, companyService) {
+app.controller('DocumentFormController', function ($scope, $http, $state, $mdDialog, documentService, warehouseService, businessYearService, document, companyService, businessPartnerService) {
 
     var editingMode = document !== null;
     if (editingMode) {
@@ -42,9 +42,12 @@ app.controller('DocumentFormController', function ($scope, $http, $state, $mdDia
         if ($scope.document.warehouse === null) {
             return;
         }
-        companyService.readById($scope.document.warehouse.company.id, function (response) {
-            $scope.businessPartners = response.data.businessPartners;
-            $scope.innerWarehouses = response.data.warehouses;
+
+        warehouseService.readByCompany($scope.document.warehouse.company.id, function (response) {
+            $scope.innerWarehouses = response.data;
+        });
+        businessPartnerService.readByCompany($scope.document.warehouse.company.id, function (response) {
+            $scope.businessPartners = response.data;
         });
     };
 

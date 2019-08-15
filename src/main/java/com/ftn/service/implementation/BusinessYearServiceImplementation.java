@@ -111,8 +111,9 @@ public class BusinessYearServiceImplementation implements BusinessYearService {
             warehouseCardAnalytics.setAveragePrice(savedwarehouseCard.getAveragePrice());
             warehouseCardAnalytics.setWarehouseCard(savedwarehouseCard);
 
-            final WarehouseCardAnalytics savedWarehouseCardAnalytics = warehouseCardAnalyticsDao.save(warehouseCardAnalytics);
-            savedwarehouseCard.getWarehouseCardAnalytics().add(savedWarehouseCardAnalytics);
+            warehouseCardAnalyticsDao.save(warehouseCardAnalytics);
+            //final WarehouseCardAnalytics savedWarehouseCardAnalytics = warehouseCardAnalyticsDao.save(warehouseCardAnalytics);
+            //savedwarehouseCard.getWarehouseCardAnalytics().add(savedWarehouseCardAnalytics);
             warehouseCardDao.save(savedwarehouseCard);
         });
     }

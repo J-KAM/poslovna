@@ -11,6 +11,8 @@ public interface WarehouseService {
 
     List<Warehouse> read();
 
+    List<Warehouse> readByCompany(Long id);
+
     Warehouse create(Warehouse warehouse);
 
     Warehouse update(Long id, Warehouse warehouse);

@@ -53,6 +53,14 @@
                         <div ng-message="required">Ovo polje ne moze biti prazno.</div>
                     </div>
                 </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Adresa</label>
+                    <input id="address" name="address" type="text" data-ng-model="user.address"
+                           required>
+                    <div ng-messages="registerForm.address.$error" ng-if="registerForm.address.$dirty">
+                        <div ng-message="required">Ovo polje ne moze biti prazno.</div>
+                    </div>
+                </md-input-container>
             </md-dialog-content>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">

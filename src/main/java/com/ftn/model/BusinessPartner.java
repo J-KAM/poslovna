@@ -8,8 +8,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Alex on 5/15/17.
@@ -45,8 +43,5 @@ public class BusinessPartner extends BaseModel {
 
     @ManyToOne
     private Location location;
-
-    @OneToMany(mappedBy = "businessPartner", cascade = CascadeType.ALL)
-    private List<Document> documents = new ArrayList<>();
 
 }

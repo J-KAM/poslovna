@@ -1,6 +1,7 @@
 package com.ftn.service;
 
 import com.ftn.model.BusinessPartner;
+import com.ftn.model.Warehouse;
 
 import java.util.List;
 
@@ -10,6 +11,8 @@ import java.util.List;
 public interface BusinessPartnerService {
 
     List<BusinessPartner> read();
+
+    List<BusinessPartner> readByCompany(Long id);
 
     BusinessPartner create(BusinessPartner businessPartner);
 

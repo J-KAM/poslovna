@@ -58,7 +58,6 @@ public class CompanyServiceImplementation implements CompanyService {
             throw new BadRequestException();
         }
         companyDao.save(company);
-        company.setLocation(locationDao.findById(company.getLocation().getId()).orElseThrow(NotFoundException::new));
         return company;
     }
 

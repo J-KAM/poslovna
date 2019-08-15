@@ -6,7 +6,7 @@ INSERT INTO `quatrofantastico`.`company` (`active`,`created`,`updated`,`address`
 
 INSERT INTO `quatrofantastico`.`business_year` (`active`, `created`, `updated`,`closed`, `year`) VALUES (1,now(),null,true,2015), (1,now(), null, true, 2016), (1, now(), null, false, 2017);
 
-INSERT INTO `quatrofantastico`.`business_partner` (`active`,`created`,`updated`,`address`,`name`,`partnership_type`,`pib`,`company_id`,`location_id`) VALUES (1,now(),null,"Janka Cmelika 29", "MAX IMPORT-EXPORT", "SUPPLIER",12121212, 1, 2), (1,now(),null,"Gunduliceva 100", "4x4 OPREMA D.O.O","ALL",12121333, 2, 1), (1,now(),null,"Stevana Sremca 13", "DEXI SHPED", "SUPPLIER", 121245676, 1, 4), (1,now(),null,"Prva proleterska 1", "MAXI", "BUYER", 133345675, 1, 5), (1,now(),null,"Zelengorska 13", "UNIVEREXPORT D.O.O.", "BUYER", 555555555, 1, 2);
+INSERT INTO `quatrofantastico`.`business_partner` (`active`,`created`,`updated`,`address`,`name`,`partnership_type`,`pib`,`company_id`,`location`) VALUES (1,now(),null,"Janka Cmelika 29", "MAX IMPORT-EXPORT", "SUPPLIER",12121212, 1, 2), (1,now(),null,"Gunduliceva 100", "4x4 OPREMA D.O.O","ALL",12121333, 2, 1), (1,now(),null,"Stevana Sremca 13", "DEXI SHPED", "SUPPLIER", 121245676, 1, 4), (1,now(),null,"Prva proleterska 1", "MAXI", "BUYER", 133345675, 1, 5), (1,now(),null,"Zelengorska 13", "UNIVEREXPORT D.O.O.", "BUYER", 555555555, 1, 2);
 
 INSERT INTO `quatrofantastico`.`ware_group` (`active`,`created`,`updated`,`name`,`company_id`) VALUES (1,now(),null,"PREHRANA",1),(1,now(),null,"TEHNICKA ROBA",1), (1,now(),null,"STOLARIJA",3), (1,now(),null,"PREHRANA",3),  (1,now(),null,"HEMIJA",2), (1,now(),null,"PETROHEMIJA",3), (1,now(),null,"PREHRANA",2), (1,now(),null,"TEHNICKA ROBA",4);
 

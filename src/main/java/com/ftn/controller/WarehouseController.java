@@ -38,6 +38,13 @@ public class WarehouseController {
 
     @Transactional
     @PreAuthorize(Auth.AUTHENTICATED)
+    @GetMapping(value = "/company/{id}")
+    public ResponseEntity read(@PathVariable Long id) {
+        return new ResponseEntity<>(warehouseService.readByCompany(id), HttpStatus.OK);
+    }
+
+    @Transactional
+    @PreAuthorize(Auth.AUTHENTICATED)
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody Warehouse warehouse, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

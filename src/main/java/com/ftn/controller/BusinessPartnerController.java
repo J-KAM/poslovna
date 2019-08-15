@@ -36,6 +36,13 @@ public class BusinessPartnerController {
     }
 
     @Transactional
+    @PreAuthorize(Auth.AUTHENTICATED)
+    @GetMapping(value = "/company/{id}")
+    public ResponseEntity read(@PathVariable Long id) {
+        return new ResponseEntity<>(businessPartnerService.readByCompany(id), HttpStatus.OK);
+    }
+
+    @Transactional
     @PreAuthorize(Auth.ADMIN)
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody BusinessPartner businessPartner, BindingResult bindingResult) {

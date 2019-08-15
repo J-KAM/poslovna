@@ -40,12 +40,11 @@ public class LevelingServiceImplementation implements LevelingService {
             warehouseCardAnalytics.setValue(leveling);
             warehouseCardAnalytics.setWarehouseCard(warehouseCard);
 
-            WarehouseCardAnalytics createdAnalytics = warehouseCardAnalyticsService.create(warehouseCardAnalytics);
-
-            warehouseCard.getWarehouseCardAnalytics().add(createdAnalytics);
+            warehouseCardAnalyticsService.create(warehouseCardAnalytics);
+            //WarehouseCardAnalytics createdAnalytics = warehouseCardAnalyticsService.create(warehouseCardAnalytics);
+            //warehouseCard.getWarehouseCardAnalytics().add(createdAnalytics);
             warehouseCard.setTotalValue(totalValue + leveling);
             warehouseCardService.update(warehouseCard.getId(), warehouseCard);
-
         }
 
         return warehouseCard;

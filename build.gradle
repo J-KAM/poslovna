@@ -54,5 +54,7 @@ dependencies {
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.8.2'
     // https://mvnrepository.com/artifact/commons-collections/commons-collections
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2.1'
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.8'
 }
 

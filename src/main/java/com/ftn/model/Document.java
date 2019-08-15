@@ -8,9 +8,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Alex on 5/15/17.
@@ -51,9 +49,6 @@ public class Document extends BaseModel {
     @Column(nullable = false)
     private Status status;
 
-    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-    private List<DocumentUnit> documentUnits = new ArrayList<>();
-
     @ManyToOne(optional = false)
     private BusinessYear businessYear;
 
@@ -67,6 +62,7 @@ public class Document extends BaseModel {
     private BusinessPartner businessPartner;
 
     //dodato iz dto sloja
+    @Transient
     private boolean reverse;
 
 }

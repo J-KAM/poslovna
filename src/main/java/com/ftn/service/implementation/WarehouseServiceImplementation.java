@@ -6,6 +6,7 @@ import com.ftn.model.LagerListElementDTO;
 import com.ftn.model.User;
 import com.ftn.model.Warehouse;
 import com.ftn.model.WarehouseCard;
+import com.ftn.repository.WarehouseCardDao;
 import com.ftn.repository.WarehouseDao;
 import com.ftn.service.AuthenticationService;
 import com.ftn.service.WarehouseService;
@@ -33,11 +34,14 @@ public class WarehouseServiceImplementation implements WarehouseService {
 
     private final WarehouseDao warehouseDao;
 
+    private final WarehouseCardDao warehouseCardDao;
+
     private final AuthenticationService authenticationService;
 
     @Autowired
-    public WarehouseServiceImplementation(WarehouseDao warehouseDao, AuthenticationService authenticationService) {
+    public WarehouseServiceImplementation(WarehouseDao warehouseDao, WarehouseCardDao warehouseCardDao, AuthenticationService authenticationService) {
         this.warehouseDao = warehouseDao;
+        this.warehouseCardDao = warehouseCardDao;
         this.authenticationService = authenticationService;
     }
 
@@ -51,6 +55,11 @@ public class WarehouseServiceImplementation implements WarehouseService {
                 return warehouseDao.findByEmployeeId(user.getId());
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public List<Warehouse> readByCompany(Long id) {
+        return warehouseDao.findByCompanyId(id);
     }
 
     @Override
@@ -82,7 +91,8 @@ public class WarehouseServiceImplementation implements WarehouseService {
         ArrayList<LagerListElementDTO> tableItems = new ArrayList<>();
         Map<String, Object> data = new HashMap<>();
 
-        for(WarehouseCard warehouseCard :  persistentWarehouse.get().getWarehouseCards()) {
+        List<WarehouseCard> warehouseCards = warehouseCardDao.findByWarehouseId(persistentWarehouse.get().getId());
+        for(WarehouseCard warehouseCard :  warehouseCards) {
             LagerListElementDTO lagerListElementDTO = new LagerListElementDTO(warehouseCard);
             tableItems.add(lagerListElementDTO);
         }
@@ -96,11 +106,11 @@ public class WarehouseServiceImplementation implements WarehouseService {
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperFilePath, data, new JREmptyDataSource());
             JasperExportManager.exportReportToPdfFile(jasperPrint, "src/main/resources/lagerReports/lagerLista" + getNextFileCounter() + ".pdf");
 
-            File file = new File("C:\\Users\\Jasmina\\lagerLista.pdf");
+            File file = new File("C:\\Users\\Ana\\lagerLista.pdf");
             OutputStream outputStream = new FileOutputStream(file);
             JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
 
-            Path path = Paths.get("C:\\Users\\Jasmina\\lagerLista.pdf");
+            Path path = Paths.get("C:\\Users\\Ana\\lagerLista.pdf");
             byte[] dataPDF = Files.readAllBytes(path);
             byte[] encodedBytes = Base64.getEncoder().encode(dataPDF);
             return new String(encodedBytes);

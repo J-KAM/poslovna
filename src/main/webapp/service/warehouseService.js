@@ -12,6 +12,10 @@ app.service('warehouseService', function($http, $window) {
             $http.get('api/warehouses').then(onSuccess, onError);
         },
 
+        readByCompany: function (id, onSuccess, onError) {
+            $http.get('api/warehouses/company/' + id).then(onSuccess, onError);
+        },
+
         create: function (warehouse, onSuccess, onError) {
             $http.post('api/warehouses', warehouse).then(onSuccess, onError);
         },

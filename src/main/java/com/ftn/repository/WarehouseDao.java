@@ -16,4 +16,6 @@ public interface WarehouseDao extends JpaRepository<Warehouse, Long> {
     Optional<Warehouse> findByIdAndEmployeeId(Long id, Long employeeId);
 
     List<Warehouse> findByEmployeeId(Long id);
+
+    List<Warehouse> findByCompanyId(Long id);
 }

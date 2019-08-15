@@ -7,6 +7,9 @@ app.service('businessPartnerService', function($http) {
         read: function (onSuccess, onError) {
             $http.get('api/businessPartners').then(onSuccess, onError);
         },
+        readByCompany: function (id, onSuccess, onError) {
+            $http.get('api/businessPartners/company/' + id).then(onSuccess, onError);
+        },
         create: function(businessPartner, onSuccess, onError) {
             $http.post('/api/businessPartners', businessPartner).then(onSuccess, onError);
         },

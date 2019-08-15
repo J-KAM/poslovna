@@ -9,8 +9,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Alex on 5/15/17.
@@ -29,12 +27,6 @@ public class Ware extends BaseModel {
 
     @Column(nullable = false)
     private double packing;
-
-    @OneToMany(mappedBy = "ware", cascade = CascadeType.ALL)
-    private List<DocumentUnit> documentUnits = new ArrayList<>();
-
-    @OneToMany(mappedBy = "ware", cascade = CascadeType.ALL)
-    private List<WarehouseCard> warehouseCards = new ArrayList<>();
 
     @ManyToOne(optional = false)
     private MeasurementUnit measurementUnit;

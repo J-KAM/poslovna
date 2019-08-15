@@ -9,8 +9,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Alex on 5/15/17.
@@ -32,14 +30,4 @@ public class Warehouse extends BaseModel {
 
     @ManyToOne(optional = false)
     private Company company;
-
-    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
-    private List<WarehouseCard> warehouseCards = new ArrayList<>();
-
-    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
-    private List<Document> documents = new ArrayList<>();
-
-    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
-    private List<Document> innerDocuments = new ArrayList<>();
-
 }

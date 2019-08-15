@@ -3,6 +3,7 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.BusinessPartner;
+import com.ftn.model.Warehouse;
 import com.ftn.repository.BusinessPartnerDao;
 import com.ftn.service.BusinessPartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class BusinessPartnerServiceImplementation implements BusinessPartnerServ
     @Override
     public List<BusinessPartner> read() {
         return businessPartnerDao.findAll();
+    }
+
+    @Override
+    public List<BusinessPartner> readByCompany(Long id) {
+        return businessPartnerDao.findByCompanyId(id);
     }
 
     @Override

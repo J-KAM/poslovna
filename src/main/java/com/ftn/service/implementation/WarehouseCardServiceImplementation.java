@@ -4,6 +4,7 @@ import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
 import com.ftn.repository.BusinessYearDao;
+import com.ftn.repository.WarehouseCardAnalyticsDao;
 import com.ftn.repository.WarehouseCardDao;
 import com.ftn.service.WarehouseCardService;
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -32,10 +33,13 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
 
     private final BusinessYearDao businessYearDao;
 
+    private final WarehouseCardAnalyticsDao warehouseCardAnalyticsDao;
+
     @Autowired
-    public WarehouseCardServiceImplementation(WarehouseCardDao warehouseCardDao, BusinessYearDao businessYearDao) {
+    public WarehouseCardServiceImplementation(WarehouseCardDao warehouseCardDao, BusinessYearDao businessYearDao, WarehouseCardAnalyticsDao warehouseCardAnalyticsDao) {
         this.warehouseCardDao = warehouseCardDao;
         this.businessYearDao = businessYearDao;
+        this.warehouseCardAnalyticsDao = warehouseCardAnalyticsDao;
     }
 
     @Override
@@ -83,7 +87,8 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
         ArrayList<WarehouseCardReportDTO> tableItems = new ArrayList<>();
         Map<String, Object> data = new HashMap<>();
 
-        for(WarehouseCardAnalytics warehouseCardAnalytics : warehouseCard.get().getWarehouseCardAnalytics()) {
+        List<WarehouseCardAnalytics> warehouseCardAnalyticsList = warehouseCardAnalyticsDao.findByWarehouseCardId(warehouseCard.get().getId());
+        for(WarehouseCardAnalytics warehouseCardAnalytics : warehouseCardAnalyticsList) {
             Date createdDate = formatDate(warehouseCardAnalytics.getCreated());
             if(createdDate.compareTo(reportDataDTO.getStartDate()) >= 0 && createdDate.compareTo(reportDataDTO.getEndDate()) <= 0) {
                 WarehouseCardReportDTO warehouseCardReportDTO = new WarehouseCardReportDTO(warehouseCardAnalytics);
@@ -104,11 +109,11 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperFilePath, data, new JREmptyDataSource());
             JasperExportManager.exportReportToPdfFile(jasperPrint, filePath);
 
-            File file = new File("C:\\Users\\Jasmina\\magacinskaKartica.pdf");
+            File file = new File("C:\\Users\\Ana\\magacinskaKartica.pdf");
             OutputStream outputStream = new FileOutputStream(file);
             JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
 
-            Path path = Paths.get("C:\\Users\\Jasmina\\magacinskaKartica.pdf");
+            Path path = Paths.get("C:\\Users\\Ana\\magacinskaKartica.pdf");
             byte[] dataPDF = Files.readAllBytes(path);
             byte[] encodedBytes = Base64.getEncoder().encode(dataPDF);
             return new String(encodedBytes);
@@ -133,10 +138,8 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
     public WarehouseCard getWarehouseCardForWare(Ware ware) {
         List<BusinessYear> businessYearList = businessYearDao.findByClosed(false);
         BusinessYear businessYear = businessYearList.get(0);
-        WarehouseCard card = warehouseCardDao.findByWareIdAndBusinessYearId(ware.getId(), businessYear.getId());
-        return card;
+        return warehouseCardDao.findByWareIdAndBusinessYearId(ware.getId(), businessYear.getId());
     }
-
 
     private static int getNextFileCounter() {
         int counter = 0;
