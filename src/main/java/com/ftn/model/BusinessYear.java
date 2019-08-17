@@ -1,7 +1,5 @@
 package com.ftn.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ftn.constants.Sql;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,8 +8,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Alex on 5/15/17.
@@ -31,13 +27,6 @@ public class BusinessYear extends BaseModel {
     private boolean closed;
 
     @ManyToOne(optional = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Company company;
-
-    /*@OneToMany(mappedBy = "businessYear", cascade = CascadeType.ALL)
-    private List<Document> documents = new ArrayList<>();*/
-
-    /*@OneToMany(mappedBy = "businessYear", cascade = CascadeType.ALL)
-    private List<WarehouseCard> warehouseCards = new ArrayList<>();*/
 
 }

@@ -44,9 +44,6 @@ public class WarehouseCard extends BaseModel {
     @ManyToOne(optional = false)
     private BusinessYear businessYear;
 
-   /* @OneToMany(mappedBy = "warehouseCard", cascade = CascadeType.ALL)
-    private List<WarehouseCardAnalytics> warehouseCardAnalytics = new ArrayList<>();*/
-
     @ManyToOne(optional = false)
     private Ware ware;
 

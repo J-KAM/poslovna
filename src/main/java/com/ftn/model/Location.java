@@ -33,13 +33,4 @@ public class Location extends BaseModel {
     @Column(nullable = false)
     private int ptt;
 
-    /*@OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-    private List<Company> companies = new ArrayList<>();
-
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-    private List<BusinessPartner> businessPartners = new ArrayList<>();
-
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
-    private List<Employee> employees = new ArrayList<>();*/
-
 }

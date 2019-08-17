@@ -50,7 +50,6 @@ public class WarehouseCardAnalytics extends BaseModel {
     private double averagePrice;
 
     @ManyToOne(optional = false)
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private WarehouseCard warehouseCard;
 
 }
