@@ -16,6 +16,15 @@ app.controller('NavigationController', function ($scope, $state, $location, $log
         });
     };
 
+    $scope.registerEmployee = function () {
+        $mdDialog.show({
+            parent: angular.element(document.body),
+            templateUrl: 'dialog/createAccount.html',
+            controller: 'CreateAccountController'
+        }).finally(function() {
+        });
+    };
+
     warehouseService.read(function (response) {
        $scope.warehouses = response.data;
        $scope.warehouses.unshift({ name: "Svi magacini", id: -1 });

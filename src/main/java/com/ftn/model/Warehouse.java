@@ -26,7 +26,7 @@ public class Warehouse extends BaseModel {
     private String name;
 
     @ManyToOne
-    private Employee employee;
+    private User employee;
 
     @ManyToOne(optional = false)
     private Company company;

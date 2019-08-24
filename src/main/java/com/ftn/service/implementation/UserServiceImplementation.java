@@ -1,6 +1,5 @@
 package com.ftn.service.implementation;
 
-import com.ftn.model.Employee;
 import com.ftn.model.User;
 import com.ftn.repository.UserDao;
 import com.ftn.service.UserService;
@@ -30,12 +29,11 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User create(User user) {
-        final Employee employee = new Employee(user);
-        employee.setRole(User.Role.EMPLOYEE);
+        user.setRole(User.Role.EMPLOYEE);
         // TODO: Uncomment this when development ends
         //employee.setPassword(encoder.encode(employee.getPassword()));
-        employee.setEnabled(true);
-        return userDao.save(employee);
+        user.setEnabled(true);
+        return userDao.save(user);
     }
 
     @Override

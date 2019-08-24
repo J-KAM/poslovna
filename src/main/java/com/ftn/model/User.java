@@ -48,6 +48,12 @@ public class User extends BaseModel {
     @Column(nullable = false)
     private Role role;
 
+    @ManyToOne
+    private Location location;
+
+    @ManyToOne
+    private Company company;
+
     @Column(nullable = false)
     private boolean enabled;
 
@@ -59,5 +65,7 @@ public class User extends BaseModel {
         this.username = user.getUsername();
         this.role = user.getRole();
         this.password = user.getPassword();
+        this.location = user.getLocation();
+        this.company = user.getCompany();
     }
 }

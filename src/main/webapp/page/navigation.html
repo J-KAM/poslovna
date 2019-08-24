@@ -11,6 +11,9 @@
                     <md-icon md-svg-icon="image/ic_search_white_24px.svg"></md-icon>
                 </md-button>
                 <h3 class="toolbar-item"><span>{{user.firstName}} {{user.lastName}}</span></h3>
+                <md-button class="md-raised" ng-if="authService.isAdmin()" ng-click="registerEmployee()">
+                    <i class="glyphicon glyphicon-user"></i>
+                </md-button>
                 <md-button class="md-raised" ng-click="logout()">
                     Logout
                 </md-button>

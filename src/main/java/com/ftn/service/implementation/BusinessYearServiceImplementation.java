@@ -43,7 +43,7 @@ public class BusinessYearServiceImplementation implements BusinessYearService {
 
     @Override
     public List<BusinessYear> read() {
-        Employee employee = authenticationService.getCurrentUser();
+        User employee = authenticationService.getCurrentUser();
         return businessYearDao.findByCompanyId(employee.getCompany().getId());
     }
 

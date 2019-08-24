@@ -26,12 +26,4 @@ app.controller('LoginController', function ($scope, $state, $http, $mdDialog, au
         );
     };
 
-    $scope.create = function () {
-        $mdDialog.show({
-            parent: angular.element(document.body),
-            templateUrl: 'dialog/createAccount.html',
-            controller: 'CreateAccountController'
-        }).finally(function() {
-        });
-    }
 });

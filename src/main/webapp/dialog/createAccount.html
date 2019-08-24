@@ -61,6 +61,49 @@
                         <div ng-message="required">Ovo polje ne moze biti prazno.</div>
                     </div>
                 </md-input-container>
+                <md-autocomplete
+                        md-selected-item="businessPartner.location"
+                        md-search-text="searchText"
+                        md-items="location in queryLocations(searchText)"
+                        md-item-text="location.name"
+                        md-min-length="0"
+                        placeholder="Traži lokaciju...">
+                    <md-item-template>
+                    <span class="item-title" style="display: block; line-height:1">
+                        <span><strong>{{location.name}}</strong></span>
+                        </span>
+                        <span class="item-metadata" style="display: block; padding-bottom: 3px;line-height: 2">
+                        <span style="padding-right: 10px">
+                            PTT: {{location.ptt}}
+                        </span>
+                    </span>
+                    </md-item-template>
+                    <md-not-found>
+                        Nije pronađena lokacija sa nazivom ili PTT-om "{{searchText}}".
+                    </md-not-found>
+                </md-autocomplete>
+                <md-autocomplete
+                        style="margin-top: 10px; margin-bottom: 10px;"
+                        md-selected-item="businessPartner.company"
+                        md-search-text="searchText1"
+                        md-items="company in queryCompanies(searchText1)"
+                        md-item-text="company.name"
+                        md-min-length="0"
+                        placeholder="Traži kompaniju...">
+                    <md-item-template>
+                        <span class="item-title" style="display: block; line-height:1">
+                            <span><strong>{{company.name}}</strong></span>
+                        </span>
+                        <span class="item-metadata" style="display: block; padding-bottom: 3px;line-height: 2">
+                            <span style="padding-right: 10px">
+                                PIB: {{company.pib}}
+                            </span>
+                        </span>
+                    </md-item-template>
+                    <md-not-found>
+                        Nije pronađena kompanija sa nazivom ili PIB-om "{{searchText}}".
+                    </md-not-found>
+                </md-autocomplete>
             </md-dialog-content>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
