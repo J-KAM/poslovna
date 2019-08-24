@@ -1,6 +1,8 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
+import com.ftn.model.enums.Role;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,15 +19,11 @@ import javax.persistence.*;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @SQLDelete(sql = Sql.UPDATE + "user" + Sql.SOFT_DELETE)
 @Where(clause = Sql.ACTIVE)
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User extends BaseModel {
-
-    public enum Role {
-        ADMIN,
-        EMPLOYEE
-    }
 
     @Column(nullable = false, length = 13)
     private String jmbg;
@@ -36,6 +34,7 @@ public class User extends BaseModel {
     @Column(nullable = false)
     private String lastName;
 
+    @Column
     private String address;
 
     @Column(unique = true)
@@ -51,21 +50,10 @@ public class User extends BaseModel {
     @ManyToOne
     private Location location;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Company company;
 
     @Column(nullable = false)
     private boolean enabled;
 
-    public User(User user) {
-        this.jmbg = user.getJmbg();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.address = user.getAddress();
-        this.username = user.getUsername();
-        this.role = user.getRole();
-        this.password = user.getPassword();
-        this.location = user.getLocation();
-        this.company = user.getCompany();
-    }
 }

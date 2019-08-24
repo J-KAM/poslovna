@@ -16,11 +16,13 @@ public abstract class BaseModel {
 
     @Id
     @GeneratedValue
+    @Column
     private long id;
 
     @Column(nullable = false)
     private Date created;
 
+    @Column
     private Date updated;
 
     @Column(nullable = false)

@@ -28,6 +28,7 @@ public class DocumentUnit extends BaseModel {
     @Column(nullable = false)
     private double price;
 
+    @Column
     private double value;
 
     @ManyToOne(optional = false)

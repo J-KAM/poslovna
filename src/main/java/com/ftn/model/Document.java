@@ -1,6 +1,8 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
+import com.ftn.model.enums.DocumentType;
+import com.ftn.model.enums.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,18 +23,6 @@ import java.util.Date;
 @Where(clause = Sql.ACTIVE)
 public class Document extends BaseModel {
 
-    public enum DocumentType {
-        RECEIPT,
-        DISPATCH,
-        INTER_WAREHOUSE_TRAFFIC
-    }
-
-    public enum Status {
-        PENDING,
-        BOOKED,
-        REVERSED
-    }
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DocumentType documentType;
@@ -43,6 +33,7 @@ public class Document extends BaseModel {
     @Column(nullable = false)
     private Date establishmentDate;
 
+    @Column
     private Date bookingDate;
 
     @Enumerated(EnumType.STRING)

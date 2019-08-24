@@ -1,6 +1,7 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
+import com.ftn.model.enums.PartnershipType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,12 +21,6 @@ import javax.persistence.*;
 @Where(clause = Sql.ACTIVE)
 public class BusinessPartner extends BaseModel {
 
-    public enum PartnershipType {
-        BUYER,
-        SUPPLIER,
-        ALL
-    }
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PartnershipType partnershipType;
@@ -36,6 +31,7 @@ public class BusinessPartner extends BaseModel {
     @Column(nullable = false, length = 9, unique = true)
     private long pib;
 
+    @Column
     private String address;
 
     @ManyToOne(optional = false)

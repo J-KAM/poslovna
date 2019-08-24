@@ -26,6 +26,7 @@ public class Company extends BaseModel {
     @Column(nullable = false, length = 9, unique = true)
     private long pib;
 
+    @Column
     private String address;
 
     @ManyToOne

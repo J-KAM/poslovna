@@ -1,16 +1,15 @@
 package com.ftn.model;
 
 import com.ftn.constants.Sql;
+import com.ftn.model.enums.Direction;
+import com.ftn.model.enums.TrafficType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Created by Alex on 5/15/17.
@@ -23,30 +22,21 @@ import javax.persistence.ManyToOne;
 @Where(clause = Sql.ACTIVE)
 public class WarehouseCardAnalytics extends BaseModel {
 
-    public enum TrafficType {
-        RECEIPT,
-        DISPATCH,
-        INTER_WAREHOUSE_TRAFFIC,
-        LEVELING,
-        INITIAL_STATE,
-        CORRECTION
-    }
-
-    public enum Direction {
-        INCOMING,
-        OUTGOING
-    }
-
     @Enumerated(EnumType.STRING)
+    @Column
     private TrafficType trafficType;
 
     @Enumerated(EnumType.STRING)
+    @Column
     private Direction direction;
 
+    @Column
     private double quantity;
 
+    @Column
     private double value;
 
+    @Column
     private double averagePrice;
 
     @ManyToOne(optional = false)
