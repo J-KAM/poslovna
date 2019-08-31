@@ -4,6 +4,7 @@ import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.Company;
 import com.ftn.model.User;
+import com.ftn.model.enums.Role;
 import com.ftn.repository.CompanyDao;
 import com.ftn.repository.LocationDao;
 import com.ftn.service.AuthenticationService;
@@ -36,7 +37,7 @@ public class CompanyServiceImplementation implements CompanyService {
     @Override
     public List<Company> read() {
         final User user = authenticationService.getCurrentUser();
-        if (user.getRole().equals(User.Role.EMPLOYEE)) {
+        if (user.getRole().equals(Role.EMPLOYEE)) {
             final Company company = user.getCompany();
             final List<Company> companies = new ArrayList<>();
             companies.add(company);

@@ -3,6 +3,7 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.WarehouseCardAnalytics;
+import com.ftn.model.enums.TrafficType;
 import com.ftn.repository.WarehouseCardAnalyticsDao;
 import com.ftn.service.WarehouseCardAnalyticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class WarehouseCardAnalyticsServiceImplementation implements WarehouseCar
     }
 
     @Override
-    public List<WarehouseCardAnalytics> read(Long id, WarehouseCardAnalytics.TrafficType trafficType) {
+    public List<WarehouseCardAnalytics> read(Long id, TrafficType trafficType) {
         return warehouseCardAnalyticsDao.findByWarehouseCardIdAndTrafficTypeOrderByCreatedDesc(id,trafficType);
     }
 

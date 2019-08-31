@@ -3,6 +3,9 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.*;
+import com.ftn.model.enums.Direction;
+import com.ftn.model.enums.Status;
+import com.ftn.model.enums.TrafficType;
 import com.ftn.repository.BusinessYearDao;
 import com.ftn.repository.DocumentDao;
 import com.ftn.repository.WarehouseCardAnalyticsDao;
@@ -85,7 +88,7 @@ public class BusinessYearServiceImplementation implements BusinessYearService {
         }
         // If there are pending documents from the previous business year, this business year cannot be opened
         final List<Document> documents = documentDao.findByWarehouseEmployeeIdAndBusinessYearId(authenticationService.getCurrentUser().getId(), previousBusinessYear.get().getId());
-        if (documents.stream().anyMatch(document -> document.getStatus().equals(Document.Status.PENDING))) {
+        if (documents.stream().anyMatch(document -> document.getStatus().equals(Status.PENDING))) {
             throw new BadRequestException();
         }
         businessYearDao.save(businessYear);
@@ -104,8 +107,8 @@ public class BusinessYearServiceImplementation implements BusinessYearService {
         final List<WarehouseCard> savedWarehouseCards = warehouseCardDao.save(newWarehouseCards);
         savedWarehouseCards.forEach(savedwarehouseCard -> {
             final WarehouseCardAnalytics warehouseCardAnalytics = new WarehouseCardAnalytics();
-            warehouseCardAnalytics.setTrafficType(WarehouseCardAnalytics.TrafficType.INITIAL_STATE);
-            warehouseCardAnalytics.setDirection(WarehouseCardAnalytics.Direction.INCOMING);
+            warehouseCardAnalytics.setTrafficType(TrafficType.INITIAL_STATE);
+            warehouseCardAnalytics.setDirection(Direction.INCOMING);
             warehouseCardAnalytics.setQuantity(savedwarehouseCard.getTotalQuantity());
             warehouseCardAnalytics.setValue(savedwarehouseCard.getTotalValue());
             warehouseCardAnalytics.setAveragePrice(savedwarehouseCard.getAveragePrice());

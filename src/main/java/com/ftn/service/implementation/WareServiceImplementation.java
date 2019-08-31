@@ -5,6 +5,7 @@ import com.ftn.exception.NotFoundException;
 import com.ftn.model.Company;
 import com.ftn.model.User;
 import com.ftn.model.Ware;
+import com.ftn.model.enums.Role;
 import com.ftn.repository.CompanyDao;
 import com.ftn.repository.WareDao;
 import com.ftn.service.AuthenticationService;
@@ -37,7 +38,7 @@ public class WareServiceImplementation implements WareService {
     @Override
     public List<Ware> read() {
         final User user = authenticationService.getCurrentUser();
-        if (User.Role.EMPLOYEE.equals(user.getRole())) {
+        if (Role.EMPLOYEE.equals(user.getRole())) {
             final Company company = user.getCompany();
             return wareDao.findByWareGroupCompanyId(company.getId());
         } else {
@@ -68,7 +69,7 @@ public class WareServiceImplementation implements WareService {
 
     private Ware getWare(Long id) {
         final User user = authenticationService.getCurrentUser();
-        if (User.Role.EMPLOYEE.equals(user.getRole())) {
+        if (Role.EMPLOYEE.equals(user.getRole())) {
             final Company company = user.getCompany();
             return wareDao.findByIdAndWareGroupCompanyId(id, company.getId()).orElseThrow(NotFoundException::new);
         } else {

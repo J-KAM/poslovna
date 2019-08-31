@@ -1,6 +1,7 @@
 package com.ftn.service.implementation;
 
 import com.ftn.model.User;
+import com.ftn.model.enums.Role;
 import com.ftn.repository.UserDao;
 import com.ftn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User create(User user) {
-        user.setRole(User.Role.EMPLOYEE);
+        user.setRole(Role.EMPLOYEE);
         // TODO: Uncomment this when development ends
         //employee.setPassword(encoder.encode(employee.getPassword()));
         user.setEnabled(true);
@@ -45,6 +46,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public List<User> readEmployees() {
-        return userDao.findByRole(User.Role.EMPLOYEE);
+        return userDao.findByRole(Role.EMPLOYEE);
     }
 }

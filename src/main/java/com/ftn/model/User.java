@@ -37,7 +37,7 @@ public class User extends BaseModel {
     @Column
     private String address;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)

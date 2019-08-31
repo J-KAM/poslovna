@@ -5,6 +5,10 @@ import com.ftn.model.Document;
 import com.ftn.model.DocumentUnit;
 import com.ftn.model.WarehouseCard;
 import com.ftn.model.WarehouseCardAnalytics;
+import com.ftn.model.enums.Direction;
+import com.ftn.model.enums.DocumentType;
+import com.ftn.model.enums.Status;
+import com.ftn.model.enums.TrafficType;
 import com.ftn.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,9 +67,9 @@ public class BookingServiceImplementation implements BookingService {
             }
         }
         if(document.isReverse()){
-            document.setStatus(Document.Status.REVERSED);
+            document.setStatus(Status.REVERSED);
         }else{
-            document.setStatus(Document.Status.BOOKED);
+            document.setStatus(Status.BOOKED);
         }
 
         document.setBookingDate(new Date());
@@ -75,8 +79,8 @@ public class BookingServiceImplementation implements BookingService {
 
     //Method for creating card with first analytic which will be represented as RECEIPT
     private WarehouseCard makeCardAndAnalytics(WarehouseCard warehouseCard, DocumentUnit documentUnit, Document document){
-        if(document.getDocumentType().equals(Document.DocumentType.DISPATCH.toString())
-                || document.getDocumentType().equals(Document.DocumentType.INTER_WAREHOUSE_TRAFFIC.toString())){
+        if(document.getDocumentType().equals(DocumentType.DISPATCH.toString())
+                || document.getDocumentType().equals(DocumentType.INTER_WAREHOUSE_TRAFFIC.toString())){
             throw new BadRequestException();
         } else if(document.isReverse()){
             throw new BadRequestException(); //Can't make storing if there's no card and analytics
@@ -88,7 +92,7 @@ public class BookingServiceImplementation implements BookingService {
         //Card initialization
         warehouseCard.setBusinessYear(document.getBusinessYear());
 
-        if(document.getDocumentType().equals(Document.DocumentType.INTER_WAREHOUSE_TRAFFIC)){
+        if(document.getDocumentType().equals(DocumentType.INTER_WAREHOUSE_TRAFFIC)){
             warehouseCard.setWarehouse(document.getInnerWarehouse());
         }else {
             warehouseCard.setWarehouse(document.getWarehouse());
@@ -105,8 +109,8 @@ public class BookingServiceImplementation implements BookingService {
 
         //Analytics initialization
         warehouseCardAnalytics.setWarehouseCard(warehouseCard);
-        warehouseCardAnalytics.setTrafficType(WarehouseCardAnalytics.TrafficType.RECEIPT);
-        warehouseCardAnalytics.setDirection(WarehouseCardAnalytics.Direction.INCOMING);
+        warehouseCardAnalytics.setTrafficType(TrafficType.RECEIPT);
+        warehouseCardAnalytics.setDirection(Direction.INCOMING);
         warehouseCardAnalytics.setAveragePrice(documentUnit.getPrice());
         warehouseCardAnalytics.setQuantity(documentUnit.getQuantity());
         warehouseCardAnalytics.setValue(documentUnit.getValue());
@@ -121,11 +125,11 @@ public class BookingServiceImplementation implements BookingService {
         WarehouseCardAnalytics warehouseCardAnalytics = new WarehouseCardAnalytics();
         warehouseCardAnalytics.setWarehouseCard(warehouseCard);
 
-        Document.DocumentType documentType = document.getDocumentType();
+        DocumentType documentType = document.getDocumentType();
         boolean reverse = document.isReverse();
 
         if(reverse){
-            if(document.getStatus().equals(Document.Status.BOOKED)){
+            if(document.getStatus().equals(Status.BOOKED)){
                 documentUnit.setQuantity(documentUnit.getQuantity()*(-1));
                 documentUnit.setValue(documentUnit.getValue()*(-1));
             }else {
@@ -193,11 +197,11 @@ public class BookingServiceImplementation implements BookingService {
 
 
     private WarehouseCardAnalytics bookReceipt(WarehouseCardAnalytics analytics, DocumentUnit documentUnit, boolean reverse){
-        analytics.setTrafficType(WarehouseCardAnalytics.TrafficType.RECEIPT);
+        analytics.setTrafficType(TrafficType.RECEIPT);
         if(reverse){
-            analytics.setDirection(WarehouseCardAnalytics.Direction.OUTGOING);
+            analytics.setDirection(Direction.OUTGOING);
         }else {
-            analytics.setDirection(WarehouseCardAnalytics.Direction.INCOMING);
+            analytics.setDirection(Direction.INCOMING);
         }
         analytics.setQuantity(documentUnit.getQuantity());
         analytics.setAveragePrice(documentUnit.getPrice());
@@ -206,11 +210,11 @@ public class BookingServiceImplementation implements BookingService {
     }
 
     private WarehouseCardAnalytics bookDispatch(WarehouseCardAnalytics analytics, DocumentUnit documentUnit, boolean reverse){
-        analytics.setTrafficType(WarehouseCardAnalytics.TrafficType.DISPATCH);
+        analytics.setTrafficType(TrafficType.DISPATCH);
         if(reverse){
-            analytics.setDirection(WarehouseCardAnalytics.Direction.INCOMING);
+            analytics.setDirection(Direction.INCOMING);
         }else {
-            analytics.setDirection(WarehouseCardAnalytics.Direction.OUTGOING);
+            analytics.setDirection(Direction.OUTGOING);
         }
         analytics.setQuantity(documentUnit.getQuantity());
         analytics.setAveragePrice(documentUnit.getPrice());

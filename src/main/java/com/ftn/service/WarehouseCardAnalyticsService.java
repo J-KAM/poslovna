@@ -1,6 +1,7 @@
 package com.ftn.service;
 
 import com.ftn.model.WarehouseCardAnalytics;
+import com.ftn.model.enums.TrafficType;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface WarehouseCardAnalyticsService {
 
     List<WarehouseCardAnalytics> read(Long warehouseCard);
 
-    List<WarehouseCardAnalytics> read(Long id, WarehouseCardAnalytics.TrafficType trafficType);
+    List<WarehouseCardAnalytics> read(Long id, TrafficType trafficType);
 
     WarehouseCardAnalytics create(WarehouseCardAnalytics warehouseCardAnalytics);
 

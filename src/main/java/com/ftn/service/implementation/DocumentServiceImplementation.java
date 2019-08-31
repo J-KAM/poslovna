@@ -4,6 +4,7 @@ import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.Document;
 import com.ftn.model.User;
+import com.ftn.model.enums.Status;
 import com.ftn.repository.DocumentDao;
 import com.ftn.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class DocumentServiceImplementation implements DocumentService {
         if (documentDao.findById(document.getId()).isPresent()) {
             throw new BadRequestException();
         }
-        document.setStatus(Document.Status.PENDING);
+        document.setStatus(Status.PENDING);
         document.setEstablishmentDate(new Date());
         document.setSerialNumber(documentDao.count() + 1);
         documentDao.save(document);

@@ -2,6 +2,8 @@ package com.ftn.service.implementation;
 
 import com.ftn.model.WarehouseCard;
 import com.ftn.model.WarehouseCardAnalytics;
+import com.ftn.model.enums.Direction;
+import com.ftn.model.enums.TrafficType;
 import com.ftn.service.LevelingService;
 import com.ftn.service.WarehouseCardAnalyticsService;
 import com.ftn.service.WarehouseCardService;
@@ -33,8 +35,8 @@ public class LevelingServiceImplementation implements LevelingService {
             double leveling = totalQuantity*averagePrice - totalValue;
 
             WarehouseCardAnalytics warehouseCardAnalytics = new WarehouseCardAnalytics();
-            warehouseCardAnalytics.setDirection(WarehouseCardAnalytics.Direction.INCOMING);
-            warehouseCardAnalytics.setTrafficType(WarehouseCardAnalytics.TrafficType.LEVELING);
+            warehouseCardAnalytics.setDirection(Direction.INCOMING);
+            warehouseCardAnalytics.setTrafficType(TrafficType.LEVELING);
             warehouseCardAnalytics.setAveragePrice(averagePrice);
             warehouseCardAnalytics.setQuantity(0.0);
             warehouseCardAnalytics.setValue(leveling);

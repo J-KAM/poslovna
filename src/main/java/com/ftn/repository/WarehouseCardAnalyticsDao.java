@@ -1,6 +1,7 @@
 package com.ftn.repository;
 
 import com.ftn.model.WarehouseCardAnalytics;
+import com.ftn.model.enums.TrafficType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -15,6 +16,6 @@ public interface WarehouseCardAnalyticsDao extends JpaRepository<WarehouseCardAn
 
     List<WarehouseCardAnalytics> findByWarehouseCardId(Long warehouseCardId);
 
-    List<WarehouseCardAnalytics> findByWarehouseCardIdAndTrafficTypeOrderByCreatedDesc(Long id, WarehouseCardAnalytics.TrafficType trafficType);
+    List<WarehouseCardAnalytics> findByWarehouseCardIdAndTrafficTypeOrderByCreatedDesc(Long id, TrafficType trafficType);
 }
 
