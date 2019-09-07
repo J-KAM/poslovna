@@ -17,7 +17,7 @@ public abstract class BaseModel {
     @Id
     @GeneratedValue
     @Column
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private Date created;

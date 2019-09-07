@@ -1,5 +1,6 @@
 package com.ftn.service.implementation;
 
+import com.ftn.exception.NotFoundException;
 import com.ftn.model.User;
 import com.ftn.model.enums.Role;
 import com.ftn.repository.UserDao;
@@ -40,7 +41,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public User read() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        final User user = userDao.findByUsername(authentication.getName());
+        final User user = userDao.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);;
         return user;
     }
 

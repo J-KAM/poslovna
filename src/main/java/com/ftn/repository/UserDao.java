@@ -5,14 +5,15 @@ import com.ftn.model.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Alex on 10/28/16.
  */
 public interface UserDao extends JpaRepository<User, Long> {
 
-    <E extends User> E findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
-    <E extends User> List<E> findByRole(Role role);
+    List<User> findByRole(Role role);
 
 }

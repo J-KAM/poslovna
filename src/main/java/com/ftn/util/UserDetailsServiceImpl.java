@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -26,8 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        final User user = userDao.findByUsername(username);
-        if (user == null) {
+        final Optional<User> user = userDao.findByUsername(username);
+        if (!user.isPresent()) {
             throw new UsernameNotFoundException("user not found");
         }
 
@@ -35,18 +36,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 final Collection<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
+                authorities.add(new SimpleGrantedAuthority(user.get().getRole().name()));
                 return authorities;
             }
 
             @Override
             public String getPassword() {
-                return user.getPassword();
+                return user.get().getPassword();
             }
 
             @Override
             public String getUsername() {
-                return user.getUsername();
+                return user.get().getUsername();
             }
 
             @Override
@@ -66,7 +67,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
             @Override
             public boolean isEnabled() {
-                return user.isEnabled();
+                return user.get().isEnabled();
             }
 
         };

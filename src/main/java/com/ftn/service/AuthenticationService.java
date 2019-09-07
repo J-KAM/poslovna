@@ -7,5 +7,5 @@ import com.ftn.model.User;
  */
 public interface AuthenticationService {
 
-    <E extends  User> E getCurrentUser();
+    User getCurrentUser();
 }
