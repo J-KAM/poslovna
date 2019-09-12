@@ -30,7 +30,7 @@ public class WarehouseCardAnalyticsController {
     }
 
     @Transactional
-    @PreAuthorize(Auth.EMPLOYEE)
+    @PreAuthorize(Auth.AUTHENTICATED)
     @GetMapping
     public ResponseEntity read() {
         return new ResponseEntity<>(warehouseCardAnalyticsService.read(), HttpStatus.OK);

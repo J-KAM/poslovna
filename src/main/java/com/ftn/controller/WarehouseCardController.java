@@ -46,7 +46,6 @@ public class WarehouseCardController {
         return new ResponseEntity<>(warehouseCardService.read(id), HttpStatus.OK);
     }
 
-
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping

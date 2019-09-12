@@ -55,12 +55,4 @@ public class BusinessYearController {
         }
         return new ResponseEntity<>(businessYearService.update(id, businessYear), HttpStatus.OK);
     }
-
-    @Transactional
-    @PreAuthorize(Auth.EMPLOYEE)
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
-        businessYearService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }
