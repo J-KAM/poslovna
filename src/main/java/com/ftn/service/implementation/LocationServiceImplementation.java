@@ -29,6 +29,11 @@ public class LocationServiceImplementation implements LocationService {
     }
 
     @Override
+    public Location read(Long id) {
+        return locationDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
     public Location create(Location location) {
         if (locationDao.findById(location.getId()).isPresent()) {
             throw new BadRequestException();

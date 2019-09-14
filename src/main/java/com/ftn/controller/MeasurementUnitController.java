@@ -36,6 +36,13 @@ public class MeasurementUnitController {
     }
 
     @Transactional
+    @PreAuthorize(Auth.AUTHENTICATED)
+    @GetMapping(value = "/{id}")
+    public ResponseEntity read(@PathVariable Long id) {
+        return new ResponseEntity<>(measurementUnitService.read(id), HttpStatus.OK);
+    }
+
+    @Transactional
     @PreAuthorize(Auth.ADMIN)
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody MeasurementUnit measurementUnit, BindingResult bindingResult) {

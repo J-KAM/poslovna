@@ -58,6 +58,11 @@ public class WarehouseServiceImplementation implements WarehouseService {
     }
 
     @Override
+    public Warehouse read(Long id) {
+        return warehouseDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
     public List<Warehouse> readByCompany(Long id) {
         return warehouseDao.findByCompanyId(id);
     }

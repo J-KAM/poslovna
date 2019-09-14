@@ -46,6 +46,11 @@ public class DocumentServiceImplementation implements DocumentService {
     }
 
     @Override
+    public Document read(Long id) {
+        return documentDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
     public List<Document> readByWarehouse(Long id) {
         return documentDao.findByWarehouseId(id);
     }

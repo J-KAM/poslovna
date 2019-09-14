@@ -11,6 +11,8 @@ public interface DocumentService {
 
     List<Document> read();
 
+    Document read(Long id);
+
     List<Document> readByWarehouse(Long id);
 
     Document create(Document document);

@@ -47,6 +47,11 @@ public class WareServiceImplementation implements WareService {
     }
 
     @Override
+    public Ware read(Long id) {
+        return wareDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
     public Ware create(Ware ware) {
         if (wareDao.findById(ware.getId()).isPresent()) {
             throw new BadRequestException();

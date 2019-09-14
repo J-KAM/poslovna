@@ -36,7 +36,8 @@ public class UserController {
     }
 
     @Transactional
-    @PostMapping(value = "/employees")
+    @PostMapping
+    @PreAuthorize(Auth.ADMIN)
     public ResponseEntity create(@Valid @RequestBody User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException();

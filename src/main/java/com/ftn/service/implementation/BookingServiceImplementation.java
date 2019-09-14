@@ -45,7 +45,7 @@ public class BookingServiceImplementation implements BookingService {
 
     @Override
     public Document book(Long id, Document document) {
-        List<DocumentUnit> documentUnits = documentUnitService.read(id);
+        List<DocumentUnit> documentUnits = documentUnitService.readByDocumentId(id);
         document.setId(id);
 
         if(documentUnits.size() == 0){

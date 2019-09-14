@@ -37,8 +37,15 @@ public class DocumentUnitController {
 
     @Transactional
     @PreAuthorize(Auth.AUTHENTICATED)
+    @GetMapping(value = "/{id}")
+    public ResponseEntity read(@PathVariable Long id) {
+        return new ResponseEntity<>(documentUnitService.read(id), HttpStatus.OK);
+    }
+
+    @Transactional
+    @PreAuthorize(Auth.AUTHENTICATED)
     @GetMapping(value = "/documents/{documentId}")
-    public ResponseEntity read(@PathVariable Long documentId) {
+    public ResponseEntity readByDocumentId(@PathVariable Long documentId) {
         return new ResponseEntity<>(documentUnitService.read(documentId), HttpStatus.OK);
     }
 
@@ -60,13 +67,5 @@ public class DocumentUnitController {
             throw new BadRequestException();
         }
         return new ResponseEntity<>(documentUnitService.update(id, documentUnit), HttpStatus.OK);
-    }
-
-    @Transactional
-    @PreAuthorize(Auth.EMPLOYEE)
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
-        documentUnitService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

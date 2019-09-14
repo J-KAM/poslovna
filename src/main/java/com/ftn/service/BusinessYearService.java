@@ -11,6 +11,8 @@ public interface BusinessYearService {
 
     List<BusinessYear> read();
 
+    BusinessYear read(Long id);
+
     BusinessYear create(BusinessYear businessYear);
 
     BusinessYear update(Long id, BusinessYear businessYear);

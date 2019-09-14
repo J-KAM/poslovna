@@ -12,7 +12,9 @@ public interface WarehouseCardAnalyticsService {
 
     List<WarehouseCardAnalytics> read();
 
-    List<WarehouseCardAnalytics> read(Long warehouseCard);
+    WarehouseCardAnalytics read(Long id);
+
+    List<WarehouseCardAnalytics> readByWarehouseCardId(Long warehouseCard);
 
     List<WarehouseCardAnalytics> read(Long id, TrafficType trafficType);
 

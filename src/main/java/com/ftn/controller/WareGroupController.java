@@ -36,6 +36,13 @@ public class WareGroupController {
     }
 
     @Transactional
+    @PreAuthorize(Auth.AUTHENTICATED)
+    @GetMapping(value = "/{id}")
+    public ResponseEntity read(@PathVariable Long id) {
+        return new ResponseEntity<>(wareGroupService.read(id), HttpStatus.OK);
+    }
+
+    @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody WareGroup wareGroup, BindingResult bindingResult) {

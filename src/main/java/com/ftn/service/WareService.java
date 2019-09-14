@@ -11,6 +11,8 @@ public interface WareService {
 
     List<Ware> read();
 
+    Ware read(Long id);
+
     Ware create(Ware ware);
 
     Ware update(Long id, Ware ware);

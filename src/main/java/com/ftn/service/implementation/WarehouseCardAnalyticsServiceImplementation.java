@@ -24,14 +24,18 @@ public class WarehouseCardAnalyticsServiceImplementation implements WarehouseCar
         this.warehouseCardAnalyticsDao = warehouseCardAnalyticsDao;
     }
 
-
     @Override
     public List<WarehouseCardAnalytics> read() {
         return warehouseCardAnalyticsDao.findAll();
     }
 
     @Override
-    public List<WarehouseCardAnalytics> read(Long warehouseCardId) {
+    public WarehouseCardAnalytics read(Long id) {
+        return warehouseCardAnalyticsDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public List<WarehouseCardAnalytics> readByWarehouseCardId(Long warehouseCardId) {
         return warehouseCardAnalyticsDao.findByWarehouseCardId(warehouseCardId);
     }
 

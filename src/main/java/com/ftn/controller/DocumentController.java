@@ -40,9 +40,16 @@ public class DocumentController {
     }
 
     @Transactional
+    @PreAuthorize(Auth.AUTHENTICATED)
+    @GetMapping(value = "/{id}")
+    public ResponseEntity read(@PathVariable Long id) {
+        return new ResponseEntity<>(documentService.read(id), HttpStatus.OK);
+    }
+
+    @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
     @GetMapping(value = "/warehouse/{id}")
-    public ResponseEntity read(@PathVariable Long id) {
+    public ResponseEntity readByWarehouseId(@PathVariable Long id) {
         return new ResponseEntity<>(documentService.readByWarehouse(id), HttpStatus.OK);
     }
 

@@ -24,6 +24,11 @@ public class BusinessPartnerServiceImplementation implements BusinessPartnerServ
     }
 
     @Override
+    public BusinessPartner read(Long id) {
+        return businessPartnerDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
     public List<BusinessPartner> read() {
         return businessPartnerDao.findAll();
     }

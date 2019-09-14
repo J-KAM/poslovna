@@ -11,6 +11,8 @@ public interface LocationService {
 
     List<Location> read();
 
+    Location read(Long id);
+
     Location create(Location location);
 
     Location update(Long id, Location location);

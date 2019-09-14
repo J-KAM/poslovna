@@ -48,7 +48,12 @@ public class WarehouseCardServiceImplementation implements WarehouseCardService 
     }
 
     @Override
-    public List<WarehouseCard> read(Long warehouseID) {
+    public WarehouseCard read(Long id) {
+        return warehouseCardDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public List<WarehouseCard> readByWarehouseId(Long warehouseID) {
         return warehouseCardDao.findByWarehouseId(warehouseID);
     }
 

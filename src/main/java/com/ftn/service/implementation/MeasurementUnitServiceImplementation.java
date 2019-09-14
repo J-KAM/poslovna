@@ -30,6 +30,11 @@ public class MeasurementUnitServiceImplementation implements MeasurementUnitServ
     }
 
     @Override
+    public MeasurementUnit read(Long id) {
+        return measurementUnitDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
     public MeasurementUnit create(MeasurementUnit measurementUnit) {
         if (measurementUnitDao.findById(measurementUnit.getId()).isPresent()) {
             throw new BadRequestException();

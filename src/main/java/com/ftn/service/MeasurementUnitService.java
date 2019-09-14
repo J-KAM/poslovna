@@ -11,6 +11,8 @@ public interface MeasurementUnitService {
 
     List<MeasurementUnit> read();
 
+    MeasurementUnit read(Long id);
+
     MeasurementUnit create(MeasurementUnit measurementUnit);
 
     MeasurementUnit update(Long id, MeasurementUnit measurementUnit);

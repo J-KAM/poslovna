@@ -38,8 +38,15 @@ public class WarehouseController {
 
     @Transactional
     @PreAuthorize(Auth.AUTHENTICATED)
-    @GetMapping(value = "/company/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity read(@PathVariable Long id) {
+        return new ResponseEntity<>(warehouseService.read(id), HttpStatus.OK);
+    }
+
+    @Transactional
+    @PreAuthorize(Auth.AUTHENTICATED)
+    @GetMapping(value = "/company/{id}")
+    public ResponseEntity readByCompanyId(@PathVariable Long id) {
         return new ResponseEntity<>(warehouseService.readByCompany(id), HttpStatus.OK);
     }
 

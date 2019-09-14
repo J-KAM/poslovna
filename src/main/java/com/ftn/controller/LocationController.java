@@ -36,6 +36,13 @@ public class LocationController {
     }
 
     @Transactional
+    @PreAuthorize(Auth.AUTHENTICATED)
+    @GetMapping(value = "/{id}")
+    public ResponseEntity read(@PathVariable Long id) {
+        return new ResponseEntity<>(locationService.read(id), HttpStatus.OK);
+    }
+
+    @Transactional
     @PreAuthorize(Auth.ADMIN)
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody Location location, BindingResult bindingResult) {

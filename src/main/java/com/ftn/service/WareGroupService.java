@@ -11,6 +11,8 @@ public interface WareGroupService {
 
     List<WareGroup> read();
 
+    WareGroup read(Long id);
+
     WareGroup create(WareGroup wareGroup);
 
     WareGroup update(Long id, WareGroup wareGroup);

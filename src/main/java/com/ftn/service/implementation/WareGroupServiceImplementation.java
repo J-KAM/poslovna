@@ -46,6 +46,11 @@ public class WareGroupServiceImplementation implements WareGroupService {
     }
 
     @Override
+    public WareGroup read(Long id) {
+        return wareGroupDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
     public WareGroup create(WareGroup wareGroup) {
         if (wareGroupDao.findById(wareGroup.getId()).isPresent()) {
             throw new BadRequestException();

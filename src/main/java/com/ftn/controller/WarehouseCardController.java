@@ -48,34 +48,6 @@ public class WarehouseCardController {
 
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
-    @PostMapping
-    public ResponseEntity create(@Valid @RequestBody WarehouseCard warehouseCard, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new BadRequestException();
-        }
-        return new ResponseEntity<>(warehouseCardService.create(warehouseCard), HttpStatus.CREATED);
-    }
-
-    @Transactional
-    @PreAuthorize(Auth.EMPLOYEE)
-    @PatchMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody WarehouseCard warehouseCard, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new BadRequestException();
-        }
-        return new ResponseEntity<>(warehouseCardService.update(id, warehouseCard), HttpStatus.OK);
-    }
-
-    @Transactional
-    @PreAuthorize(Auth.EMPLOYEE)
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
-        warehouseCardService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @Transactional
-    @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping(value = "/generateReport", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity generateReport(@RequestBody ReportDataDTO reportDataDTO) {
         return new ResponseEntity<>(warehouseCardService.generateReport(reportDataDTO), HttpStatus.OK);

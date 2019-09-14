@@ -37,6 +37,13 @@ public class WareController {
 
     @Transactional
     @PreAuthorize(Auth.EMPLOYEE)
+    @GetMapping(value = "/{id}")
+    public ResponseEntity read(@PathVariable Long id) {
+        return new ResponseEntity<>(wareService.read(id), HttpStatus.OK);
+    }
+
+    @Transactional
+    @PreAuthorize(Auth.EMPLOYEE)
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody Ware ware, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

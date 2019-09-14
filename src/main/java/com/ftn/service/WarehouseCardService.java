@@ -11,8 +11,10 @@ public interface WarehouseCardService {
 
     List<WarehouseCard> read();
 
+    WarehouseCard read(Long id);
+
     //read warehouse cards for active warehouse
-    List<WarehouseCard> read(Long id);
+    List<WarehouseCard> readByWarehouseId(Long id);
 
     //Check if there's card for ware, year and specific warehouse
     WarehouseCard read(Ware ware, BusinessYear businessYear, Warehouse warehouse);

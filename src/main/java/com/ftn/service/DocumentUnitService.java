@@ -11,7 +11,9 @@ public interface DocumentUnitService {
 
     List<DocumentUnit> read();
 
-    List<DocumentUnit> read(Long documentId);
+    DocumentUnit read(Long id);
+
+    List<DocumentUnit> readByDocumentId(Long documentId);
 
     DocumentUnit create(DocumentUnit documentUnit);
 

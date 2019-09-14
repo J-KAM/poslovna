@@ -51,6 +51,11 @@ public class BusinessYearServiceImplementation implements BusinessYearService {
     }
 
     @Override
+    public BusinessYear read(Long id) {
+        return businessYearDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
     public BusinessYear create(BusinessYear businessYear) {
         if (businessYearDao.findById(businessYear.getId()).isPresent()) {
             throw new BadRequestException();

@@ -37,7 +37,12 @@ public class DocumentUnitServiceImplementation implements DocumentUnitService {
     }
 
     @Override
-    public List<DocumentUnit> read(Long documentId) {
+    public DocumentUnit read(Long id) {
+        return documentUnitDao.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public List<DocumentUnit> readByDocumentId(Long documentId) {
         List<DocumentUnit> documentUnits = documentUnitDao.findByDocumentId(documentId);
         return documentUnits;
     }
