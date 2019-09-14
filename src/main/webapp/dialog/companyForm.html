@@ -13,7 +13,7 @@
             <md-dialog-content>
                 <md-input-container class="md-block">
                     <label>PIB</label>
-                    <input id="pib" name="pib" type="text" data-ng-model="company.pib" required
+                    <input id="pib" name="pib" type="text" data-ng-model="company.pib" required ng-disabled="disabled"
                            ng-pattern="/^[0-9]{9,9}$/" ng-change="companyForm.pib.$error.uniqueError = false">
                     <div ng-messages="companyForm.pib.$error" ng-if="companyForm.pib.$dirty">
                         <div ng-message="required">Obavezan unos PIB-a.</div>

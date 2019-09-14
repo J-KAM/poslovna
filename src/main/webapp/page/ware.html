@@ -14,7 +14,6 @@
                         <th md-column><span>Pakovanje</span></th>
                         <th md-column><span>Jedinica mere</span></th>
                         <th md-column><span>Grupa robe</span></th>
-                        <th md-column>Magacinska kartica</th>
                         <th md-column>Brisanje</th>
                     </tr>
                     </thead>
@@ -25,11 +24,6 @@
                         <td md-cell>{{ware.packing}}</td>
                         <td md-cell>{{ware.measurementUnit.name}}</td>
                         <td md-cell>{{ware.wareGroup.name}}</td>
-                        <td md-cell>
-                            <md-button class="md-icon-button md-accent" aria-label="Kartica" ng-click="showCardDetails(ware, $event)">
-                                <md-icon md-svg-icon="image/ic_document_24px.svg"></md-icon>
-                            </md-button>
-                        </td>
                         <td md-cell>
                             <md-button class="md-icon-button md-accent" aria-label="Obriši" ng-click="delete(ware, $event)">
                                 <md-icon md-svg-icon="image/ic_delete_blue.svg"></md-icon>

@@ -58,31 +58,6 @@ app.controller('WareController', function ($scope, $state, $rootScope, $mdDialog
     $scope.edit = function (ware) {
         openForm(ware);
     };
-    
-    $scope.showCardDetails = function (ware, event) {
-        event.stopPropagation();
-        warehouseCardService.getCardForWare(ware, function (response) {
-            if(response.data === ""){
-                $mdDialog.show(
-                    $mdDialog.alert()
-                        .parent(angular.element(document.body))
-                        .clickOutsideToClose(true)
-                        .title('Roba u magacinu')
-                        .textContent('Roba nema magacinsku karticu u trenutno aktivnoj poslovnoj godini!')
-                        .ariaLabel('Alert knjizenje')
-                        .ok('OK')
-                        .targetEvent(event)
-                );
-                return;
-            }
-            $mdDialog.show({
-                parent: angular.element(document.body),
-                templateUrl: 'dialog/warehouseCardDetails.html',
-                controller: 'WarehouseCardDetailsController',
-                locals: { warehouseCard: response.data}
-            });
-        });
-    };
 
     $scope.delete = function (ware, event) {
         event.stopPropagation();

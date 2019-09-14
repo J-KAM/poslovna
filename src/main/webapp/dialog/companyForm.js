@@ -6,6 +6,7 @@ app.controller('CompanyFormController', function ($scope, $http, $state, $mdDial
     var editingMode = company !== null;
     if (editingMode) {
         $scope.company = JSON.parse(JSON.stringify(company));
+        $scope.disabled = true;
     }
 
     locationService.read(function (response) {
