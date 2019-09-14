@@ -23,19 +23,9 @@ public class ExceptionResolver {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity forbiddenException(HttpServletRequest request, ForbiddenException exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.FORBIDDEN);
-    }
-
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity authenticationException(HttpServletRequest request, AuthenticationException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler(MethodNotAllowedException.class)
-    public ResponseEntity methodNotAllowedException(HttpServletRequest request, MethodNotAllowedException exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(DataAccessException.class)

@@ -3,7 +3,6 @@ package com.ftn.service.implementation;
 import com.ftn.exception.BadRequestException;
 import com.ftn.exception.NotFoundException;
 import com.ftn.model.BusinessPartner;
-import com.ftn.model.Warehouse;
 import com.ftn.repository.BusinessPartnerDao;
 import com.ftn.service.BusinessPartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
