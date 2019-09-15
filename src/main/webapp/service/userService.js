@@ -7,4 +7,4 @@ app.service('userService', function($http){
             $http.get('/api/users/employees').then(onSuccess, onError);
         }
     }
-});u
+});

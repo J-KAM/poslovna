@@ -46,7 +46,7 @@ public class DocumentUnitController {
     @PreAuthorize(Auth.AUTHENTICATED)
     @GetMapping(value = "/documents/{documentId}")
     public ResponseEntity readByDocumentId(@PathVariable Long documentId) {
-        return new ResponseEntity<>(documentUnitService.read(documentId), HttpStatus.OK);
+        return new ResponseEntity<>(documentUnitService.readByDocumentId(documentId), HttpStatus.OK);
     }
 
     @Transactional

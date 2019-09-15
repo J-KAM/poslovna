@@ -46,7 +46,7 @@ public class WarehouseCardAnalyticsController {
     @PreAuthorize(Auth.AUTHENTICATED)
     @GetMapping(value = "/warehouseCards/{warehouseCardId}")
     public ResponseEntity readByWarehouseCardId(@PathVariable Long warehouseCardId) {
-        return new ResponseEntity<>(warehouseCardAnalyticsService.read(warehouseCardId), HttpStatus.OK);
+        return new ResponseEntity<>(warehouseCardAnalyticsService.readByWarehouseCardId(warehouseCardId), HttpStatus.OK);
     }
 
 }
