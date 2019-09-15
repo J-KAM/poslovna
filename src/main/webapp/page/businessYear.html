@@ -15,8 +15,7 @@
                     </tr>
                     </thead>
                     <tbody md-body>
-                    <tr md-row ng-repeat="businessYear in businessYears | limitTo: query.limit:(query.page-1) * query.limit"
-                        ng-click="edit(businessYear)">
+                    <tr md-row ng-repeat="businessYear in businessYears | limitTo: query.limit:(query.page-1) * query.limit">
                         <td md-cell>{{businessYear.year}}</td>
                         <td md-cell>{{ businessYear.closed ? "Da" : "Ne" }}</td>
                     </tr>
