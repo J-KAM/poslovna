@@ -5,8 +5,6 @@ app.controller('DocumentUnitPreviewController', function ($scope, $http, $state,
 
     $scope.selectedIndex = 0;
     $scope.secondLocked = true;
-    $scope.saveDisabled = true;
-
 
     documentUnitService.read(document.id, function (response) {
         $scope.documentUnits = response.data;
@@ -16,12 +14,7 @@ app.controller('DocumentUnitPreviewController', function ($scope, $http, $state,
         $scope.wares = response.data;
     });
 
-    $scope.disableSave = function () {
-        $scope.saveDisabled = true;
-    }
-
-
-    $scope.editDocumentUnit = function(documentUnit){
+   $scope.editDocumentUnit = function(documentUnit){
         if(documentUnit.document.status !== "PENDING"){
             $scope.selectedIndex = 0;
             $scope.secondLocked = false;
@@ -33,8 +26,15 @@ app.controller('DocumentUnitPreviewController', function ($scope, $http, $state,
             $scope.saveDisabled = false;
             $scope.notPending = false;
             $scope.pending = true;
-            $scope.documentUnit = JSON.parse(JSON.stringify(documentUnit));
         }
+        $mdDialog.show({
+            parent: angular.element(document.body),
+            templateUrl: 'dialog/documentUnitForm.html',
+            controller: 'DocumentUnitFormController',
+            locals: {
+                document : document,
+                documentUnit : documentUnit}
+        });
     }
     
 

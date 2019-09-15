@@ -3,6 +3,11 @@
  */
 app.controller('DocumentUnitFormController', function ($scope, $http, $state, $mdDialog, documentUnitService, documentService, wareService, documentUnit, document) {
 
+        var editingMode = documentUnit !== null;
+        if(editingMode){
+           $scope.documentUnit = JSON.parse(JSON.stringify(documentUnit));
+        }
+
         wareService.read(function (response) {
             $scope.wares = response.data;
         });
@@ -31,11 +36,18 @@ app.controller('DocumentUnitFormController', function ($scope, $http, $state, $m
         };
 
         $scope.submit = function () {
-            $scope.documentUnit.document = document;
-            $scope.documentUnit.value = $scope.documentUnit.price * $scope.documentUnit.quantity;
-            documentUnitService.create($scope.documentUnit, function () {
-                $scope.close();
-            });
+            if(!editingMode){
+                $scope.documentUnit.document = document;
+                $scope.documentUnit.value = $scope.documentUnit.price * $scope.documentUnit.quantity;
+                documentUnitService.create($scope.documentUnit, function () {
+                    $scope.close();
+                });
+            } else {
+                $scope.documentUnit.value = $scope.documentUnit.price * $scope.documentUnit.quantity;
+                documentUnitService.update($scope.documentUnit, function () {
+                    $scope.close();
+                });
+            }
         };
 
         $scope.close = function () {
