@@ -55,10 +55,6 @@ app.controller('BusinessYearController', function ($scope, $state, $rootScope, $
         openForm(null);
     });
 
-    $scope.edit = function (businessYear) {
-        openForm(businessYear);
-    };
-
     $scope.options = {
         rowSelection: true,
         boundaryLinks: true
