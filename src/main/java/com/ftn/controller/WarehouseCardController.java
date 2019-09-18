@@ -7,6 +7,7 @@ import com.ftn.model.WarehouseCard;
 import com.ftn.model.ReportDataDTO;
 import com.ftn.service.LevelingService;
 import com.ftn.service.WarehouseCardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ public class WarehouseCardController {
     private final WarehouseCardService warehouseCardService;
     private final LevelingService levelingService;
 
+    @Autowired
     public WarehouseCardController(WarehouseCardService warehouseCardService, LevelingService levelingService) {
         this.warehouseCardService = warehouseCardService;
         this.levelingService = levelingService;
